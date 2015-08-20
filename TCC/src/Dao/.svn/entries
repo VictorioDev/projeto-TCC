@@ -1,0 +1,91 @@
+10
+
+dir
+3
+https://trabalhoforcaeperguntas-final.googlecode.com/svn/trunk/Jogo/src/Dao
+https://trabalhoforcaeperguntas-final.googlecode.com/svn
+
+
+
+2014-05-28T13:27:53.542011Z
+3
+victorio25.03@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+969ef119-1651-c9c2-8694-f5e21439f49c
+
+
+
+
+
+
+0
+
+AlternativaDao.java
+file
+0
+
+
+add
+
+CategoriaDao.java
+file
+0
+
+
+add
+
+DicaDao.java
+file
+0
+
+
+add
+
+JogadorDao.java
+file
+0
+
+
+add
+
+JogoForcaDao.java
+file
+0
+
+
+add
+
+NivelDao.java
+file
+0
+
+
+add
+
+PalavraDao.java
+file
+0
+
+
+add
+
+PerguntaDao.java
+file
+0
+
+
+add
+
