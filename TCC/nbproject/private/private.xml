@@ -3,28 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaInicial.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaCadastroPalavra.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Dao/JogadorDao.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaPesquisarNivel.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Bean/PalavraJogadaBean.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaEscolhaDicas.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaEscolhaDica.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/Telajogo.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Bean/JogadorBean.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaLogin.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaPesquisaPalavra.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaCadastroNivel.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/util/VoltaImagemJPG.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/util/UtilObjetos.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Dao/DicaDao.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/AePlayWave.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/util/Audio.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/AudioPlayerExample1.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaPesquisarPergunta.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Telas/TelaCadastroUsuario.java</file>
-            <file>file:/D:/IFPR/3%20ano/TCCIFPR/TCC/src/Dao/PalavraDao.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
