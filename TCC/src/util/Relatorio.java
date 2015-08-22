@@ -19,7 +19,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author victorio
  */
 public class Relatorio {
-    public static void gerarRelatório(String caminho, ResultSet rs) throws JRException{
+    public static void gerarRelatorio(String caminho, ResultSet rs) throws JRException{
         JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
         JasperPrint jasperPrint = JasperFillManager.fillReport(caminho, new HashMap(), jrRS);
         JasperViewer.viewReport(jasperPrint, false);

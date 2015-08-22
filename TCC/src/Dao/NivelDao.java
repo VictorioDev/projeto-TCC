@@ -58,33 +58,38 @@ public class NivelDao {
     }
 
     public static void SalvarNivel(NivelBean nv) throws SQLException {
-
-        String slq = "insert into Nivel (descricao) values (?)";
-        Connection conexao = Conexao.getConexao();
-        PreparedStatement stmt = conexao.prepareStatement(slq);
-        stmt.setString(1, nv.getDescricao());
-        stmt.execute();
-        stmt.close();
-        conexao.close();
+        try {
+            String slq = "insert into Nivel (descricao) values (?)";
+            Connection conexao = Conexao.getConexao();
+            PreparedStatement stmt = conexao.prepareStatement(slq);
+            stmt.setString(1, nv.getDescricao());
+            stmt.execute();
+            stmt.close();
+            conexao.close();
 //          JOptionPane.showMessageDialog(null, "Nivel cadastrado com sucesso!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar o nivel!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
     public static void alterar(NivelBean nivel) throws SQLException {
-
-        String sql = "update Nivel set descricao=? where idNivel=?";
-        Connection conexao = Conexao.getConexao();
-        PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setString(1, nivel.getDescricao());
-        stmt.setInt(2, nivel.getIdNivel());
-        stmt.executeUpdate();
-        stmt.close();
-        conexao.close();
-
+        try {
+            String sql = "update Nivel set descricao=? where idNivel=?";
+            Connection conexao = Conexao.getConexao();
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, nivel.getDescricao());
+            stmt.setInt(2, nivel.getIdNivel());
+            stmt.executeUpdate();
+            stmt.close();
+            conexao.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao alterar o nível", "ERRO!", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void DeletarNivel(NivelBean nv) throws SQLException {
-
         String slq = " delete from Nivel where idNivel = ?";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(slq);
@@ -92,7 +97,14 @@ public class NivelDao {
         stmt.executeUpdate();
         stmt.close();
         conexao.close();
+    }
 
+    public static ResultSet retornaRs(NivelBean nv) throws SQLException {
+        String sql = "select * from Nivel where descricao like'" + nv.getDescricao() + "%' order by descricao";
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stat = conexao.prepareStatement(sql);
+        ResultSet rs = stat.executeQuery();
+        return rs;
     }
 
 }

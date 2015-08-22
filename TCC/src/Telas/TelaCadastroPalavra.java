@@ -353,8 +353,6 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        txNome.setEditable(false);
-
         javax.swing.GroupLayout pnCadastroLayout = new javax.swing.GroupLayout(pnCadastro);
         pnCadastro.setLayout(pnCadastroLayout);
         pnCadastroLayout.setHorizontalGroup(

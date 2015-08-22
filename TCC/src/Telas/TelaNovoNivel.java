@@ -8,50 +8,66 @@ package Telas;
 import Bean.NivelBean;
 import Dao.NivelDao;
 import java.awt.Color;
-import java.awt.Component;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+import util.LimitaCaracteres;
 import util.UtilInterface;
 
 /**
  *
  * @author Victório
  */
-public class TelaCadastroNivel extends javax.swing.JFrame {
+public class TelaNovoNivel extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaCadastroNivel
      */
+    public static ImageIcon icosal = new ImageIcon("src\\icones\\Ok-icon16.png");
+    public static ImageIcon icocan = new ImageIcon("src\\icones\\Close-icon16.png");
+
     private boolean salvar = false;
     private int id = 0;
 
-    public TelaCadastroNivel() {
+    public TelaNovoNivel() {
         initComponents();
+        txDescricaoNivel.setDocument(new LimitaCaracteres());
         salvar = true;
         setResizable(false);
-        iconeBotoes();
+        configuraComponentes();
+//        iconeBotoes();
         setLocationRelativeTo(null);
-        UtilInterface.setFontes(jPanel1.getComponents());
-        UtilInterface.setFontes(jPanel2.getComponents());
-        
+        getRootPane().setDefaultButton(btSalvar);
     }
 
-    public TelaCadastroNivel(NivelBean n) {
+    public TelaNovoNivel(NivelBean n) {
         initComponents();
+        txDescricaoNivel.setDocument(new LimitaCaracteres());
         preencherCampos(n);
         salvar = false;
         id = n.getIdNivel();
         setResizable(false);
-        iconeBotoes();
+        configuraComponentes();
+//        iconeBotoes();
         setLocationRelativeTo(null);
+        getRootPane().setDefaultButton(btSalvar);
     }
 
-    private void iconeBotoes() {
-        btCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
+    private void configuraComponentes(){
         btSalvar.setIcon(UtilInterface.ICONE_SALVAR);
+        btCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
+        lbNivel.setFont(UtilInterface.FONTE_PADRAO);
+        txDescricaoNivel.setFont(UtilInterface.FONTE_PADRAO);
+    }
+    
+    private void iconeBotoes() {
+        btCancelar.setIcon(icocan);
+        btSalvar.setIcon(icosal);
     }
 
     private void preencherCampos(NivelBean nivel) {
@@ -67,24 +83,51 @@ public class TelaCadastroNivel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        txDescricaoNivel = new javax.swing.JTextField();
+        jPanel5 = new javax.swing.JPanel();
         lbNivel = new javax.swing.JLabel();
+        txDescricaoNivel = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Níveis");
-        setBackground(new java.awt.Color(153, 153, 225));
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 225));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        lbNivel.setText("Nivel: *");
+        jPanel5.setBackground(new java.awt.Color(153, 153, 225));
 
-        jPanel2.setBackground(java.awt.Color.yellow);
+        lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbNivel.setText("Descrição: *");
 
-        btSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Ok-icon16.png"))); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(255, 255, 0));
+
+        btSalvar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +136,7 @@ public class TelaCadastroNivel extends javax.swing.JFrame {
         });
         jPanel2.add(btSalvar);
 
-        btCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Close-icon16.png"))); // NOI18N
+        btCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btCancelar.setText("Cancelar");
         btCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,38 +145,56 @@ public class TelaCadastroNivel extends javax.swing.JFrame {
         });
         jPanel2.add(btCancelar);
 
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(lbNivel)
+                        .addGap(0, 301, Short.MAX_VALUE))
+                    .addComponent(txDescricaoNivel))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(lbNivel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txDescricaoNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbNivel)
-                    .addComponent(txDescricaoNivel)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lbNivel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txDescricaoNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -143,7 +204,6 @@ public class TelaCadastroNivel extends javax.swing.JFrame {
         if (salvar) {
             if (VerificaCampo()) {
                 try {
-
                     NivelDao.SalvarNivel(retornaObjeto());
                     dispose();
                 } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
@@ -190,20 +250,20 @@ public class TelaCadastroNivel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaNovoNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaNovoNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaNovoNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaNovoNivel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastroNivel().setVisible(true);
+                new TelaNovoNivel().setVisible(true);
             }
         });
     }
@@ -218,7 +278,7 @@ public class TelaCadastroNivel extends javax.swing.JFrame {
     private boolean VerificaCampo() {
         boolean aux = false;
         if (txDescricaoNivel.getText().trim().equals("")) {
-            lbNivel.setForeground(UtilInterface.COR_ERRO);
+            lbNivel.setForeground(Color.red);
             aux = false;
         } else {
             aux = true;
@@ -233,7 +293,11 @@ public class TelaCadastroNivel extends javax.swing.JFrame {
     private javax.swing.JButton btSalvar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lbNivel;
     private javax.swing.JTextField txDescricaoNivel;
     // End of variables declaration//GEN-END:variables
 }
+

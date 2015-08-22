@@ -309,7 +309,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
         try {
-            Relatorio.gerarRelatório("relatorios//relatorioJogadores.jasper", JogadorDao.RetornaJogadoresRs(retornaObjeto()));
+            Relatorio.gerarRelatorio("relatorios//relatorioJogadores.jasper", JogadorDao.RetornaJogadoresRs(retornaObjeto()));
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Não foi");

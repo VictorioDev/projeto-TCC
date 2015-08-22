@@ -12,10 +12,15 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import util.Relatorio;
+import util.UtilInterface;
 
 /**
  *
@@ -30,13 +35,17 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
     public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
     public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
     public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
-
+    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
+    
     public TelaPesquisarNivel() {
         initComponents();
         setResizable(false);
-        iconeBotoes();
+//        iconeBotoes();
+        configuraComponentes();
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btPesquisar);
+        btAlterar.setEnabled(false);
+        btExcluir.setEnabled(false);
     }
 
     private List<NivelBean> listaNivel;
@@ -46,14 +55,37 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         nivel.setDescricao(txNivel.getText());
         return nivel;
     }
+    
+    private void configuraComponentes(){
+        btAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
+        btExcluir.setIcon(UtilInterface.ICONE_REMOVER);
+        btImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
+        btNovo.setIcon(UtilInterface.ICONE_NOVO);
+        btPesquisar.setIcon(UtilInterface.ICONE_PESQUISAR);
+        lbMensg.setFont(UtilInterface.FONTE_PADRAO);
+        lbNivel.setFont(UtilInterface.FONTE_PADRAO);
+        txNivel.setFont(UtilInterface.FONTE_PADRAO);
+    }
 
     private void iconeBotoes() {
         btPesquisar.setIcon(icopes);
         btAlterar.setIcon(icoalt);
         btNovo.setIcon(iconov);
         btExcluir.setIcon(icoexc);
+        btImprimir.setIcon(icorel);
     }
 
+    private void validaBotoes() {
+        if (tabelaNivel.getSelectedRow() == -1) {
+            btAlterar.setEnabled(false);
+            btExcluir.setEnabled(false);
+        } else if (tabelaNivel.getSelectedRow() != -1) {
+            btAlterar.setEnabled(true);
+            btExcluir.setEnabled(true);
+        }
+        
+    }
+    
     private void AtualizaTabNivel() {
         try {
             listaNivel = NivelDao.RetornaNiveis(retornaObjeto());
@@ -89,24 +121,35 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txNivel = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
         lbNivel = new javax.swing.JLabel();
+        txNivel = new javax.swing.JTextField();
+        btPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaNivel = new javax.swing.JTable();
-        btPesquisar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        lbMensg = new javax.swing.JLabel();
         btNovo = new javax.swing.JButton();
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
+        btImprimir = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lbMensg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pesquisa de Níveis");
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 225));
+        jPanel4.setBackground(new java.awt.Color(153, 153, 225));
 
-        lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        lbNivel.setText("Nível:");
+        lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbNivel.setText("Nível: *");
+
+        btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
 
         tabelaNivel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -116,22 +159,16 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
                 "Nível"
             }
         ));
-        jScrollPane1.setViewportView(tabelaNivel);
-
-        btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        btPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Zoom-icon16_1.png"))); // NOI18N
-        btPesquisar.setText("Pesquisar");
-        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarActionPerformed(evt);
+        tabelaNivel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaNivelMouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(tabelaNivel);
 
-        jPanel2.setBackground(java.awt.Color.yellow);
-        jPanel2.add(lbMensg);
+        jPanel2.setBackground(new java.awt.Color(255, 255, 0));
 
-        btNovo.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        btNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Document-Blank-icon16.png"))); // NOI18N
+        btNovo.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btNovo.setText("Novo");
         btNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,8 +177,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         });
         jPanel2.add(btNovo);
 
-        btAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        btAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Document-Write-icon16.png"))); // NOI18N
+        btAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btAlterar.setText("Alterar");
         btAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,8 +186,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         });
         jPanel2.add(btAlterar);
 
-        btExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        btExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/Delete-icon16.png"))); // NOI18N
+        btExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btExcluir.setText("Excluir");
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,45 +195,74 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         });
         jPanel2.add(btExcluir);
 
+        btImprimir.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btImprimir.setText("Imprimir");
+        btImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImprimirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btImprimir);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 0));
+        jPanel3.add(lbMensg);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(lbNivel)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txNivel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btPesquisar)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbNivel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btPesquisar))
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txNivel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btPesquisar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbNivel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(lbNivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txNivel, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(btPesquisar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,6 +274,8 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 
     private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
         // TODO add your handling code here:
+        btAlterar.setEnabled(false);
+        btExcluir.setEnabled(false);
         if (txNivel.getText().length() > 1) {
             AtualizaTabNivel();
         } else {
@@ -222,7 +288,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
         // TODO add your handling code here:
-        new TelaCadastroNivel().setVisible(true);
+        new TelaNovoNivel().setVisible(true);
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
@@ -232,7 +298,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
             txNivel.requestFocus();
         } else {
             NivelBean nivel = listaNivel.get(tabelaNivel.getSelectedRow());
-            new TelaCadastroNivel(nivel).setVisible(true);
+            new TelaNovoNivel(nivel).setVisible(true);
         }
     }//GEN-LAST:event_btAlterarActionPerformed
 
@@ -248,12 +314,27 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
                 if (opc == JOptionPane.YES_OPTION) {
                     NivelDao.DeletarNivel(nivel);
                     AtualizaTabNivel();
-                }
+                    validaBotoes();                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_btExcluirActionPerformed
+
+    private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
+        // TODO add your handling code here:
+        try{
+            Relatorio.gerarRelatorio("Relatorios\\RelatorioNivel.jasper", NivelDao.retornaRs(retornaObjeto()));
+        }catch(SQLException e){
+        } catch (JRException ex) {
+            Logger.getLogger(TelaPesquisarNivel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btImprimirActionPerformed
+
+    private void tabelaNivelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaNivelMouseClicked
+        // TODO add your handling code here:
+        validaBotoes();
+    }//GEN-LAST:event_tabelaNivelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -293,10 +374,13 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAlterar;
     private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btImprimir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btPesquisar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbMensg;
     private javax.swing.JLabel lbNivel;

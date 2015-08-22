@@ -15,12 +15,14 @@ public class UtilInterface {
     public final static ImageIcon ICONE_ALTERAR = new ImageIcon("src\\icones\\Document-Write-icon16.png");
     public final static ImageIcon ICONE_PESQUISAR = new ImageIcon("src\\icones\\Zoom-icon16.png");
     public final static ImageIcon ICONE_DELETAR = new ImageIcon("src\\icones\\Delete-icon16.png");
+    public final static ImageIcon ICONE_REMOVER = new ImageIcon("src\\icones\\Delete-icon16.png");
+    public final static ImageIcon ICONE_RELATORIO = new ImageIcon("src\\icones\\relatorio_icone.jpg");
     public final static ImageIcon ICONE_IMAGEMUSERPADRAO = new ImageIcon("src\\Telas\\imagens\\imguser.jpg");
     public final static ImageIcon ICONE_FORCA = new ImageIcon("src\\icones\\forcaicon.png");
     public final static ImageIcon ICONE_DICASOM = new ImageIcon("src\\icones\\iconesom.png");
     public final static ImageIcon ICONE_DICATEXTO = new ImageIcon("src\\icones\\iconetextto.png");
     public final static ImageIcon ICONE_DICAIMAGEM = new ImageIcon("src\\icones\\iconeimagem.png");
-    
+
     public final static Color COR_ERRO = Color.RED;
     public final static Font FONTE_PADRAO = new Font("Comic Sans MS", 0, 12);
 

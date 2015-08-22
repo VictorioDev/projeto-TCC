@@ -23,10 +23,45 @@ import util.Conexao;
  */
 public class PerguntaDao {
 
-    public static List<PerguntaBean> RetornaPerguntas(PerguntaBean per) throws SQLException {
-        List<PerguntaBean> listaPer = new ArrayList<PerguntaBean>();
-//        String sql = "select * from Pergunta where descricao like'" + per.getDescricao() + "%'";       
-        String sql = "SELECT "
+//    public static List<PalavraBean> retornaPlvs(PalavraBean pl, String filtro) throws SQLException {
+//        List<PalavraBean> listaPl = new ArrayList<PalavraBean>();
+//        String sql = null;
+//        if(filtro.equalsIgnoreCase("<<Selecione>>")){
+//           sql = "SELECT"
+//                + " p.idPalavra,"
+//                + " p.nome,"
+//                + " n.idNivel,"
+//                + " n.descricao"
+//                + " FROM "
+//                + "Palavra p,"
+//                + "Nivel n "
+//                + "WHERE "
+//                + "p.idNivel = n.idNivel"
+//                + " AND p.nome like'" + pl.getNome() + "%'"
+//                + "ORDER BY p.nome";
+//        }else{
+//            
+//            sql = "SELECT"
+//                + " p.idPalavra,"
+//                + " p.nome,"
+//                + " n.idNivel,"
+//                + " n.descricao"
+//                + " FROM "
+//                + "Palavra p,"
+//                + "Nivel n "
+//                + "WHERE "
+//                + "p.idNivel = n.idNivel"
+//                + " AND p.nome like'" + pl.getNome() + "%' and n.descricao = '"+filtro+"'"
+//                + "ORDER BY p.nome";
+//        }
+//    }
+    
+    public static List<PerguntaBean> RetornaPerguntas(PerguntaBean per, String filtro) throws SQLException {
+        List<PerguntaBean> listaPer = new ArrayList<PerguntaBean>(); 
+//        String sql = "select * from Pergunta where descricao like'" + per.getDescricao() + "%'"; 
+        String sql = "";
+        if(filtro.equalsIgnoreCase("Pergunta")){   
+        sql = "SELECT "
                 + "pe.idPergunta,"
                 + "pe.descricao,"
                 + "ca.descricao as descricaoCat,"
@@ -39,8 +74,42 @@ public class PerguntaDao {
                 + "Nivel ni "
                 + "WHERE "
                 + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
-                + "pe.descricao like '"+per.getDescricao()+"%' "
+                + "pe.descricao like '" + per.getDescricao() + "%' "
                 + "ORDER BY pe.descricao";
+        } else if(filtro.equalsIgnoreCase("Categoria")) {
+           sql = "SELECT "
+                + "pe.idPergunta,"
+                + "pe.descricao,"
+                + "ca.descricao as descricaoCat,"
+                + "ca.idCategoria, "
+                + "ni.idNivel, "
+                + "ni.descricao as descricaoNiv "
+                + "FROM "
+                + "Pergunta pe, "
+                + "Categoria ca, "
+                + "Nivel ni "
+                + "WHERE "
+                + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                + "pe.descricao like '" + per.getDescricao() + "%' "
+                + "ORDER BY ca.descricao"; 
+        }else{
+            sql = "SELECT "
+                + "pe.idPergunta,"
+                + "pe.descricao,"
+                + "ca.descricao as descricaoCat,"
+                + "ca.idCategoria, "
+                + "ni.idNivel, "
+                + "ni.descricao as descricaoNiv "
+                + "FROM "
+                + "Pergunta pe, "
+                + "Categoria ca, "
+                + "Nivel ni "
+                + "WHERE "
+                + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                + "pe.descricao like '" + per.getDescricao() + "%' "
+                + "ORDER BY ni.descricao";
+        }
+        
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
@@ -53,7 +122,7 @@ public class PerguntaDao {
             NivelBean nivel = new NivelBean();
             nivel.setDescricao(rs.getString("descricaoNiv"));
             nivel.setIdNivel(rs.getInt("idNivel"));
-            
+
             PerguntaBean pergunta = new PerguntaBean();
             pergunta.setDescricao(rs.getString("descricao"));
             pergunta.setIdPergunta(rs.getInt("idPergunta"));
@@ -79,11 +148,11 @@ public class PerguntaDao {
         while (rs.next()) {
 
             CategoriaBean categoria = new CategoriaBean();
-            categoria.setDescricao(rs.getString("descricaoCat"));
+            categoria.setDescricao(rs.getString("descricao"));
             categoria.setIdCategoria(rs.getInt("idCategoria"));
 
             NivelBean nivel = new NivelBean();
-            nivel.setDescricao(rs.getString("descricaoNiv"));
+            nivel.setDescricao(rs.getString("descricao"));
             nivel.setIdNivel(rs.getInt("idNivel"));
 
             List<AlternativaBean> lisalternativa = new ArrayList<AlternativaBean>();
@@ -136,7 +205,7 @@ public class PerguntaDao {
             conexao.close();
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao salvar a pergunta","ERRO!",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao salvar a pergunta", "ERRO!", JOptionPane.ERROR_MESSAGE);
 
         }
     }
@@ -151,11 +220,16 @@ public class PerguntaDao {
             stmt.setInt(3, pergunta.getNivel().getIdNivel());
             stmt.setInt(4, pergunta.getIdPergunta());
             stmt.executeUpdate();
+            AlternativaDao.excluirr(pergunta.getIdPergunta());
+            for (AlternativaBean alternativa : pergunta.getAlternativa()) {
+                alternativa.setPergunta(pergunta);
+                AlternativaDao.salvar(alternativa);
+            }
             stmt.close();
             conexao.close();
         } catch (Exception ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao alterar pergunta","ERRO!",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao alterar pergunta", "ERRO!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -170,10 +244,32 @@ public class PerguntaDao {
             conexao.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao excluir pergunta","ERRO!",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao excluir pergunta", "ERRO!", JOptionPane.ERROR_MESSAGE);
 
         }
 
+    }
+
+    public static ResultSet retornaRs(PerguntaBean per) throws SQLException {
+        String sql = "SELECT "
+                + "pe.idPergunta,"
+                + "pe.descricao,"
+                + "ca.descricao as descricaoCat,"
+                + "ca.idCategoria, "
+                + "ni.idNivel, "
+                + "ni.descricao as descricaoNiv "
+                + "FROM "
+                + "Pergunta pe, "
+                + "Categoria ca, "
+                + "Nivel ni "
+                + "WHERE "
+                + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                + "pe.descricao like '" + per.getDescricao() + "%' "
+                + "ORDER BY pe.descricao";
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
     }
 
 }

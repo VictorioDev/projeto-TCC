@@ -9,9 +9,17 @@ import Dao.PerguntaDao;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+import net.sf.jasperreports.engine.JRException;
+import util.Relatorio;
+import util.UtilInterface;
 
 /**
  *
@@ -26,14 +34,18 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
     public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
     public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
+    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
 
     public TelaPesquisarPergunta() {
         initComponents();
+        TxaPergunta.setDocument(new limitadorPesquisaPergunta());
         setResizable(false);
-        iconeBotoes();
+//        iconeBotoes();
+        configuraComponentes();
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btPesquisar);
-       // validaBotoes();
+        btAlterar.setEnabled(false);
+        btExcluir.setEnabled(false);
     }
 
     private List<PerguntaBean> listaPerguntas;
@@ -43,37 +55,50 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         pergunta.setDescricao(TxaPergunta.getText().trim());
         return pergunta;
     }
-
+    
+    private void configuraComponentes(){
+        btAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
+        btExcluir.setIcon(UtilInterface.ICONE_REMOVER);
+        btImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
+        btNovo.setIcon(UtilInterface.ICONE_NOVO);
+        btPesquisar.setIcon(UtilInterface.ICONE_PESQUISAR);
+        lbMensg.setFont(UtilInterface.FONTE_PADRAO);
+        lbPergunta.setFont(UtilInterface.FONTE_PADRAO);
+        TxaPergunta.setFont(UtilInterface.FONTE_PADRAO);
+        cbOrdenacao.setFont(UtilInterface.FONTE_PADRAO);
+    }
+    
     private void iconeBotoes() {
         btPesquisar.setIcon(icopes);
         btAlterar.setIcon(icoalt);
         btNovo.setIcon(iconov);
         btExcluir.setIcon(icoexc);
+        btImprimir.setIcon(icorel);
     }
-    
-    private void validaBotoes(){
+
+    private void validaBotoes() {
         if (tabelaPergunta.getSelectedRow() == -1) {
             btAlterar.setEnabled(false);
             btExcluir.setEnabled(false);
-        }else if(tabelaPergunta.getSelectedRow() != -1){
+        } else if (tabelaPergunta.getSelectedRow() != -1) {
             btAlterar.setEnabled(true);
             btExcluir.setEnabled(true);
         }
-    }
         
-    private void AtualizaTabPergunta() {
+    }
+    
+     private void AtualizaTabPergunta() {
         try {
-            listaPerguntas = PerguntaDao.RetornaPerguntas(retornaObjeto());
+            listaPerguntas = PerguntaDao.RetornaPerguntas(retornaObjeto(),cbOrdenacao.getSelectedItem().toString());
             DefaultTableModel modeloperg = (DefaultTableModel) tabelaPergunta.getModel();
             modeloperg.setNumRows(0);
             for (PerguntaBean per : listaPerguntas) {
                 modeloperg.addRow(new Object[]{
                     per.getDescricao(),
                     per.getCategoria().getDescricao(),
-                    per.getNivel().getDescricao(),
-                });
+                    per.getNivel().getDescricao()});
             }
-             
+
             if (listaPerguntas.size() == 0) {
                 lbMensg.setText("Não há perguntas registradas");
             } else if (listaPerguntas.size() == 1) {
@@ -96,75 +121,37 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        TxaPergunta = new javax.swing.JTextField();
+        lbPergunta = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        cbOrdenacao = new javax.swing.JComboBox();
+        btPesquisar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaPergunta = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btNovo = new javax.swing.JButton();
         btAlterar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        btPesquisar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TxaPergunta = new javax.swing.JTextArea();
-        lbPergunta = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        cbOrdenacao = new javax.swing.JComboBox();
+        btImprimir = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lbMensg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Pesquisar Perguntas");
+        setTitle("Pesquisa de Perguntas");
 
-        tabelaPergunta.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jPanel5.setBackground(new java.awt.Color(153, 153, 225));
 
-            },
-            new String [] {
-                "Pergunta(s)", "Categoria", "Nível"
-            }
-        ));
-        jScrollPane2.setViewportView(tabelaPergunta);
-
-        jPanel2.setBackground(new java.awt.Color(0, 204, 204));
-
-        btNovo.setText("Novo");
-        btNovo.addActionListener(new java.awt.event.ActionListener() {
+        TxaPergunta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNovoActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btNovo);
-
-        btAlterar.setText("Alterar");
-        btAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAlterarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btAlterar);
-
-        btExcluir.setText("Excluir");
-        btExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btExcluirActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btExcluir);
-
-        btPesquisar.setText("Pesquisar");
-        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPesquisarActionPerformed(evt);
+                TxaPerguntaActionPerformed(evt);
             }
         });
 
-        TxaPergunta.setColumns(20);
-        TxaPergunta.setRows(5);
-        jScrollPane1.setViewportView(TxaPergunta);
+        lbPergunta.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbPergunta.setText("Pergunta: *");
 
-        lbPergunta.setText("Pergunta:");
-
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel1.setText("Ordenar:");
 
         cbOrdenacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pergunta", "Categoria", "Nível" }));
@@ -174,79 +161,128 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(lbPergunta)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(cbOrdenacao, 0, 124, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbPergunta)
-                .addGap(1, 1, 1)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btPesquisar)
-                            .addComponent(cbOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2))
-        );
+        tabelaPergunta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jPanel3.setBackground(new java.awt.Color(0, 204, 204));
+            },
+            new String [] {
+                "Pergunta(s)", "Categoria", "Nível"
+            }
+        ));
+        tabelaPergunta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPerguntaMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabelaPergunta);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 0));
+
+        btNovo.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btNovo.setText("Novo");
+        btNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNovoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btNovo);
+
+        btAlterar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btAlterar.setText("Alterar");
+        btAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAlterarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btAlterar);
+
+        btExcluir.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btExcluir);
+
+        btImprimir.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btImprimir.setText("Imprimir");
+        btImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btImprimirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btImprimir);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 0));
         jPanel3.add(lbMensg);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxaPergunta)
+                            .addComponent(lbPergunta))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(cbOrdenacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(20, 20, 20))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPergunta)
+                    .addComponent(jLabel1))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxaPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btPesquisar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -256,7 +292,6 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (TxaPergunta.getText().length() > 1) {
             AtualizaTabPergunta();
-           
         } else {
             lbMensg.setText("A pesquisa deve ter ao menos 2 caracteres");
             lbMensg.setForeground(Color.red);
@@ -274,29 +309,38 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
         // TODO add your handling code here:
         if (tabelaPergunta.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Nenhuma pergunta selecionada para a exclusão!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Nenhuma pergunta selecionada para a exclusão!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            lbMensg.setForeground(Color.red);
+            lbMensg.setText("Você deve selecionar a pergunta desejada!");
             TxaPergunta.requestFocus();
         } else {
+            lbMensg.setText("");
+            lbMensg.setForeground(Color.black);
             PerguntaBean pergunta = listaPerguntas.get(tabelaPergunta.getSelectedRow());
             try {
                 int opc = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a pergunta?");
                 if (opc == JOptionPane.YES_OPTION) {
                     PerguntaDao.excluir(pergunta);
                     AtualizaTabPergunta();
+                    validaBotoes();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_btExcluirActionPerformed
-
-
+    
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
         // TODO add your handling code here:
+        TelaNovaPergunta.auxilio = 1;
         if (tabelaPergunta.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Nenhuma pergunta selecionada para a alteração!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(null, "Nenhuma pergunta selecionada para a alteração!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            lbMensg.setForeground(Color.red);
+            lbMensg.setText("Você deve selecionar a pergunta desejada!");
             TxaPergunta.requestFocus();
         } else {
+            lbMensg.setText("");
+            lbMensg.setForeground(Color.black);
             PerguntaBean pergunta = listaPerguntas.get(tabelaPergunta.getSelectedRow());
             new TelaNovaPergunta(this, true, pergunta).setVisible(true);
         }
@@ -305,6 +349,27 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     private void cbOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbOrdenacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbOrdenacaoActionPerformed
+
+    private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
+        // TODO add your handling code here:
+        try {
+            Relatorio.gerarRelatorio("Relatorios\\RelatorioPergunta.jasper", PerguntaDao.retornaRs(retornaObjeto()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
+        } catch (JRException ex) {
+            Logger.getLogger(TelaPesquisarPergunta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btImprimirActionPerformed
+
+    private void TxaPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxaPerguntaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxaPerguntaActionPerformed
+
+    private void tabelaPerguntaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPerguntaMouseClicked
+        // TODO add your handling code here:
+        validaBotoes();
+    }//GEN-LAST:event_tabelaPerguntaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -341,21 +406,35 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea TxaPergunta;
+    private javax.swing.JTextField TxaPergunta;
     private javax.swing.JButton btAlterar;
     private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btImprimir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btPesquisar;
     private javax.swing.JComboBox cbOrdenacao;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbMensg;
     private javax.swing.JLabel lbPergunta;
     private javax.swing.JTable tabelaPergunta;
     // End of variables declaration//GEN-END:variables
+}
+
+// Classe responsável pela delimitaçao da quantidde de caracteres em um Textfield...
+class limitadorPesquisaPergunta extends PlainDocument {
+
+    @Override
+    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+        int tamanho = (this.getLength() + str.length());
+        if (tamanho <= 40) {
+            super.insertString(offs, str, a); //To change body of generated methods, choose Tools | Templates.
+        } else {
+            super.insertString(offs, str.replaceAll("[aA0-zZ9]", ""), a); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+
 }

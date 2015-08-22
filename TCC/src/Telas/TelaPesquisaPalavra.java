@@ -354,7 +354,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
      
         try {
-        Relatorio.gerarRelatório("relatorios//relatorioPalavras.jasper", PalavraDao.retornaPalavrasRs(retornaObjeto()));
+        Relatorio.gerarRelatorio("relatorios//relatorioPalavras.jasper", PalavraDao.retornaPalavrasRs(retornaObjeto()));
          } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Não foi");

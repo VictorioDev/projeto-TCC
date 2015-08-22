@@ -58,12 +58,12 @@ public class CategoriaDao {
         return listaCat;
         }
      
-      public static void salvar(CategoriaBean categoria) throws SQLException{
+      public static void salvar(CategoriaBean cat) throws SQLException{
         try{
         String sql = "insert into Categoria (descricao) values (?)";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setString(1,categoria.getDescricao());
+        stmt.setString(1,cat.getDescricao());
         stmt.execute();
         stmt.close();
         conexao.close();
@@ -74,13 +74,13 @@ public class CategoriaDao {
        }
     }
     
-    public static void alterar(CategoriaBean categoria) throws SQLException{
+    public static void alterar(CategoriaBean cat) throws SQLException{
         try{
         String sql = "update Categoria set descricao=? where idCategoria=?";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setString(1,categoria.getDescricao());
-        stmt.setInt(2, categoria.getIdCategoria());
+        stmt.setString(1,cat.getDescricao());
+        stmt.setInt(2, cat.getIdCategoria());
         stmt.executeUpdate();
         stmt.close();
         conexao.close();
@@ -90,12 +90,12 @@ public class CategoriaDao {
         }
     }
    
-   public static void excluir(CategoriaBean categoria) throws SQLException{
+   public static void excluir(CategoriaBean cat) throws SQLException{
        try{
         String sql = "delete from Categoria where idCategoria=?";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setInt(1, categoria.getIdCategoria());
+        stmt.setInt(1, cat.getIdCategoria());
         stmt.executeUpdate();
         stmt.close();
         conexao.close();
@@ -103,6 +103,14 @@ public class CategoriaDao {
            ex.printStackTrace();
        }
     }
+   
+   public static ResultSet retornaRs(CategoriaBean cat) throws SQLException{
+       String sql = "select * from Categoria where descricao like'"+cat.getDescricao()+"%' order by descricao";
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stat = conexao.prepareStatement(sql);
+        ResultSet rs = stat.executeQuery();
+        return rs;
+   }
 
     
 }

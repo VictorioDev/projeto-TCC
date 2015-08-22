@@ -5,8 +5,6 @@
 
 package Bean;
 
-import java.util.List;
-
 /**
  *
  * @author Administrador
@@ -15,7 +13,6 @@ public class NivelBean {
 
      private String descricao;
      private int idNivel;
-     private List<PalavraBean> lplv;
 
     /**
      * @return the descricao
@@ -45,19 +42,4 @@ public class NivelBean {
         this.idNivel = idNivel;
     }
 
-    /**
-     * @return the lplv
-     */
-    public List<PalavraBean> getLplv() {
-        return lplv;
-    }
-
-    /**
-     * @param lplv the lplv to set
-     */
-    public void setLplv(List<PalavraBean> lplv) {
-        this.lplv = lplv;
-    }
-
-   
 }
