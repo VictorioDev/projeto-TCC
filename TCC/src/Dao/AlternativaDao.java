@@ -23,8 +23,8 @@ import util.Conexao;
 public class AlternativaDao {
 
      public static List<AlternativaBean> retornaAlternativas(PerguntaBean pergunta) throws SQLException{
-        List<AlternativaBean> listaAlt = new ArrayList<AlternativaBean>();
-        String sql = "select * from Alternativa where idPergunta = "+pergunta.getIdPergunta()+"";
+        List<AlternativaBean> listaAlt = new ArrayList<>();
+        String sql = "select * from alternativa where idPergunta = "+pergunta.getIdPergunta()+"";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stat = conexao.prepareStatement(sql);
         ResultSet rs = stat.executeQuery();
