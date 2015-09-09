@@ -13,10 +13,13 @@ import Dao.DicaDao;
 import Dao.JogadorDao;
 import Dao.PalavraDao;
 import Dao.PalavraJogadaDAO;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -535,6 +538,8 @@ public class Telajogo extends javax.swing.JFrame {
         }.start();
 
     }
+    
+   
 
     /**
      *
@@ -594,7 +599,6 @@ public class Telajogo extends javax.swing.JFrame {
         btnB = new javax.swing.JButton();
         btnN = new javax.swing.JButton();
         btnM = new javax.swing.JButton();
-        fundo = new javax.swing.JLabel();
         pnPlv = new javax.swing.JPanel();
         tfpalavra = new javax.swing.JTextField();
         lbImgForca = new javax.swing.JLabel();
@@ -625,7 +629,7 @@ public class Telajogo extends javax.swing.JFrame {
             }
         });
 
-        pninform.setBackground(new java.awt.Color(0, 0, 0));
+        pninform.setBackground(new java.awt.Color(102, 0, 255));
         pninform.setForeground(new java.awt.Color(255, 51, 0));
         pninform.setOpaque(false);
 
@@ -746,8 +750,10 @@ public class Telajogo extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pninformLayout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(pnDicas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        getContentPane().add(pninform, java.awt.BorderLayout.NORTH);
 
         pnBtn.setBackground(java.awt.Color.yellow);
         pnBtn.setOpaque(false);
@@ -1024,8 +1030,11 @@ public class Telajogo extends javax.swing.JFrame {
         });
         pnBtn.add(btnM);
 
-        fundo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(pnBtn, java.awt.BorderLayout.SOUTH);
 
+        pnPlv.setLayout(new java.awt.BorderLayout());
+
+        tfpalavra.setEditable(false);
         tfpalavra.setFont(new java.awt.Font("Comic Sans MS", 3, 64)); // NOI18N
         tfpalavra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         tfpalavra.addActionListener(new java.awt.event.ActionListener() {
@@ -1033,60 +1042,14 @@ public class Telajogo extends javax.swing.JFrame {
                 tfpalavraActionPerformed(evt);
             }
         });
+        pnPlv.add(tfpalavra, java.awt.BorderLayout.CENTER);
 
+        lbImgForca.setForeground(new java.awt.Color(255, 255, 255));
+        lbImgForca.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbImgForca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImagemForca/ImgForcaDefaultC.jpg"))); // NOI18N
+        pnPlv.add(lbImgForca, java.awt.BorderLayout.EAST);
 
-        javax.swing.GroupLayout pnPlvLayout = new javax.swing.GroupLayout(pnPlv);
-        pnPlv.setLayout(pnPlvLayout);
-        pnPlvLayout.setHorizontalGroup(
-            pnPlvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPlvLayout.createSequentialGroup()
-                .addGap(734, 734, 734)
-                .addComponent(lbImgForca, javax.swing.GroupLayout.PREFERRED_SIZE, 199, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(pnPlvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnPlvLayout.createSequentialGroup()
-                    .addGap(13, 13, 13)
-                    .addComponent(tfpalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(219, Short.MAX_VALUE)))
-        );
-        pnPlvLayout.setVerticalGroup(
-            pnPlvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPlvLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbImgForca, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(pnPlvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnPlvLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(tfpalavra, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(fundo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(pnPlv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pninform, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pninform, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnPlv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fundo))
-        );
+        getContentPane().add(pnPlv, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1444,7 +1407,6 @@ public class Telajogo extends javax.swing.JFrame {
     private javax.swing.JButton btnY;
     private javax.swing.JButton btnZ;
     private javax.swing.JButton btnÇ;
-    private javax.swing.JLabel fundo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

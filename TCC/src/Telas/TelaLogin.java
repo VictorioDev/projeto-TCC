@@ -7,8 +7,11 @@ package Telas;
 
 import Bean.JogadorBean;
 import Dao.JogadorDao;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +34,8 @@ public class TelaLogin extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-         getRootPane().setDefaultButton(btnLogar);
-        
+        getRootPane().setDefaultButton(btnLogar);
+
     }
 
     /**
@@ -61,6 +64,12 @@ public class TelaLogin extends javax.swing.JDialog {
 
         lbLogin.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         lbLogin.setText("Login:*");
+
+        txLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txLoginMouseClicked(evt);
+            }
+        });
 
         lbSenha.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         lbSenha.setText("Senha:*");
@@ -156,7 +165,7 @@ public class TelaLogin extends javax.swing.JDialog {
                 util.UtilObjetos.jogadorLogado = jogadorLogado;
                 dispose();
                 new TelaInicial(jogadorLogado).setVisible(true);
-                
+
             } catch (SQLException ex) {
                 System.out.println("INVALIDO");
             }
@@ -166,8 +175,8 @@ public class TelaLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLogarActionPerformed
 
     private void lbCadastreseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCadastreseMouseEntered
-       lbCadastrese.setForeground(Color.blue);
-       lbCadastrese.setCursor(new Cursor(Cursor.HAND_CURSOR));  
+        lbCadastrese.setForeground(Color.blue);
+        lbCadastrese.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_lbCadastreseMouseEntered
 
     private void lbCadastreseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCadastreseMouseExited
@@ -178,6 +187,14 @@ public class TelaLogin extends javax.swing.JDialog {
         dispose();
         new TelaCadastroUsuario(null, true).setVisible(true);
     }//GEN-LAST:event_lbCadastreseMouseClicked
+
+    private void txLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txLoginMouseClicked
+        try {
+            ativaTeclado();
+        } catch (AWTException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txLoginMouseClicked
 
     private boolean VerificaCampos() {
         boolean veri = false;
@@ -202,6 +219,14 @@ public class TelaLogin extends javax.swing.JDialog {
         }
 
         return veri;
+
+    }
+
+    private void ativaTeclado() throws AWTException {
+        Robot r = new Robot();
+        r.mouseMove(1230, 15);
+        r.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
     }
 
