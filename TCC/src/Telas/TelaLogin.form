@@ -101,6 +101,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txLogin">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txLoginMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbSenha">
           <Properties>

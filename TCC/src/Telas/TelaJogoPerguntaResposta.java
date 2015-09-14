@@ -6,16 +6,32 @@
 package Telas;
 
 import Bean.AlternativaBean;
+import Bean.NivelBean;
 import Bean.PerguntaBean;
 import Dao.AlternativaDao;
+import Dao.NivelDao;
 import Dao.PerguntaDao;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.RadioButton;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import util.Contador;
 
 /**
@@ -38,10 +54,14 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private static int qtdepula = 0;
     private static boolean contador = true;
     private static boolean zerado = false;
+    private static JRadioButton b;
+    private static PerguntaBean p;
+    private static ButtonGroup br;
 
     /**
      * Creates new form TelaJogoPerguntaResposta
      */
+
     public TelaJogoPerguntaResposta() {
         initComponents();
         jtxaPergunta.setEditable(false);
@@ -64,32 +84,61 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     }
 
     public String SorteiaPergunta() {
-        PerguntaBean p = new PerguntaBean();
+        p = new PerguntaBean();
         try {
             listaperguntas = PerguntaDao.RetornaPerguntas();
             Random ram = new Random();
             indicePergunta = ram.nextInt(listaperguntas.size());
             p = listaperguntas.get(indicePergunta);
             pergunta = p.getDescricao();
-//            alternativas = p.getAlternativa().toString();
-//            System.out.println(p.getAlternativa());
+            List<AlternativaBean> l = AlternativaDao.retornaAlternativas(p);
+
+            br = new ButtonGroup();
+
+            pnAlternativas.setLayout(new GridLayout(l.size(), 1));
+            for (AlternativaBean l1 : l) {
+                b = new JRadioButton(l1.getDescricao());
+                if (l1.getCorreta().equalsIgnoreCase("correta")) {
+                    pnAlternativas.add(b, 1);
+
+                } else {
+                    pnAlternativas.add(b);
+                }
+                b.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (e.getClickCount() > 0) {
+                            System.err.println("Selecionei: "+b.getText());
+                        }
+                    }
+                });
+                br.add(b);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        //pnAlternativas.setLayout(new GridLayout);
         return pergunta;
     }
 
     public void Configura() {
         jtxaPergunta.setText(pergunta);
+        try {
+            //Coloca Nivel no label
+            PerguntaBean a = PerguntaDao.RetornaPerguntas(p);
+            lbNivel.setText(a.getNivel().getDescricao());
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaJogoPerguntaResposta.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     //Código abaixo destinado a contagem do cronometro
-    
-     private void pausarCronometro() {
-    	contador = false;
+    private void pausarCronometro() {
+        contador = false;
     }
-     
+
     public static boolean isContador() {
         return contador;
     }
@@ -113,11 +162,11 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
-        jPanel11 = new javax.swing.JPanel();
+        pnPaiDeTodos = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         scrPergunta = new javax.swing.JScrollPane();
         jtxaPergunta = new javax.swing.JTextArea();
-        jPanel2 = new javax.swing.JPanel();
+        pnAlternativas = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         btResponder = new javax.swing.JButton();
         btPular1 = new javax.swing.JButton();
@@ -145,10 +194,10 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Jogo de Perguntas e Respostas");
 
-        jPanel11.setBackground(new java.awt.Color(153, 153, 225));
+        pnPaiDeTodos.setBackground(new java.awt.Color(153, 153, 225));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 225));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pergunta", 0, 0, new java.awt.Font("Comic Sans MS", 0, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pergunta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 18))); // NOI18N
 
         jtxaPergunta.setEditable(false);
         jtxaPergunta.setColumns(20);
@@ -172,17 +221,22 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 225));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alternativas", 0, 0, new java.awt.Font("Comic Sans MS", 0, 18))); // NOI18N
+        pnAlternativas.setBackground(new java.awt.Color(153, 153, 225));
+        pnAlternativas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alternativas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 18))); // NOI18N
+        pnAlternativas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnAlternativasMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnAlternativasLayout = new javax.swing.GroupLayout(pnAlternativas);
+        pnAlternativas.setLayout(pnAlternativasLayout);
+        pnAlternativasLayout.setHorizontalGroup(
+            pnAlternativasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnAlternativasLayout.setVerticalGroup(
+            pnAlternativasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 111, Short.MAX_VALUE)
         );
 
@@ -364,20 +418,20 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 .addComponent(lbTempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnPaiDeTodosLayout = new javax.swing.GroupLayout(pnPaiDeTodos);
+        pnPaiDeTodos.setLayout(pnPaiDeTodosLayout);
+        pnPaiDeTodosLayout.setHorizontalGroup(
+            pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(pnPaiDeTodosLayout.createSequentialGroup()
+                .addGroup(pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnAlternativas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addGroup(pnPaiDeTodosLayout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -385,25 +439,25 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        pnPaiDeTodosLayout.setVerticalGroup(
+            pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnPaiDeTodosLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel11Layout.createSequentialGroup()
+            .addGroup(pnPaiDeTodosLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnAlternativas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -412,12 +466,12 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnPaiDeTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnPaiDeTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(2, 2, 2))
         );
 
@@ -447,7 +501,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             qtdepula++;
             SorteiaPergunta();
             Configura();
-        } 
+        }
         //se pular tres vezes perde o jogo
         if (qtdepula == 3) {
             pausarCronometro();
@@ -455,6 +509,12 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_btPular1ActionPerformed
+
+    private void pnAlternativasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnAlternativasMouseClicked
+            // TODO add your handling code h
+
+
+    }//GEN-LAST:event_pnAlternativasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -499,8 +559,6 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
@@ -512,6 +570,8 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private javax.swing.JLabel lbNivel;
     private javax.swing.JLabel lbTempo;
     private javax.swing.JLabel lbcategoria;
+    private javax.swing.JPanel pnAlternativas;
+    private javax.swing.JPanel pnPaiDeTodos;
     private javax.swing.JScrollPane scrPergunta;
     private javax.swing.JTextField txAcertos;
     private javax.swing.JTextField txErros;

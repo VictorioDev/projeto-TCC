@@ -4,7 +4,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/usuario/Documents/GitHub/projeto-TCC/TCC/src/Bean/TesteCommitLuizao.java</file>
+=======
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Telas/TelaPesquisarPergunta.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Dao/AlternativaDao.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Telas/TelaJogoPerguntaResposta.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Dao/PerguntaDao.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Telas/TelaPesquisaPalavra.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Telas/TelaCadastroPalavra.java</file>
+            <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Dao/DicaDao.java</file>
+>>>>>>> 36abaa1e9411d2411311d3288a357fe7fbfc9e16
         </group>
     </open-files>
 </project-private>

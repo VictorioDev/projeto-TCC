@@ -55,13 +55,10 @@ public class PerguntaDao {
 //                + "ORDER BY p.nome";
 //        }
 //    }
-    
-    public static List<PerguntaBean> RetornaPerguntas(PerguntaBean per, String filtro) throws SQLException {
-        List<PerguntaBean> listaPer = new ArrayList<PerguntaBean>(); 
+    public static PerguntaBean RetornaPerguntas(PerguntaBean per) throws SQLException {
+        PerguntaBean pe = new PerguntaBean();
 //        String sql = "select * from Pergunta where descricao like'" + per.getDescricao() + "%'"; 
-        String sql = "";
-        if(filtro.equalsIgnoreCase("Pergunta")){   
-        sql = "SELECT "
+        String sql = "SELECT "
                 + "pe.idPergunta,"
                 + "pe.descricao,"
                 + "ca.descricao as descricaoCat,"
@@ -76,40 +73,79 @@ public class PerguntaDao {
                 + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
                 + "pe.descricao like '" + per.getDescricao() + "%' "
                 + "ORDER BY pe.descricao";
-        } else if(filtro.equalsIgnoreCase("Categoria")) {
-           sql = "SELECT "
-                + "pe.idPergunta,"
-                + "pe.descricao,"
-                + "ca.descricao as descricaoCat,"
-                + "ca.idCategoria, "
-                + "ni.idNivel, "
-                + "ni.descricao as descricaoNiv "
-                + "FROM "
-                + "Pergunta pe, "
-                + "Categoria ca, "
-                + "Nivel ni "
-                + "WHERE "
-                + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
-                + "pe.descricao like '" + per.getDescricao() + "%' "
-                + "ORDER BY ca.descricao"; 
-        }else{
-            sql = "SELECT "
-                + "pe.idPergunta,"
-                + "pe.descricao,"
-                + "ca.descricao as descricaoCat,"
-                + "ca.idCategoria, "
-                + "ni.idNivel, "
-                + "ni.descricao as descricaoNiv "
-                + "FROM "
-                + "Pergunta pe, "
-                + "Categoria ca, "
-                + "Nivel ni "
-                + "WHERE "
-                + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
-                + "pe.descricao like '" + per.getDescricao() + "%' "
-                + "ORDER BY ni.descricao";
+
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.first()) {
+            NivelBean n = new NivelBean();
+            n.setIdNivel(rs.getInt("idNivel"));
+            n.setDescricao(rs.getString("descricaoNiv"));
+            pe.setNivel(n);
         }
-        
+
+        rs.close();
+        stmt.close();
+        conexao.close();
+
+        return pe;
+
+    }
+
+    public static List<PerguntaBean> RetornaPerguntas(PerguntaBean per, String filtro) throws SQLException {
+        List<PerguntaBean> listaPer = new ArrayList<PerguntaBean>();
+//        String sql = "select * from Pergunta where descricao like'" + per.getDescricao() + "%'"; 
+        String sql = "";
+        if (filtro.equalsIgnoreCase("Pergunta")) {
+            sql = "SELECT "
+                    + "pe.idPergunta,"
+                    + "pe.descricao,"
+                    + "ca.descricao as descricaoCat,"
+                    + "ca.idCategoria, "
+                    + "ni.idNivel, "
+                    + "ni.descricao as descricaoNiv "
+                    + "FROM "
+                    + "Pergunta pe, "
+                    + "Categoria ca, "
+                    + "Nivel ni "
+                    + "WHERE "
+                    + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                    + "pe.descricao like '" + per.getDescricao() + "%' "
+                    + "ORDER BY pe.descricao";
+        } else if (filtro.equalsIgnoreCase("Categoria")) {
+            sql = "SELECT "
+                    + "pe.idPergunta,"
+                    + "pe.descricao,"
+                    + "ca.descricao as descricaoCat,"
+                    + "ca.idCategoria, "
+                    + "ni.idNivel, "
+                    + "ni.descricao as descricaoNiv "
+                    + "FROM "
+                    + "Pergunta pe, "
+                    + "Categoria ca, "
+                    + "Nivel ni "
+                    + "WHERE "
+                    + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                    + "pe.descricao like '" + per.getDescricao() + "%' "
+                    + "ORDER BY ca.descricao";
+        } else {
+            sql = "SELECT "
+                    + "pe.idPergunta,"
+                    + "pe.descricao,"
+                    + "ca.descricao as descricaoCat,"
+                    + "ca.idCategoria, "
+                    + "ni.idNivel, "
+                    + "ni.descricao as descricaoNiv "
+                    + "FROM "
+                    + "Pergunta pe, "
+                    + "Categoria ca, "
+                    + "Nivel ni "
+                    + "WHERE "
+                    + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                    + "pe.descricao like '" + per.getDescricao() + "%' "
+                    + "ORDER BY ni.descricao";
+        }
+
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
@@ -166,7 +202,7 @@ public class PerguntaDao {
             pergunta.setIdPergunta(rs.getInt("idPergunta"));
             pergunta.setCategoria(categoria);
 //            pergunta.setNivel(nivel);
-//            pergunta.setAlternativa(lisalternativa);
+            pergunta.setAlternativa(lisalternativa);
 
             listaPer.add(pergunta);
         }
