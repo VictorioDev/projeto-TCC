@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
 <<<<<<< HEAD
             <file>file:/C:/Users/usuario/Documents/GitHub/projeto-TCC/TCC/src/Bean/TesteCommitLuizao.java</file>
@@ -16,5 +17,8 @@
             <file>file:/C:/Users/victo/Documents/NetBeansProjects/projeto-TCC/TCC/src/Dao/DicaDao.java</file>
 >>>>>>> 36abaa1e9411d2411311d3288a357fe7fbfc9e16
         </group>
+=======
+        <group/>
+>>>>>>> d8043a72e11731b3b3d65231a1c551f5223c5f6e
     </open-files>
 </project-private>
