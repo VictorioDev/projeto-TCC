@@ -74,7 +74,6 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                             webSource.retrieve(frame);
                             Imgcodecs.imencode(".bmp", frame, mem);
                             Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
-
                             BufferedImage buff = (BufferedImage) im;
                             Graphics g = lbImagemUser.getGraphics();
                            
@@ -370,13 +369,15 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             isAction = true;
             btnCam.setText("Tirar");
         } else {
-            int accept = jFileChooser1.showSaveDialog(this);
-            if (accept == JFileChooser.APPROVE_OPTION) {
-                File file = jFileChooser1.getSelectedFile();
-                Imgcodecs.imwrite(file.getPath(), frame);
-            } else {
-                System.err.println("Cancelado!");
-            }
+            
+            
+//            int accept = jFileChooser1.showSaveDialog(this);
+//            if (accept == JFileChooser.APPROVE_OPTION) {
+//                File file = jFileChooser1.getSelectedFile();
+//                Imgcodecs.imwrite(file.getPath(), frame);
+//            } else {
+//                System.err.println("Cancelado!");
+//            }
         }
 
 
@@ -482,10 +483,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
         BufferedImage ImagemRedimensionada = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         ImagemRedimensionada.getGraphics().drawImage(imagemB, 0, 0, width, height, new Color(240, 240, 240), null);
-
         ByteArrayOutputStream bytesImg = new ByteArrayOutputStream();
         ImageIO.write((BufferedImage) ImagemRedimensionada, "png", bytesImg);//seta a imagem para bytesImg 
-
         bytesImg.flush();//limpa a variável    
         byte[] byteArray = bytesImg.toByteArray();//Converte ByteArrayOutputStream para byte[]     
         bytesImg.close();//fecha a conversão    
