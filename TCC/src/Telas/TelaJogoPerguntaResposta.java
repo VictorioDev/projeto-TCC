@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.RadioButton;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -61,15 +63,13 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private static ButtonGroup br;
 
     private static int corretaIndex = 0;
-    
+
     private static List<JRadioButton> listaBtn = new ArrayList<JRadioButton>();
     private static AlternativaBean aCorreto = new AlternativaBean();
-   
 
     /**
      * Creates new form TelaJogoPerguntaResposta
      */
-
     public TelaJogoPerguntaResposta() {
         initComponents();
         jtxaPergunta.setEditable(false);
@@ -92,7 +92,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     }
 
     public String SorteiaPergunta() {
-        pnAlternativas.removeAll();
+       
         p = new PerguntaBean();
         try {
             listaperguntas = PerguntaDao.RetornaPerguntas();
@@ -105,7 +105,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             br = new ButtonGroup();
             pnAlternativas.setLayout(new GridLayout(l.size(), 1));
             int i = 0;
-            
+
             for (AlternativaBean alternativaBean : l) {
                 if (alternativaBean.getCorreta().equalsIgnoreCase("correta")) {
                     corretaIndex = i;
@@ -113,24 +113,31 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 }
                 i++;
             }
-            
-            System.err.println("correta: "+corretaIndex);
-            
+
+            System.err.println("correta: " + corretaIndex);
+            pnAlternativas.removeAll();
             i = 0;
             for (AlternativaBean l1 : l) {
                 b = new JRadioButton(l1.getDescricao());
-                b.setName("btn"+i);
+                b.setName("btn" + i);
                 b.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         if (e.getClickCount() > 0) {
-                           
-                            if((b.getText()).trim().equalsIgnoreCase(aCorreto.getDescricao())){
-                                System.err.println("Acertouuuuu");
+                            int f = 0;
+                            for (Enumeration<AbstractButton> buttons = br.getElements(); buttons.hasMoreElements();) {
+                                AbstractButton button = buttons.nextElement();
+
+                                if (button.isSelected()) {
+                                    if(f == corretaIndex){
+                                        JOptionPane.showMessageDialog(null, "Acertou!!!!");
+                                        SorteiaPergunta();
+                                        Configura();
+                                    }
+                                }
+                                f++;
                             }
-                            
-                            
-                            
+
 //                            if (br.isSelected(b.getModel())) {
 //                                if (b.getName().equalsIgnoreCase(name)) {
 //                                    SorteiaPergunta();
@@ -143,7 +150,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                         }
                     }
                 });
-                listaBtn.add(b);
+                //listaBtn.add(b);
                 pnAlternativas.add(b);
                 br.add(b);
                 i++;
@@ -163,7 +170,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             //Coloca Nivel no label
             PerguntaBean a = PerguntaDao.RetornaPerguntas(p);
             lbNivel.setText(a.getNivel().getDescricao());
-            lbcategoria.setText(a.getCategoria().getDescricao());
+            //lbcategoria.setText(a.getCategoria().getDescricao());
         } catch (SQLException ex) {
             Logger.getLogger(TelaJogoPerguntaResposta.class.getName()).log(Level.SEVERE, null, ex);
         }
