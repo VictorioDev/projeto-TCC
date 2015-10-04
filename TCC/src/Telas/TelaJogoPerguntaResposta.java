@@ -120,36 +120,26 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             for (AlternativaBean l1 : l) {
                 b = new JRadioButton(l1.getDescricao());
                 b.setName("btn" + i);
-                b.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        if (e.getClickCount() > 0) {
-                            int f = 0;
-                            for (Enumeration<AbstractButton> buttons = br.getElements(); buttons.hasMoreElements();) {
-                                AbstractButton button = buttons.nextElement();
-
-                                if (button.isSelected()) {
-                                    if(f == corretaIndex){
-                                        JOptionPane.showMessageDialog(null, "Acertou!!!!");
-                                        SorteiaPergunta();
-                                        Configura();
-                                    }
-                                }
-                                f++;
-                            }
-
-//                            if (br.isSelected(b.getModel())) {
-//                                if (b.getName().equalsIgnoreCase(name)) {
-//                                    SorteiaPergunta();
-//                                    Configura();
-//                                    System.err.println(b.getName());
-//                                } else {
-//                                    JOptionPane.showMessageDialog(null, "Errrrroooouu");
+//                b.addMouseListener(new MouseAdapter() {
+//                    @Override
+//                    public void mouseClicked(MouseEvent e) {
+//                        if (e.getClickCount() > 0) {
+//                            int f = 0;
+//                            for (Enumeration<AbstractButton> buttons = br.getElements(); buttons.hasMoreElements();) {
+//                                AbstractButton button = buttons.nextElement();
+//
+//                                if (button.isSelected()) {
+//                                    if(f == corretaIndex){
+//                                        JOptionPane.showMessageDialog(null, "Acertou!!!!");
+//                                        SorteiaPergunta();
+//                                        Configura();
+//                                    }
 //                                }
+//                                f++;
 //                            }
-                        }
-                    }
-                });
+//                        }
+//                    }
+//                });
                 //listaBtn.add(b);
                 pnAlternativas.add(b);
                 br.add(b);
@@ -532,6 +522,19 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
     private void btResponderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btResponderActionPerformed
         // TODO add your handling code here:
+        int f = 0;
+                            for (Enumeration<AbstractButton> buttons = br.getElements(); buttons.hasMoreElements();) {
+                                AbstractButton button = buttons.nextElement();
+
+                                if (button.isSelected()) {
+                                    if(f == corretaIndex){
+                                        JOptionPane.showMessageDialog(null, "Acertou!!!!");
+                                        SorteiaPergunta();
+                                        Configura();
+                                    }
+                                }
+                                f++;
+                            }
     }//GEN-LAST:event_btResponderActionPerformed
 
     private void btRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRankingActionPerformed
