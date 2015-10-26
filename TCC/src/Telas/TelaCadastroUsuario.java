@@ -10,8 +10,10 @@ import Bean.JogadorBean;
 import Dao.JogadorDao;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
 import util.LimitaCaracteres;
 import util.UtilInterface;
 
@@ -40,16 +47,60 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     public static JFileChooser arquivoSelect = new JFileChooser();
     public boolean salvar = true;
     private int id = 0;
+    private static boolean isAction = false;
     /**
      * Creates new form TelaCadastroUsuario
      */
+
+    //definitions
+    private DaemonThread myThread = null;
+    int count = 0;
+    VideoCapture webSource = null;
+
+    Mat frame = new Mat();
+    MatOfByte mem = new MatOfByte();
+
+    //class of thread
+    class DaemonThread implements Runnable {
+
+        protected volatile boolean runnable = false;
+
+        @Override
+        public void run() {
+            synchronized (this) {
+                while (runnable) {
+                    if (webSource.grab()) {
+                        try {
+                            webSource.retrieve(frame);
+                            Imgcodecs.imencode(".bmp", frame, mem);
+                            Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
+
+                            BufferedImage buff = (BufferedImage) im;
+                            Graphics g = lbImagemUser.getGraphics();
+                           
+                            if (g.drawImage(buff, 0, 0, getWidth() - 350, getHeight() - 250, 0, 0, buff.getWidth(), buff.getHeight(), null)) {
+                                if (runnable == false) {
+                                    System.out.println("Going to wait()");
+                                    this.wait();
+                                }
+                            }
+                        } catch (Exception ex) {
+                            System.out.println("Error");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //end class
     public TelaCadastroUsuario(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        imageReturn.setImage(imageReturn.getImage().getScaledInstance(96, 96, 100));
+        imageReturn.setImage(imageReturn.getImage().getScaledInstance(148, 136, 100));
         lbImagemUser.setIcon(imageReturn);
         getRootPane().setDefaultButton(btnSalvar);
-        
+
         txNome.setDocument(new LimitaCaracteres());
         txNomeUser.setDocument(new LimitaCaracteres());
         btnSalvar.setIcon(UtilInterface.ICONE_SALVAR);
@@ -70,10 +121,10 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         UtilInterface.setFontes(jPanel1.getComponents());
         UtilInterface.setFontes(jPanel2.getComponents());
         setResizable(false);
-        
+
     }
-    
-    public void PreencherCampos(JogadorBean j){
+
+    public void PreencherCampos(JogadorBean j) {
         txNome.setText(j.getNome());
         txNomeUser.setText(j.getLogin());
         txEmail.setText(j.getEmail());
@@ -84,8 +135,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         }
         ImageIcon img = new ImageIcon("src/imgUsers/imgger.jpg");
         lbImagemUser.setIcon(img);
-        
-        
+
     }
 
     /**
@@ -97,6 +147,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         lbNameUser = new javax.swing.JLabel();
         txNomeUser = new javax.swing.JTextField();
@@ -113,6 +164,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         btnEnvImagem = new javax.swing.JButton();
         txNome = new javax.swing.JTextField();
         lbNome = new javax.swing.JLabel();
+        btnCam = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Formulário de Cadastro");
@@ -138,7 +190,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         lbSenhaConfirm.setFont(lbSenhaConfirm.getFont().deriveFont(lbSenhaConfirm.getFont().getSize()+1f));
         lbSenhaConfirm.setText("Confirmação de senha:*");
 
-        lbImagemUser.setPreferredSize(new java.awt.Dimension(96, 96));
+        lbImagemUser.setPreferredSize(new java.awt.Dimension(110, 110));
 
         jPanel2.setBackground(java.awt.Color.yellow);
         jPanel2.setForeground(new java.awt.Color(226, 16, 16));
@@ -167,6 +219,13 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         lbNome.setFont(lbNome.getFont().deriveFont(lbNome.getFont().getSize()+1f));
         lbNome.setText("Nome:*");
 
+        btnCam.setText("webcam");
+        btnCam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCamActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -178,37 +237,41 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                         .addComponent(lbNome)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txNome, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txConfirmSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                            .addComponent(lbNameUser, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbsenha, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbSenhaConfirm, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txNomeUser, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txSenha, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txNome, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txConfirmSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                                    .addComponent(lbNameUser, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbsenha, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbSenhaConfirm, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txNomeUser, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txSenha, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addGap(39, 39, 39)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEnvImagem, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(lbImagemUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(8, 8, 8)))))
-                        .addContainerGap())))
+                                    .addComponent(btnCam, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnEnvImagem))
+                                .addGap(0, 53, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbImagemUser, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(45, Short.MAX_VALUE)
                 .addComponent(lbNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbNameUser)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txNomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,18 +280,20 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbsenha))
-                    .addComponent(lbImagemUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEnvImagem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbSenhaConfirm)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txConfirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbsenha)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEnvImagem)
+                            .addComponent(txSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbSenhaConfirm)
+                            .addComponent(btnCam))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txConfirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbImagemUser, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -268,16 +333,16 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                     JogadorDao.SalvarJogador(RetornObjetoJogador());
                     JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
                     dispose();
-                } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex){
+                } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
                     JOptionPane.showMessageDialog(null, UtilInterface.MSG_REGISTRO_DUPLICADO);
-                }catch(SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (IOException ex) {
                     Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            }else{
-                
+            } else {
+
                 try {
                     try {
                         JogadorDao.AlterarJogador(RetornObjetoJogador());
@@ -288,11 +353,34 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                 } catch (IOException ex) {
                     Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                        
-                
+
             }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCamActionPerformed
+        // TODO add your handling code here:
+        if (!isAction) {
+            webSource = new VideoCapture(0); //video capture form default cam
+            myThread = new DaemonThread(); //create object of tjreat class
+            Thread t = new Thread(myThread);
+            t.setDaemon(true);
+            myThread.runnable = true;
+            t.start(); //start thread
+            isAction = true;
+            btnCam.setText("Tirar");
+        } else {
+            int accept = jFileChooser1.showSaveDialog(this);
+            if (accept == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser1.getSelectedFile();
+                Imgcodecs.imwrite(file.getPath(), frame);
+            } else {
+                System.err.println("Cancelado!");
+            }
+        }
+
+
+    }//GEN-LAST:event_btnCamActionPerformed
 
     private JogadorBean RetornObjetoJogador() throws IOException {
         JogadorBean jog = new JogadorBean();
@@ -434,7 +522,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(TelaCadastroUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -451,9 +539,11 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCam;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEnvImagem;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbEmail;
