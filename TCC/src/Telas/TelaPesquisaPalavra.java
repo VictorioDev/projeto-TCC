@@ -33,6 +33,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private List<PalavraBean> listapalavras;
     private List<NivelBean> listaNiveis;
     private List<DicaBean> listadc;
+
     /**
      * Creates new form TelaPesquisaPalavra
      */
@@ -43,7 +44,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         VerificaBotoes();
         txDescricaoPalavra.setDocument(new LimitaCaracteres());
         btnAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
@@ -72,22 +73,22 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
             txMensagemDeRetorno.setText("Não há registros!");
             txMensagemDeRetorno.setForeground(Color.red);
 
-        }else{if(tabelaPesquisaPalavra.getSelectedRow() == -1 || listapalavras.size() < 0){
-            btnAlterar.setEnabled(false);
-            btnExcluir.setEnabled(false);
-           
-            
-        }else{
-            btnAlterar.setEnabled(true);
-            btnExcluir.setEnabled(true);
-            
-        }
+        } else {
+            if (tabelaPesquisaPalavra.getSelectedRow() == -1 || listapalavras.size() < 0) {
+                btnAlterar.setEnabled(false);
+                btnExcluir.setEnabled(false);
+
+            } else {
+                btnAlterar.setEnabled(true);
+                btnExcluir.setEnabled(true);
+
+            }
             txMensagemDeRetorno.setText("");
         }
     }
-    
-    private void VerificaBotoes(){
-         if (tabelaPesquisaPalavra.getSelectedRow() == -1 || listaj.size() < 0) {
+
+    private void VerificaBotoes() {
+        if (tabelaPesquisaPalavra.getSelectedRow() == -1 || listaj.size() < 0) {
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
 
@@ -96,16 +97,16 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
             btnExcluir.setEnabled(true);
 
         }
-        
+
     }
-    
-    private void populaCombo() throws SQLException{
+
+    private void populaCombo() throws SQLException {
         listaNiveis = NivelDao.RetornaNiveis();
         cbNiveis.removeAllItems();;
-        cbNiveis.addItem("<<Selecione>>");
+        cbNiveis.addItem("<<Tudo>>");
         for (NivelBean n : listaNiveis) {
             cbNiveis.addItem(n.getDescricao());
-            
+
         }
     }
 
@@ -247,7 +248,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        cbNiveis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione>>" }));
+        cbNiveis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Tudo>>" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -311,8 +312,13 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         // TODO add your handling code here:
-        atualizaTabela();
-        VerificaBotoes();
+        if (txDescricaoPalavra.getText().trim().length() > 1) {
+            atualizaTabela();
+            VerificaBotoes();
+        }else{
+            txMensagemDeRetorno.setText("o BURRO!");
+        }
+
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnNovaPalavraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPalavraActionPerformed
@@ -352,14 +358,14 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-     
+
         try {
-        Relatorio.gerarRelatorio("relatorios//relatorioPalavras.jasper", PalavraDao.retornaPalavrasRs(retornaObjeto()));
-         } catch (SQLException e) {
+            Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.retornaPalavrasRs(retornaObjeto(), cbNiveis.getSelectedItem().toString()));
+        } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Não foi");
 
-        }catch(JRException e){
+        } catch (JRException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnImprimirActionPerformed
@@ -367,22 +373,22 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private void tabelaPesquisaPalavraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPesquisaPalavraMouseClicked
         // TODO add your handling code here:
         VerificaBotoes();
-      
+
     }//GEN-LAST:event_tabelaPesquisaPalavraMouseClicked
 
     private void jPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseEntered
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jPanel2MouseEntered
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         // TODO add your handling code here:
-     
+
     }//GEN-LAST:event_formMouseMoved
 
     private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jPanel1MouseMoved
 
     private PalavraBean retornaObjeto() {
