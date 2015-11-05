@@ -111,35 +111,35 @@ public class PalavraDao {
     public static List<PalavraBean> retornaPlvs(PalavraBean pl, String filtro) throws SQLException {
         List<PalavraBean> listaPl = new ArrayList<PalavraBean>();
         String sql = null;
-        if(filtro.equalsIgnoreCase("<<Selecione>>")){
-           sql = "SELECT"
-                + " p.idPalavra,"
-                + " p.nome,"
-                + " n.idNivel,"
-                + " n.descricao"
-                + " FROM "
-                + "Palavra p,"
-                + "Nivel n "
-                + "WHERE "
-                + "p.idNivel = n.idNivel"
-                + " AND p.nome like'" + pl.getNome() + "%'"
-                + "ORDER BY p.nome";
-        }else{
-            
+        if (filtro.equalsIgnoreCase("<<Tudo>>")) {
             sql = "SELECT"
-                + " p.idPalavra,"
-                + " p.nome,"
-                + " n.idNivel,"
-                + " n.descricao"
-                + " FROM "
-                + "Palavra p,"
-                + "Nivel n "
-                + "WHERE "
-                + "p.idNivel = n.idNivel"
-                + " AND p.nome like'" + pl.getNome() + "%' and n.descricao = '"+filtro+"'"
-                + "ORDER BY p.nome";
+                    + " p.idPalavra,"
+                    + " p.nome,"
+                    + " n.idNivel,"
+                    + " n.descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel"
+                    + " AND p.nome like'" + pl.getNome() + "%'"
+                    + "ORDER BY p.nome";
+        } else {
+
+            sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome,"
+                    + " n.idNivel,"
+                    + " n.descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel"
+                    + " AND p.nome like'" + pl.getNome() + "%' and n.descricao = '" + filtro + "'"
+                    + "ORDER BY p.nome";
         }
-        
+
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
@@ -173,27 +173,56 @@ public class PalavraDao {
         stmt.close();
         conexao.close();
     }
-    
-     public static ResultSet retornaPalavrasRs(PalavraBean p) throws SQLException {
-        
-        String sql = "SELECT"
-                + " p.idPalavra,"
-                + " p.nome,"
-                + " n.idNivel,"
-                + " n.descricao"
-                + " FROM "
-                + "Palavra p,"
-                + "Nivel n "
-                + "WHERE "
-                + "p.idNivel = n.idNivel"
-                + " AND p.nome like'" + p.getNome() + "%' "
-                + "ORDER BY p.nome";
+
+    public static ResultSet retornaPalavrasRs(PalavraBean p, String parametro) throws SQLException {
+
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+//            sql = "SELECT"
+//                    + " p.idPalavra,"
+//                    + " p.nome as 'palavra_nome',"
+//                    + " n.idNivel,"
+//                    + " n.descricao as 'nivel_descricao'"
+//                    + " FROM "
+//                    + "Palavra p,"
+//                    + "Nivel n "
+//                    + "WHERE "
+//                    + "p.idNivel = n.idNivel "
+//                    + "ORDER BY nivel_descricao and palavra_nome";
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN palavra "
+                    + "p ON n.idNivel = p.idNivel "
+                    + "order by nivel_descricao";
+        } else {
+//            sql = "SELECT"
+//                    + " p.idPalavra,"
+//                    + " p.nome,"
+//                    + " n.idNivel,"
+//                    + " n.descricao"
+//                    + " FROM "
+//                    + "Palavra p,"
+//                    + "Nivel n "
+//                    + "WHERE "
+//                    + "p.idNivel = n.idNivel"
+//                    + " AND p.nome like'" + p.getNome() + "%' "
+//                    + "ORDER BY p.nome";
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN palavra "
+                    + "p ON n.idNivel = p.idNivel AND n.descricao like '" + parametro + "' "
+                    + "order by nivel_descricao and palavra_nome";
+        }
+        System.err.println(sql);
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         return rs;
-       
-
     }
-
 }
