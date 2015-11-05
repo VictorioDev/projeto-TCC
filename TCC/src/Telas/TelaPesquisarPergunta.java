@@ -353,7 +353,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
         try {
-            Relatorio.gerarRelatorio("Relatorios\\RelatorioPergunta.jasper", PerguntaDao.retornaRs(retornaObjeto()));
+            Relatorio.gerarRelatorio("Relatorios\\RelatorioPergunta.jasper", PerguntaDao.retornaRs(retornaObjeto(), cbOrdenacao.getSelectedItem().toString()));
         } catch (SQLException e) {
             e.printStackTrace();
             
