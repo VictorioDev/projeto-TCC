@@ -286,8 +286,25 @@ public class PerguntaDao {
 
     }
 
-    public static ResultSet retornaRs(PerguntaBean per) throws SQLException {
-        String sql = "SELECT "
+    public static ResultSet retornaRs(PerguntaBean per, String parametro) throws SQLException {
+        String sql = "";
+       if(parametro.equalsIgnoreCase("Tudo")){
+            sql = "SELECT "
+                + "pe.idPergunta,"
+                + "pe.descricao,"
+                + "ca.descricao as descricaoCat,"
+                + "ca.idCategoria, "
+                + "ni.idNivel, "
+                + "ni.descricao as Niveldesc "
+                + "FROM "
+                + "Pergunta pe, "
+                + "Categoria ca, "
+                + "Nivel ni "
+                + "WHERE "
+                + "pe.idNivel = ni.idNivel "
+                + "ORDER BY Niveldesc";
+       }else{
+             sql = "SELECT "
                 + "pe.idPergunta,"
                 + "pe.descricao,"
                 + "ca.descricao as descricaoCat,"
@@ -302,6 +319,9 @@ public class PerguntaDao {
                 + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
                 + "pe.descricao like '" + per.getDescricao() + "%' "
                 + "ORDER BY pe.descricao";
+       }
+        
+        
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();

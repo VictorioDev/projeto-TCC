@@ -68,7 +68,8 @@ public class NivelDao {
             conexao.close();
 //          JOptionPane.showMessageDialog(null, "Nivel cadastrado com sucesso!");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar o nivel!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Erro ao salvar o nivel!", "ERRO!", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
 
     }
