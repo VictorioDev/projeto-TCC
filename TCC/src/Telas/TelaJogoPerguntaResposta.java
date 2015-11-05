@@ -6,11 +6,15 @@
 package Telas;
 
 import Bean.AlternativaBean;
+import Bean.JogadorBean;
 import Bean.NivelBean;
 import Bean.PerguntaBean;
+import Bean.PerguntaJogadaBean;
 import Dao.AlternativaDao;
+import Dao.JogadorDao;
 import Dao.NivelDao;
 import Dao.PerguntaDao;
+import Dao.PerguntaJogadaDAO;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -55,6 +59,12 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     public String pergunta;
     public String alternativas;
 
+    public static boolean gameOver;
+    public static int pontos;
+    public static int tempoGasto;
+    public static boolean acertou;
+    long start = 0;
+
     private static int qtdepula = 0;
     private static boolean contador = true;
     private static boolean zerado = false;
@@ -67,6 +77,8 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private static List<JRadioButton> listaBtn = new ArrayList<JRadioButton>();
     private static AlternativaBean aCorreto = new AlternativaBean();
 
+    public static JogadorBean j = util.UtilObjetos.jogadorLogado;
+
     /**
      * Creates new form TelaJogoPerguntaResposta
      */
@@ -78,6 +90,16 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         Configura();
         Contador cont = new Contador(lbTempo);
         cont.start();
+        if(j == null){
+            System.err.println("Objeto vazio!");
+            
+        }
+        
+    }
+
+    private void PreeencherCampos(JogadorBean j) {
+        txAcertos.setText(j.getPontos() + "");
+
     }
 
     private void iconesBotoes() {
@@ -92,7 +114,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     }
 
     public String SorteiaPergunta() {
-       
+
         p = new PerguntaBean();
         try {
             listaperguntas = PerguntaDao.RetornaPerguntas();
@@ -144,6 +166,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 pnAlternativas.add(b);
                 br.add(b);
                 i++;
+                start = System.currentTimeMillis();
             }
 
         } catch (SQLException e) {
@@ -152,6 +175,43 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
         //pnAlternativas.setLayout(new GridLayout);
         return pergunta;
+    }
+
+    public void configIni() {
+        gameOver = false;
+        tempoGasto = 0;
+        acertou = false;
+        start = System.currentTimeMillis();
+    }
+
+    private PerguntaJogadaBean RetornaObjeto() {
+        PerguntaJogadaBean pjb = new PerguntaJogadaBean();
+        pjb.setJogador(util.UtilObjetos.jogadorLogado);
+        pjb.setPergunta(p);
+        pjb.setTempo(tempoGasto);
+        pjb.setAcertou(acertou);
+       
+        System.err.println("Id da pergunta: "+p.getDescricao());
+
+        return pjb;
+    }
+
+    public void AtualizarBanco() {
+        
+            tempoGasto = (int) ((System.currentTimeMillis() - start) / 1000);
+            System.out.println(tempoGasto);
+            j.setPontos(pontos);
+            try {
+                JogadorDao.UpdatePontos(j);
+                PerguntaJogadaDAO.SalvarPerguntaJogada(RetornaObjeto());
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Telajogo.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+
+            configIni();
+        
     }
 
     public void Configura() {
@@ -195,6 +255,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        jSpinner1 = new javax.swing.JSpinner();
         pnPaiDeTodos = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         scrPergunta = new javax.swing.JScrollPane();
@@ -233,9 +294,9 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pergunta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 18))); // NOI18N
 
         jtxaPergunta.setEditable(false);
-        jtxaPergunta.setColumns(20);
-        jtxaPergunta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jtxaPergunta.setRows(5);
+        jtxaPergunta.setColumns(10);
+        jtxaPergunta.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jtxaPergunta.setRows(2);
         scrPergunta.setViewportView(jtxaPergunta);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -243,14 +304,14 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(scrPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                .addComponent(scrPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scrPergunta, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                .addComponent(scrPergunta)
                 .addContainerGap())
         );
 
@@ -270,7 +331,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         );
         pnAlternativasLayout.setVerticalGroup(
             pnAlternativasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 111, Short.MAX_VALUE)
+            .addGap(0, 101, Short.MAX_VALUE)
         );
 
         jPanel10.setBackground(new java.awt.Color(153, 153, 225));
@@ -309,20 +370,22 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btResponder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addComponent(btRanking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btPular1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(btResponder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btPular1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addComponent(btResponder, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btPular1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btPular1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 225));
@@ -381,7 +444,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -443,7 +506,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addComponent(lbTempo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,24 +539,27 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         pnPaiDeTodosLayout.setVerticalGroup(
             pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnPaiDeTodosLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
                 .addGroup(pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnPaiDeTodosLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnAlternativas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnPaiDeTodosLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnAlternativas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(pnPaiDeTodosLayout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addGroup(pnPaiDeTodosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)))
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -504,9 +570,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addComponent(pnPaiDeTodos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(2, 2, 2))
+            .addComponent(pnPaiDeTodos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -523,18 +587,22 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private void btResponderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btResponderActionPerformed
         // TODO add your handling code here:
         int f = 0;
-                            for (Enumeration<AbstractButton> buttons = br.getElements(); buttons.hasMoreElements();) {
-                                AbstractButton button = buttons.nextElement();
+        for (Enumeration<AbstractButton> buttons = br.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
 
-                                if (button.isSelected()) {
-                                    if(f == corretaIndex){
-                                        JOptionPane.showMessageDialog(null, "Acertou!!!!");
-                                        SorteiaPergunta();
-                                        Configura();
-                                    }
-                                }
-                                f++;
-                            }
+            if (button.isSelected()) {
+                if (f == corretaIndex) {
+                    JOptionPane.showMessageDialog(null, "Acertou!!!!");
+                    pontos++;
+                    acertou = true;
+                    gameOver = true;
+                    AtualizarBanco();
+                    SorteiaPergunta();
+                    Configura();
+                }
+            }
+            f++;
+        }
     }//GEN-LAST:event_btResponderActionPerformed
 
     private void btRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRankingActionPerformed
@@ -613,6 +681,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextArea jtxaPergunta;
     private javax.swing.JLabel lbNivel;
     private javax.swing.JLabel lbTempo;
