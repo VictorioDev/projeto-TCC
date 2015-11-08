@@ -174,7 +174,7 @@ public class PalavraDao {
         conexao.close();
     }
 
-    public static ResultSet retornaPalavrasRs(PalavraBean p, String parametro) throws SQLException {
+    public static ResultSet RetornaPalavrasPorNiveisRs(PalavraBean p, String parametro) throws SQLException {
 
         String sql = "";
         if (parametro.equalsIgnoreCase("<<Tudo>>")) {
@@ -220,6 +220,15 @@ public class PalavraDao {
                     + "order by nivel_descricao and palavra_nome";
         }
         System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+    
+    
+    public static ResultSet RetornaPalavrasEAlternativasRs(PalavraBean p) throws SQLException{
+        String sql = "select p.nome as descricaoPalavra, d.texto, d.nomeDica, d.som, d.imagem from palavra p inner join dica d on d.idPalavra = p.idPalavra order by descricaoPalavra";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();

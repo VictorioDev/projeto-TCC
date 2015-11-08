@@ -17,7 +17,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import util.LimitaCaracteres;
@@ -315,7 +319,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         if (txDescricaoPalavra.getText().trim().length() > 1) {
             atualizaTabela();
             VerificaBotoes();
-        }else{
+        } else {
             txMensagemDeRetorno.setText("o BURRO!");
         }
 
@@ -358,9 +362,21 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-
+        JPanel panel = new JPanel();
+        JRadioButton c1 = new JRadioButton("Palavras de um nivel");
+        JRadioButton c2 = new JRadioButton("Palavras e suas dicas");
+        ButtonGroup btnG = new ButtonGroup();
+        btnG.add(c1);
+        btnG.add(c2);
+        panel.add(c1);
+        panel.add(c2);
+        JOptionPane.showMessageDialog(null, panel,"Radio Test",JOptionPane.QUESTION_MESSAGE);
+        if(c1.isSelected()){
+            System.err.println("selecionou primeiro");
+        }
         try {
-            Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.retornaPalavrasRs(retornaObjeto(), cbNiveis.getSelectedItem().toString()));
+            Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.RetornaPalavrasPorNiveisRs(retornaObjeto(), cbNiveis.getSelectedItem().toString()));
+            //Relatorio.gerarRelatorio("relatorios//dicasDaPalavra.jasper", PalavraDao.RetornaPalavrasEAlternativasRs(retornaObjeto()));
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Não foi");
