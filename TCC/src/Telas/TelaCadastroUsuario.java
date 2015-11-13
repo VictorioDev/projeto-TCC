@@ -172,13 +172,13 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         jPanel1.setForeground(new java.awt.Color(153, 153, 255));
 
         lbNameUser.setFont(lbNameUser.getFont().deriveFont(lbNameUser.getFont().getSize()+1f));
-        lbNameUser.setText("Nome de usuario:*");
+        lbNameUser.setText("Nome de usuario: *");
 
         lbsenha.setFont(lbsenha.getFont().deriveFont(lbsenha.getFont().getSize()+1f));
-        lbsenha.setText("Senha:*");
+        lbsenha.setText("Senha: *");
 
         lbEmail.setFont(lbEmail.getFont().deriveFont(lbEmail.getFont().getSize()+1f));
-        lbEmail.setText("Email:*");
+        lbEmail.setText("Email: *");
 
         txEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +187,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         });
 
         lbSenhaConfirm.setFont(lbSenhaConfirm.getFont().deriveFont(lbSenhaConfirm.getFont().getSize()+1f));
-        lbSenhaConfirm.setText("Confirmação de senha:*");
+        lbSenhaConfirm.setText("Confirmação de senha: *");
 
         lbImagemUser.setPreferredSize(new java.awt.Dimension(110, 110));
 
@@ -216,7 +216,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         });
 
         lbNome.setFont(lbNome.getFont().deriveFont(lbNome.getFont().getSize()+1f));
-        lbNome.setText("Nome:*");
+        lbNome.setText("Nome: *");
 
         btnCam.setText("webcam");
         btnCam.addActionListener(new java.awt.event.ActionListener() {

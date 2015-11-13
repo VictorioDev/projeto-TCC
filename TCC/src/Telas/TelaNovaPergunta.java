@@ -39,10 +39,10 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
     /**
      * Creates new form TelaNovaPerguntaa
      */
-    public static ImageIcon icosal = new ImageIcon("src\\icones\\Ok-icon16.png");
-    public static ImageIcon icocan = new ImageIcon("src\\icones\\Close-icon16.png");
-    public static ImageIcon icoadd = new ImageIcon("src\\icones\\Add-icon16.jpg");
-    public static ImageIcon icorem = new ImageIcon("src\\icones\\Delete-icon16.png");
+//    public static ImageIcon icosal = new ImageIcon("src\\icones\\Ok-icon16.png");
+//    public static ImageIcon icocan = new ImageIcon("src\\icones\\Close-icon16.png");
+//    public static ImageIcon icoadd = new ImageIcon("src\\icones\\Add-icon16.jpg");
+//    public static ImageIcon icorem = new ImageIcon("src\\icones\\Delete-icon16.png");
     private boolean salvar = false;
 
     private int id = 0;
@@ -57,6 +57,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
     public boolean aux2 = false;
     public List<PerguntaBean> listaPerguntas;
 
+        
     public TelaNovaPergunta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         salvar = true;
@@ -93,6 +94,8 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
     private void configuraComponentes() {
         btSalvar.setIcon(UtilInterface.ICONE_SALVAR);
         btCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
+        btAdd.setIcon(UtilInterface.ICONE_NOVO);
+        btRemover.setIcon(UtilInterface.ICONE_ALTERAR);
         txAlternativa.setFont(UtilInterface.FONTE_PADRAO);
         txaPergunta.setFont(UtilInterface.FONTE_PADRAO);
         cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
@@ -100,10 +103,10 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
     }
 
     private void iconeBotoes() {
-        btCancelar.setIcon(icocan);
-        btSalvar.setIcon(icosal);
-        btAdd.setIcon(icoadd);
-        btRemover.setIcon(icorem);
+//        btCancelar.setIcon(icocan);
+//        btSalvar.setIcon(icosal);
+//        btAdd.setIcon(icoadd);
+//        btRemover.setIcon(icorem);
     }
 
     private void validaBotoes() {

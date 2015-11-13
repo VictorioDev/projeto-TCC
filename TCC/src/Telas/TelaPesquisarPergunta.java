@@ -30,17 +30,16 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     /**
      * Creates new form TelaManterPergunta
      */
-    public static ImageIcon icopes = new ImageIcon("src\\icones\\Zoom-icon16_1.png");
-    public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
-    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
-    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
-    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
+//    public static ImageIcon icopes = new ImageIcon("src\\icones\\Zoom-icon16_1.png");
+//    public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
+//    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
+//    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
+//    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
 
     public TelaPesquisarPergunta() {
         initComponents();
         TxaPergunta.setDocument(new limitadorPesquisaPergunta());
         setResizable(false);
-//        iconeBotoes();
         configuraComponentes();
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btPesquisar);
@@ -69,11 +68,11 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     }
     
     private void iconeBotoes() {
-        btPesquisar.setIcon(icopes);
-        btAlterar.setIcon(icoalt);
-        btNovo.setIcon(iconov);
-        btExcluir.setIcon(icoexc);
-        btImprimir.setIcon(icorel);
+//        btPesquisar.setIcon(icopes);
+//        btAlterar.setIcon(icoalt);
+//        btNovo.setIcon(iconov);
+//        btExcluir.setIcon(icoexc);
+//        btImprimir.setIcon(icorel);
     }
 
     private void validaBotoes() {
