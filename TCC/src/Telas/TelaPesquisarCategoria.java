@@ -29,13 +29,13 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
     /**
      * Creates new form TelaPesquisarCategoria
      */
-    public static ImageIcon icopes = new ImageIcon("src\\icones\\Zoom-icon16_1.png");
-    public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
-    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
-    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
-    public static Relatorio rel = new Relatorio();
-    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
-    
+//    public static ImageIcon icopes = new ImageIcon("src\\icones\\Zoom-icon16_1.png");
+//    public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
+//    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
+//    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
+//    public static Relatorio rel = new Relatorio();
+//    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
+//    
     public TelaPesquisarCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -58,25 +58,25 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
         return categoria;
     }
 
-    private void configuraComponentes(){
+    private void configuraComponentes() {
         btAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
         btExcluir.setIcon(UtilInterface.ICONE_REMOVER);
         btImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
         btNovo.setIcon(UtilInterface.ICONE_NOVO);
         btPesquisar.setIcon(UtilInterface.ICONE_PESQUISAR);
-//        lbMensg.setFont(UtilInterface.FONTE_PADRAO);
-//        lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
-//        txCategoria.setFont(UtilInterface.FONTE_PADRAO);
+        lbMensg.setFont(UtilInterface.FONTE_PADRAO);
+        lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
+        txCategoria.setFont(UtilInterface.FONTE_PADRAO);
     }
-    
+
     private void iconeBotoes() {
-        btPesquisar.setIcon(icopes);
-        btAlterar.setIcon(icoalt);
-        btNovo.setIcon(iconov);
-        btExcluir.setIcon(icoexc);
-        btImprimir.setIcon(icorel);
+//        btPesquisar.setIcon(icopes);
+//        btAlterar.setIcon(icoalt);
+//        btNovo.setIcon(iconov);
+//        btExcluir.setIcon(icoexc);
+//        btImprimir.setIcon(icorel);
     }
-    
+
     private void validaBotoes() {
         if (tabelaCategoria.getSelectedRow() == -1) {
             btAlterar.setEnabled(false);
@@ -85,7 +85,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
             btAlterar.setEnabled(true);
             btExcluir.setEnabled(true);
         }
-        
+
     }
 
     private void AtualizaTabCategoria() {
@@ -151,14 +151,14 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
         });
 
         lbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbCategoria.setText("Categoria: *");
+        lbCategoria.setText("Categoria:*");
 
         tabelaCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Categoria"
+                "Categoria(s)"
             }
         ));
         tabelaCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -316,7 +316,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
         if (txCategoria.getText().length() > 1) {
             AtualizaTabCategoria();
         } else {
-            lbMensg.setText("A pesquisa deve ter ao menos 2 carcater");
+            lbMensg.setText("A pesquisa deve ter ao menos 2 carcateres");
             lbMensg.setForeground(Color.red);
             DefaultTableModel modelo = (DefaultTableModel) tabelaCategoria.getModel();
             modelo.setNumRows(0);
@@ -325,10 +325,12 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
-        setVisible(false);dispose();
+        setVisible(false);
+        dispose();
         try {
             Relatorio.gerarRelatorio("Relatorios\\RelatorioCategoria.jasper", CategoriaDao.retornaRs(retornaObjeto()));
-        } catch (SQLException e) {} catch (JRException ex) {
+        } catch (SQLException e) {
+        } catch (JRException ex) {
             Logger.getLogger(TelaPesquisarCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btImprimirActionPerformed
@@ -337,7 +339,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
         // TODO add your handling code here:
         validaBotoes();
     }//GEN-LAST:event_tabelaCategoriaMouseClicked
-     /**
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {

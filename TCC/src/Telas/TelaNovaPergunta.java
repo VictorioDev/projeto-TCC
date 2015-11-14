@@ -95,7 +95,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         btSalvar.setIcon(UtilInterface.ICONE_SALVAR);
         btCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
         btAdd.setIcon(UtilInterface.ICONE_NOVO);
-        btRemover.setIcon(UtilInterface.ICONE_ALTERAR);
+        btRemover.setIcon(UtilInterface.ICONE_REMOVER);
         txAlternativa.setFont(UtilInterface.FONTE_PADRAO);
         txaPergunta.setFont(UtilInterface.FONTE_PADRAO);
         cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
@@ -387,8 +387,10 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
 
         jPanel10.setBackground(new java.awt.Color(153, 153, 225));
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nível da Pergunta*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
+        jPanel10.setToolTipText("");
 
         cbNivel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione um nível>>" }));
+        cbNivel.setToolTipText("Selecione o nível da pergunta");
         cbNivel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbNivelActionPerformed(evt);
@@ -416,6 +418,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria da Pergunta*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
 
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione uma Categoria>>" }));
+        cbCategoria.setToolTipText("Selecione a categoria da pergunta");
         cbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCategoriaActionPerformed(evt);

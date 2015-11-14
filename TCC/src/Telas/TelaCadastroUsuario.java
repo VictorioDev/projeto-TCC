@@ -76,7 +76,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                             Image im = ImageIO.read(new ByteArrayInputStream(mem.toArray()));
                             BufferedImage buff = (BufferedImage) im;
                             Graphics g = lbImagemUser.getGraphics();
-                           
+
                             if (g.drawImage(buff, 0, 0, getWidth() - 350, getHeight() - 250, 0, 0, buff.getWidth(), buff.getHeight(), null)) {
                                 if (runnable == false) {
                                     System.out.println("Going to wait()");
@@ -102,10 +102,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
         txNome.setDocument(new LimitaCaracteres());
         txNomeUser.setDocument(new LimitaCaracteres());
-        btnSalvar.setIcon(UtilInterface.ICONE_SALVAR);
-        btnCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
-        UtilInterface.setFontes(jPanel1.getComponents());
-        UtilInterface.setFontes(jPanel2.getComponents());
+        configuraComponentes();
         setResizable(false);
     }
 
@@ -115,12 +112,16 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         salvar = false;
         id = j.getIdJogador();
         PreencherCampos(j);
+        configuraComponentes();
+        setResizable(false);
+
+    }
+
+    private void configuraComponentes() {
         btnSalvar.setIcon(UtilInterface.ICONE_SALVAR);
         btnCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
         UtilInterface.setFontes(jPanel1.getComponents());
         UtilInterface.setFontes(jPanel2.getComponents());
-        setResizable(false);
-
     }
 
     public void PreencherCampos(JogadorBean j) {
@@ -172,13 +173,13 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         jPanel1.setForeground(new java.awt.Color(153, 153, 255));
 
         lbNameUser.setFont(lbNameUser.getFont().deriveFont(lbNameUser.getFont().getSize()+1f));
-        lbNameUser.setText("Nome de usuario: *");
+        lbNameUser.setText("Nome de usuario:*");
 
         lbsenha.setFont(lbsenha.getFont().deriveFont(lbsenha.getFont().getSize()+1f));
-        lbsenha.setText("Senha: *");
+        lbsenha.setText("Senha:*");
 
         lbEmail.setFont(lbEmail.getFont().deriveFont(lbEmail.getFont().getSize()+1f));
-        lbEmail.setText("Email: *");
+        lbEmail.setText("Email:*");
 
         txEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +188,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         });
 
         lbSenhaConfirm.setFont(lbSenhaConfirm.getFont().deriveFont(lbSenhaConfirm.getFont().getSize()+1f));
-        lbSenhaConfirm.setText("Confirmação de senha: *");
+        lbSenhaConfirm.setText("Confirmação de senha:*");
 
         lbImagemUser.setPreferredSize(new java.awt.Dimension(110, 110));
 
@@ -216,7 +217,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         });
 
         lbNome.setFont(lbNome.getFont().deriveFont(lbNome.getFont().getSize()+1f));
-        lbNome.setText("Nome: *");
+        lbNome.setText("Nome:*");
 
         btnCam.setText("webcam");
         btnCam.addActionListener(new java.awt.event.ActionListener() {
@@ -369,8 +370,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             isAction = true;
             btnCam.setText("Tirar");
         } else {
-            
-            
+
 //            int accept = jFileChooser1.showSaveDialog(this);
 //            if (accept == JFileChooser.APPROVE_OPTION) {
 //                File file = jFileChooser1.getSelectedFile();

@@ -77,14 +77,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             btnRemover.setEnabled(false);
         }
         txNome.setDocument(new LimitaCaracteres());
-        btnSalvar.setIcon(UtilInterface.ICONE_SALVAR);
-        btnCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
-        btnAdicionar.setIcon(UtilInterface.ICONE_NOVO);
-        btnRemover.setIcon(UtilInterface.ICONE_ALTERAR);
-        UtilInterface.setFontes(jPanel1.getComponents());
-        UtilInterface.setFontes(pnCadastro.getComponents());
-        UtilInterface.setFontes(pnBotoes.getComponents());
-
+        configuraComponentes();
     }
 
     public TelaCadastroPalavra(java.awt.Frame parent, boolean modal, PalavraBean pl) throws SQLException {
@@ -95,16 +88,20 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 
         acoesComponentes();
         txNome.setDocument(new LimitaCaracteres());
-        btnSalvar.setIcon(UtilInterface.ICONE_SALVAR);
-        btnCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
-        btnAdicionar.setIcon(UtilInterface.ICONE_NOVO);
-        btnRemover.setIcon(UtilInterface.ICONE_DELETAR);
-        UtilInterface.setFontes(jPanel1.getComponents());
-        UtilInterface.setFontes(pnCadastro.getComponents());
-        UtilInterface.setFontes(pnBotoes.getComponents());
+        configuraComponentes();
         preencherCampos(pl);
     }
 
+     private void configuraComponentes(){
+        btnSalvar.setIcon(UtilInterface.ICONE_SALVAR);
+        btnCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
+        btnAdicionar.setIcon(UtilInterface.ICONE_NOVO);
+        btnRemover.setIcon(UtilInterface.ICONE_REMOVER);
+        UtilInterface.setFontes(jPanel1.getComponents());
+        UtilInterface.setFontes(pnCadastro.getComponents());
+        UtilInterface.setFontes(pnBotoes.getComponents());
+    }
+    
     private void preencherCampos(PalavraBean p) throws SQLException {
 
         txNome.setText(p.getNome());

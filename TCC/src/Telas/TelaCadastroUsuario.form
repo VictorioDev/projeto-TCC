@@ -146,7 +146,7 @@
                 <Font component="lbNameUser" property="font" relativeSize="true" size="1"/>
               </FontInfo>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nome de usuario: *"/>
+            <Property name="text" type="java.lang.String" value="Nome de usuario:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txNomeUser">
@@ -158,7 +158,7 @@
                 <Font component="lbsenha" property="font" relativeSize="true" size="1"/>
               </FontInfo>
             </Property>
-            <Property name="text" type="java.lang.String" value="Senha: *"/>
+            <Property name="text" type="java.lang.String" value="Senha:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txSenha">
@@ -170,7 +170,7 @@
                 <Font component="lbEmail" property="font" relativeSize="true" size="1"/>
               </FontInfo>
             </Property>
-            <Property name="text" type="java.lang.String" value="Email: *"/>
+            <Property name="text" type="java.lang.String" value="Email:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txEmail">
@@ -185,7 +185,7 @@
                 <Font component="lbSenhaConfirm" property="font" relativeSize="true" size="1"/>
               </FontInfo>
             </Property>
-            <Property name="text" type="java.lang.String" value="Confirma&#xe7;&#xe3;o de senha: *"/>
+            <Property name="text" type="java.lang.String" value="Confirma&#xe7;&#xe3;o de senha:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txConfirmSenha">
@@ -256,7 +256,7 @@
                 <Font component="lbNome" property="font" relativeSize="true" size="1"/>
               </FontInfo>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nome: *"/>
+            <Property name="text" type="java.lang.String" value="Nome:*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnCam">

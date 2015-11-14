@@ -41,6 +41,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import util.Contador;
+import util.UtilInterface;
 
 /**
  *
@@ -94,6 +95,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             System.err.println("Objeto vazio!");
             
         }
+        btResponder.setIcon(UtilInterface.ICONE_JOGOPERGUNTA);
         
     }
 

@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import util.UtilInterface;
 
 /**
  *
@@ -35,9 +36,10 @@ public class TelaLogin extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btnLogar);
-
+//        btnLogar.setIcon(UtilInterface.ICONE_SALVAR);
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

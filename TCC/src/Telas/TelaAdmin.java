@@ -6,6 +6,7 @@
 package Telas;
 
 import javax.swing.ImageIcon;
+import util.UtilInterface;
 
 /**
  *
@@ -20,10 +21,24 @@ public class TelaAdmin extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Adminstrador");
-        setSize(722,449);
+        setSize(722, 449);
         ImageIcon img = new ImageIcon("src\\Telas\\imagens\\3d_bars-2560x1440.jpg");
         img.setImage(img.getImage().getScaledInstance(725, 453, 100));
-       lbFundo.setIcon(img);
+        lbFundo.setIcon(img);
+        configuraComponentes();
+    }
+
+    private void configuraComponentes() {
+        //Menu Gerenciar
+        submenuGerenciarJogadores.setIcon(UtilInterface.ICONE_IMAGEMUSERPADRAO);
+        submenuGerenciarCategorias.setIcon(UtilInterface.ICONE_CATEGORIA);
+        submenuGerenciarNiveis.setIcon(UtilInterface.ICONE_NIVEL);
+        submenuGerenciarPalavras.setIcon(UtilInterface.ICONE_PALAVRA);
+        submenuGerenciarPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA);
+        
+        //Menu Jogar
+        submenuJogarForca.setIcon(UtilInterface.ICONE_FORCA);
+        submenuJogarPerguntas.setIcon(UtilInterface.ICONE_JOGOPERGUNTA);
     }
 
     /**
@@ -35,52 +50,164 @@ public class TelaAdmin extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         lbFundo = new javax.swing.JLabel();
+        Menu = new javax.swing.JMenuBar();
+        menuSobre = new javax.swing.JMenu();
+        submenuJogarForca = new javax.swing.JMenuItem();
+        submenuJogarPerguntas = new javax.swing.JMenuItem();
+        menuGerenciar = new javax.swing.JMenu();
+        submenuGerenciarJogadores = new javax.swing.JMenuItem();
+        submenuGerenciarCategorias = new javax.swing.JMenuItem();
+        submenuGerenciarNiveis = new javax.swing.JMenuItem();
+        submenuGerenciarPalavras = new javax.swing.JMenuItem();
+        submenuGerenciarPerguntas = new javax.swing.JMenuItem();
+        menuRelatorios = new javax.swing.JMenu();
+        menuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/niveisicon.png"))); // NOI18N
-        jButton3.setText("Gerenciar Níveis");
-        getContentPane().add(jButton3);
-        jButton3.setBounds(500, 170, 180, 79);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/palavrasicon.png"))); // NOI18N
-        jButton2.setText("Gerenciar Palavras");
-        getContentPane().add(jButton2);
-        jButton2.setBounds(270, 210, 190, 90);
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/questionicon.png"))); // NOI18N
-        jButton1.setText("Gerenciar Perguntas");
-        getContentPane().add(jButton1);
-        jButton1.setBounds(500, 260, 180, 79);
-
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(226, 249, 255));
-        jLabel1.setText("    Bem Vindo");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(170, 20, 360, 60);
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/categorieicon.png"))); // NOI18N
-        jButton4.setText("Gerenciar Categorias");
-        getContentPane().add(jButton4);
-        jButton4.setBounds(40, 260, 190, 79);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/usericon_1.png"))); // NOI18N
-        jButton5.setText("Gerenciar Usuários");
-        getContentPane().add(jButton5);
-        jButton5.setBounds(40, 170, 190, 79);
         getContentPane().add(lbFundo);
         lbFundo.setBounds(0, 0, 720, 450);
 
+        menuSobre.setText("Jogar");
+
+        submenuJogarForca.setText("Jogo da Forca");
+        submenuJogarForca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuJogarForcaActionPerformed(evt);
+            }
+        });
+        menuSobre.add(submenuJogarForca);
+
+        submenuJogarPerguntas.setText("Jogo de Perguntas e Respostas");
+        submenuJogarPerguntas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuJogarPerguntasActionPerformed(evt);
+            }
+        });
+        menuSobre.add(submenuJogarPerguntas);
+
+        Menu.add(menuSobre);
+
+        menuGerenciar.setText("Gerenciar");
+
+        submenuGerenciarJogadores.setText("Gerenciar Jogadores");
+        submenuGerenciarJogadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                submenuGerenciarJogadoresMouseClicked(evt);
+            }
+        });
+        submenuGerenciarJogadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuGerenciarJogadoresActionPerformed(evt);
+            }
+        });
+        menuGerenciar.add(submenuGerenciarJogadores);
+
+        submenuGerenciarCategorias.setText("Gerenciar Categorias");
+        submenuGerenciarCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                submenuGerenciarCategoriasMouseClicked(evt);
+            }
+        });
+        submenuGerenciarCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuGerenciarCategoriasActionPerformed(evt);
+            }
+        });
+        menuGerenciar.add(submenuGerenciarCategorias);
+
+        submenuGerenciarNiveis.setText("Gerenciar Níveis");
+        submenuGerenciarNiveis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuGerenciarNiveisActionPerformed(evt);
+            }
+        });
+        menuGerenciar.add(submenuGerenciarNiveis);
+
+        submenuGerenciarPalavras.setText("Gerenciar Palavras");
+        submenuGerenciarPalavras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuGerenciarPalavrasActionPerformed(evt);
+            }
+        });
+        menuGerenciar.add(submenuGerenciarPalavras);
+
+        submenuGerenciarPerguntas.setText("Gerenciar Perguntas");
+        submenuGerenciarPerguntas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuGerenciarPerguntasActionPerformed(evt);
+            }
+        });
+        menuGerenciar.add(submenuGerenciarPerguntas);
+
+        Menu.add(menuGerenciar);
+
+        menuRelatorios.setText("Relatórios");
+        Menu.add(menuRelatorios);
+
+        menuSair.setText("Sair");
+        menuSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSairMouseClicked(evt);
+            }
+        });
+        Menu.add(menuSair);
+
+        setJMenuBar(Menu);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void submenuGerenciarJogadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuGerenciarJogadoresActionPerformed
+        // TODO add your handling code here:
+        new TelaPesquisaJogadores(this, true).setVisible(true);
+    }//GEN-LAST:event_submenuGerenciarJogadoresActionPerformed
+
+    private void menuSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSairMouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_menuSairMouseClicked
+
+    private void submenuGerenciarJogadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submenuGerenciarJogadoresMouseClicked
+        // TODO add your handling code here:
+        new TelaPesquisaJogadores(this, true).setVisible(true);
+    }//GEN-LAST:event_submenuGerenciarJogadoresMouseClicked
+
+    private void submenuGerenciarCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_submenuGerenciarCategoriasMouseClicked
+        // TODO add your handling code here:
+        new TelaPesquisarCategoria(null, true).setVisible(true);
+    }//GEN-LAST:event_submenuGerenciarCategoriasMouseClicked
+
+    private void submenuGerenciarCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuGerenciarCategoriasActionPerformed
+        // TODO add your handling code here:
+        new TelaPesquisarCategoria(null, true).setVisible(true);
+    }//GEN-LAST:event_submenuGerenciarCategoriasActionPerformed
+
+    private void submenuGerenciarNiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuGerenciarNiveisActionPerformed
+        // TODO add your handling code here:
+        new TelaPesquisarNivel(null, true).setVisible(true);
+    }//GEN-LAST:event_submenuGerenciarNiveisActionPerformed
+
+    private void submenuGerenciarPalavrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuGerenciarPalavrasActionPerformed
+        // TODO add your handling code here:
+        new TelaPesquisaPalavra().setVisible(true);
+    }//GEN-LAST:event_submenuGerenciarPalavrasActionPerformed
+
+    private void submenuGerenciarPerguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuGerenciarPerguntasActionPerformed
+        // TODO add your handling code here:
+        new TelaPesquisarPergunta().setVisible(true);
+    }//GEN-LAST:event_submenuGerenciarPerguntasActionPerformed
+
+    private void submenuJogarForcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuJogarForcaActionPerformed
+        // TODO add your handling code here:
+        new Telajogo().setVisible(true);
+    }//GEN-LAST:event_submenuJogarForcaActionPerformed
+
+    private void submenuJogarPerguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuJogarPerguntasActionPerformed
+        // TODO add your handling code here:
+        new TelaJogoPerguntaResposta().setVisible(true);
+    }//GEN-LAST:event_submenuJogarPerguntasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,12 +252,18 @@ public class TelaAdmin extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar Menu;
     private javax.swing.JLabel lbFundo;
+    private javax.swing.JMenu menuGerenciar;
+    private javax.swing.JMenu menuRelatorios;
+    private javax.swing.JMenu menuSair;
+    private javax.swing.JMenu menuSobre;
+    private javax.swing.JMenuItem submenuGerenciarCategorias;
+    private javax.swing.JMenuItem submenuGerenciarJogadores;
+    private javax.swing.JMenuItem submenuGerenciarNiveis;
+    private javax.swing.JMenuItem submenuGerenciarPalavras;
+    private javax.swing.JMenuItem submenuGerenciarPerguntas;
+    private javax.swing.JMenuItem submenuJogarForca;
+    private javax.swing.JMenuItem submenuJogarPerguntas;
     // End of variables declaration//GEN-END:variables
 }

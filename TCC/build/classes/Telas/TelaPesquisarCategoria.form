@@ -122,7 +122,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Comic Sans MS" size="11" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Categoria: *"/>
+                <Property name="text" type="java.lang.String" value="Categoria:*"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -136,7 +136,7 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="1" rowCount="0">
-                        <Column editable="true" title="Categoria" type="java.lang.Object"/>
+                        <Column editable="true" title="Categoria(s)" type="java.lang.Object"/>
                       </Table>
                     </Property>
                   </Properties>

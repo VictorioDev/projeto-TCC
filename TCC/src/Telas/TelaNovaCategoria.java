@@ -124,7 +124,7 @@ public class TelaNovaCategoria extends javax.swing.JDialog {
         jPanel4.setBackground(new java.awt.Color(153, 153, 225));
 
         lbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbCategoria.setText("Descrição: *");
+        lbCategoria.setText("Descrição:*");
 
         txCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

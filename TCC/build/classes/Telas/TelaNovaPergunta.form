@@ -273,6 +273,7 @@
                     </TitledBorder>
                   </Border>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
 
               <Layout>
@@ -303,6 +304,7 @@
                         <StringItem index="0" value="&lt;&lt;Selecione um n&#xed;vel&gt;&gt;"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Selecione o n&#xed;vel da pergunta"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbNivelActionPerformed"/>
@@ -352,6 +354,7 @@
                         <StringItem index="0" value="&lt;&lt;Selecione uma Categoria&gt;&gt;"/>
                       </StringArray>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Selecione a categoria da pergunta"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbCategoriaActionPerformed"/>

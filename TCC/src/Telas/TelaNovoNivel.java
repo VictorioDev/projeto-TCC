@@ -123,7 +123,7 @@ public class TelaNovoNivel extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(153, 153, 225));
 
         lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbNivel.setText("Descrição: *");
+        lbNivel.setText("Descrição:*");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 0));
 

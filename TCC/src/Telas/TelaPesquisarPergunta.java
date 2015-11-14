@@ -148,7 +148,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         });
 
         lbPergunta.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbPergunta.setText("Pergunta: *");
+        lbPergunta.setText("Pergunta:*");
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         jLabel1.setText("Ordenar:");

@@ -31,13 +31,13 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
     /**
      * Creates new form TelaPesquisaNivel
      */
-    public static ImageIcon icopes = new ImageIcon("src\\icones\\Zoom-icon16_1.png");
-    public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
-    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
-    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
-    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
+//    public static ImageIcon icopes = new ImageIcon("src\\icones\\Zoom-icon16_1.png");
+//    public static ImageIcon icoalt = new ImageIcon("src\\icones\\Document-Write-icon16.png");
+//    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
+//    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
+//    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
     
-    public TelaPesquisarNivel() {
+    public TelaPesquisarNivel(java.awt.Frame parent, boolean modal) {
         initComponents();
         setResizable(false);
 //        iconeBotoes();
@@ -68,11 +68,11 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
     }
 
     private void iconeBotoes() {
-        btPesquisar.setIcon(icopes);
-        btAlterar.setIcon(icoalt);
-        btNovo.setIcon(iconov);
-        btExcluir.setIcon(icoexc);
-        btImprimir.setIcon(icorel);
+//        btPesquisar.setIcon(icopes);
+//        btAlterar.setIcon(icoalt);
+//        btNovo.setIcon(iconov);
+//        btExcluir.setIcon(icoexc);
+//        btImprimir.setIcon(icorel);
     }
 
     private void validaBotoes() {
@@ -141,7 +141,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(153, 153, 225));
 
         lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        lbNivel.setText("Nível: *");
+        lbNivel.setText("Nível:*");
 
         btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btPesquisar.setText("Pesquisar");
@@ -156,7 +156,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nível"
+                "Nível(is)"
             }
         ));
         tabelaNivel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -279,7 +279,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         if (txNivel.getText().length() > 1) {
             AtualizaTabNivel();
         } else {
-            lbMensg.setText("A pesquisa deve ter ao menos 2 carcater");
+            lbMensg.setText("A pesquisa deve ter ao menos 2 carcateres");
             lbMensg.setForeground(Color.red);
             DefaultTableModel modelo = (DefaultTableModel) tabelaNivel.getModel();
             modelo.setNumRows(0);
@@ -366,7 +366,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPesquisarNivel().setVisible(true);
+                new TelaPesquisarNivel(null, true).setVisible(true);
             }
         });
     }
