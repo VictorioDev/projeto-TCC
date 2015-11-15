@@ -42,6 +42,54 @@ public class PalavraDao {
         conexao.close();
     }
 
+    public static ResultSet RetornaPalavraMaisJogadaAcertada(String dataInicial, String dataFinal, int escolha) throws SQLException {
+        String sql = "";
+        if(escolha == 1){
+             sql = "SELECT\n"
+                + "	p.idPalavra,\n"
+                + "	p.nome,\n"
+                + "	count(*) as NumVezesJogadas,\n"
+                + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
+                + "	sum(pj.acertou) QtdeAcertos,\n"
+                + "	(sum(pj.palpites) / count(*)) as MediaPalpites\n"
+                + "\n"
+                + "FROM\n"
+                + "	palavrajogada pj,\n"
+                + "	palavra p \n"
+                + "WHERE\n"
+                + "	pj.idPalavra = p.idPalavra\n"
+                + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
+                + "GROUP BY\n"
+                + "	pj.idPalavra\n"
+                + "ORDER BY\n"
+                + "NumVezesJogadas desc";
+        }else{
+            sql = "SELECT\n"
+                + "	p.idPalavra,\n"
+                + "	p.nome,\n"
+                + "	count(*) as NumVezesJogadas,\n"
+                + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
+                + "	sum(pj.acertou) QtdeAcertos,\n"
+                + "	(sum(pj.palpites) / count(*)) as MediaPalpites\n"
+                + "\n"
+                + "FROM\n"
+                + "	palavrajogada pj,\n"
+                + "	palavra p \n"
+                + "WHERE\n"
+                + "	pj.idPalavra = p.idPalavra\n"
+                + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
+                + "GROUP BY\n"
+                + " pj.idPalavra\n"
+                + " ORDER BY\n"
+                + "QtdeAcertos desc";
+        }
+      
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
     public static void salvarPalavra(PalavraBean palavra) throws SQLException {
 
         String sql = "insert into Palavra (nome,idNivel,idCategoria) values (?,?,?)";
@@ -110,32 +158,32 @@ public class PalavraDao {
         return listaPl;
 
     }
-    
-     public static List<PalavraBean> RetornaPalavrasSO(String nivel, String categoria) throws SQLException {
+
+    public static List<PalavraBean> RetornaPalavrasSO(String nivel, String categoria) throws SQLException {
         List<PalavraBean> listaPl = new ArrayList<PalavraBean>();
         Connection conexao = Conexao.getConexao();
-       String sql = "SELECT"
-                    + " p.idPalavra,"
-                    + " p.nome,"
-                    + " n.idNivel,"
-                    + " n.descricao,"
-                    + "c.idCategoria,"
-                    + "c.descricao"
-                    + " FROM "
-                    + "Palavra p,"
-                    + "Nivel n, "
-                    + "Categoria c "
-                    + "WHERE "
-                    + "p.idNivel = n.idNivel AND "
-                    + "p.idCategoria = c.idCategoria AND "
-                    + "n.descricao = '" + nivel + "' "
-                    + "AND c.descricao = '" + categoria + "' "
-                    + "ORDER BY p.nome";
-         System.err.println("Sql: "+sql);
+        String sql = "SELECT"
+                + " p.idPalavra,"
+                + " p.nome,"
+                + " n.idNivel,"
+                + " n.descricao,"
+                + "c.idCategoria,"
+                + "c.descricao"
+                + " FROM "
+                + "Palavra p,"
+                + "Nivel n, "
+                + "Categoria c "
+                + "WHERE "
+                + "p.idNivel = n.idNivel AND "
+                + "p.idCategoria = c.idCategoria AND "
+                + "n.descricao = '" + nivel + "' "
+                + "AND c.descricao = '" + categoria + "' "
+                + "ORDER BY p.nome";
+        System.err.println("Sql: " + sql);
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-             NivelBean n = new NivelBean();
+            NivelBean n = new NivelBean();
             n.setIdNivel(rs.getInt("idNivel"));
             n.setDescricao(rs.getString("descricao"));
 
@@ -157,33 +205,32 @@ public class PalavraDao {
         return listaPl;
 
     }
-     
-     
-     public static List<PerguntaBean> RetornaPerguntasSO(String nivel, String categoria) throws SQLException {
+
+    public static List<PerguntaBean> RetornaPerguntasSO(String nivel, String categoria) throws SQLException {
         List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
         Connection conexao = Conexao.getConexao();
-       String sql = "SELECT"
-                    + " p.idPergunta,"
-                    + " p.descricao,"
-                    + " n.idNivel,"
-                    + " n.descricao,"
-                    + "c.idCategoria,"
-                    + "c.descricao"
-                    + " FROM "
-                    + "Pergunta p,"
-                    + "Nivel n, "
-                    + "Categoria c "
-                    + "WHERE "
-                    + "p.idNivel = n.idNivel AND "
-                    + "p.idCategoria = c.idCategoria AND "
-                    + "n.descricao = '" + nivel + "' "
-                    + "AND c.descricao = '" + categoria + "' "
-                    + "ORDER BY p.nome";
-         System.err.println("Sql: "+sql);
+        String sql = "SELECT"
+                + " p.idPergunta,"
+                + " p.descricao,"
+                + " n.idNivel,"
+                + " n.descricao,"
+                + "c.idCategoria,"
+                + "c.descricao"
+                + " FROM "
+                + "Pergunta p,"
+                + "Nivel n, "
+                + "Categoria c "
+                + "WHERE "
+                + "p.idNivel = n.idNivel AND "
+                + "p.idCategoria = c.idCategoria AND "
+                + "n.descricao = '" + nivel + "' "
+                + "AND c.descricao = '" + categoria + "' "
+                + "ORDER BY p.nome";
+        System.err.println("Sql: " + sql);
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-             NivelBean n = new NivelBean();
+            NivelBean n = new NivelBean();
             n.setIdNivel(rs.getInt("idNivel"));
             n.setDescricao(rs.getString("descricao"));
 
@@ -205,8 +252,6 @@ public class PalavraDao {
         return listaPl;
 
     }
-     
-     
 
     public static List<PalavraBean> retornaPlvs(PalavraBean pl, String filtroNivel, String filtroCategoria) throws SQLException {
         List<PalavraBean> listaPl = new ArrayList<PalavraBean>();

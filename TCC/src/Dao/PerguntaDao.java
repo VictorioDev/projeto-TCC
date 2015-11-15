@@ -55,33 +55,31 @@ public class PerguntaDao {
 //                + "ORDER BY p.nome";
 //        }
 //    }
-    
-    
     public static List<PerguntaBean> RetornaPerguntasSO(String nivel, String categoria) throws SQLException {
         List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
         Connection conexao = Conexao.getConexao();
-       String sql = "SELECT"
-                    + " p.idPergunta,"
-                    + " p.descricao,"
-                    + " n.idNivel,"
-                    + " n.descricao,"
-                    + "c.idCategoria,"
-                    + "c.descricao"
-                    + " FROM "
-                    + "Pergunta p,"
-                    + "Nivel n, "
-                    + "Categoria c "
-                    + "WHERE "
-                    + "p.idNivel = n.idNivel AND "
-                    + "p.idCategoria = c.idCategoria AND "
-                    + "n.descricao = '" + nivel + "' "
-                    + "AND c.descricao = '" + categoria + "' "
-                    + "ORDER BY p.descricao";
-         System.err.println("Sql: "+sql);
+        String sql = "SELECT"
+                + " p.idPergunta,"
+                + " p.descricao,"
+                + " n.idNivel,"
+                + " n.descricao,"
+                + "c.idCategoria,"
+                + "c.descricao"
+                + " FROM "
+                + "Pergunta p,"
+                + "Nivel n, "
+                + "Categoria c "
+                + "WHERE "
+                + "p.idNivel = n.idNivel AND "
+                + "p.idCategoria = c.idCategoria AND "
+                + "n.descricao = '" + nivel + "' "
+                + "AND c.descricao = '" + categoria + "' "
+                + "ORDER BY p.descricao";
+        System.err.println("Sql: " + sql);
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-             NivelBean n = new NivelBean();
+            NivelBean n = new NivelBean();
             n.setIdNivel(rs.getInt("idNivel"));
             n.setDescricao(rs.getString("n.descricao"));
 
@@ -103,10 +101,51 @@ public class PerguntaDao {
         return listaPl;
 
     }
-     
-    
-    
-    
+
+    public static ResultSet RetornaPerguntaMaisJogadaAcertada(String dataInicial, String dataFinal, int escolha) throws SQLException {
+        String sql = "";
+        if (escolha == 2) {
+            sql = "SELECT\n"
+                    + "	p.idPergunta,\n"
+                    + "	p.descricao,\n"
+                    + "	count(*) as NumVezesJogadas,\n"
+                    + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
+                    + "	sum(pj.acertou) QtdeAcertos\n"
+                    + "FROM\n"
+                    + "	perguntajogada pj,\n"
+                    + "	pergunta p\n"
+                    + "WHERE\n"
+                    + "	pj.idPergunta = p.idPergunta\n"
+                    + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
+                    + "GROUP BY\n"
+                    + "	p.idPergunta\n"
+                    + "ORDER BY\n"
+                    + "NumVezesJogadas desc";
+        } else {
+            sql = "SELECT\n"
+                    + "	p.idPergunta,\n"
+                    + "	p.descricao,\n"
+                    + "	count(*) as NumVezesJogadas,\n"
+                    + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
+                    + "	sum(pj.acertou) QtdeAcertos\n"
+                    + "FROM\n"
+                    + "	perguntajogada pj,\n"
+                    + "	pergunta p\n"
+                    + "WHERE\n"
+                    + "	pj.idPergunta = p.idPergunta\n"
+                    + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
+                    + "GROUP BY\n"
+                    + "	p.idPergunta\n"
+                    + "ORDER BY\n"
+                    + "QtdeAcertos desc";
+        }
+
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
     public static PerguntaBean RetornaPerguntas(PerguntaBean per) throws SQLException {
         PerguntaBean pe = new PerguntaBean();
 //        String sql = "select * from Pergunta where descricao like'" + per.getDescricao() + "%'"; 
@@ -340,40 +379,39 @@ public class PerguntaDao {
 
     public static ResultSet retornaRs(PerguntaBean per, String parametro) throws SQLException {
         String sql = "";
-       if(parametro.equalsIgnoreCase("Tudo")){
+        if (parametro.equalsIgnoreCase("Tudo")) {
             sql = "SELECT "
-                + "pe.idPergunta,"
-                + "pe.descricao,"
-                + "ca.descricao as descricaoCat,"
-                + "ca.idCategoria, "
-                + "ni.idNivel, "
-                + "ni.descricao as Niveldesc "
-                + "FROM "
-                + "Pergunta pe, "
-                + "Categoria ca, "
-                + "Nivel ni "
-                + "WHERE "
-                + "pe.idNivel = ni.idNivel "
-                + "ORDER BY Niveldesc";
-       }else{
-             sql = "SELECT "
-                + "pe.idPergunta,"
-                + "pe.descricao,"
-                + "ca.descricao as descricaoCat,"
-                + "ca.idCategoria, "
-                + "ni.idNivel, "
-                + "ni.descricao as descricaoNiv "
-                + "FROM "
-                + "Pergunta pe, "
-                + "Categoria ca, "
-                + "Nivel ni "
-                + "WHERE "
-                + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
-                + "pe.descricao like '" + per.getDescricao() + "%' "
-                + "ORDER BY pe.descricao";
-       }
-        
-        
+                    + "pe.idPergunta,"
+                    + "pe.descricao,"
+                    + "ca.descricao as descricaoCat,"
+                    + "ca.idCategoria, "
+                    + "ni.idNivel, "
+                    + "ni.descricao as Niveldesc "
+                    + "FROM "
+                    + "Pergunta pe, "
+                    + "Categoria ca, "
+                    + "Nivel ni "
+                    + "WHERE "
+                    + "pe.idNivel = ni.idNivel "
+                    + "ORDER BY Niveldesc";
+        } else {
+            sql = "SELECT "
+                    + "pe.idPergunta,"
+                    + "pe.descricao,"
+                    + "ca.descricao as descricaoCat,"
+                    + "ca.idCategoria, "
+                    + "ni.idNivel, "
+                    + "ni.descricao as descricaoNiv "
+                    + "FROM "
+                    + "Pergunta pe, "
+                    + "Categoria ca, "
+                    + "Nivel ni "
+                    + "WHERE "
+                    + "pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                    + "pe.descricao like '" + per.getDescricao() + "%' "
+                    + "ORDER BY pe.descricao";
+        }
+
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
