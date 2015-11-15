@@ -125,6 +125,8 @@ public class TelaNovoNivel extends javax.swing.JFrame {
         lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbNivel.setText("Descrição:*");
 
+        txDescricaoNivel.setToolTipText("Digite o nível neste campo para o cadastro");
+
         jPanel2.setBackground(new java.awt.Color(255, 255, 0));
 
         btSalvar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N

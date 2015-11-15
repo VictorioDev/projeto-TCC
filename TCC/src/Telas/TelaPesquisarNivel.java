@@ -143,7 +143,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbNivel.setText("Nível:*");
 
-        txNivel.setToolTipText("Redija nível desejado (ou as primeiras letras deste) para a pesquisa");
+        txNivel.setToolTipText("Digite o nível desejado (ou as primeiras letras deste) neste campo para a pesquisa");
 
         btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btPesquisar.setText("Pesquisar");

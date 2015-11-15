@@ -116,7 +116,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txNivel">
               <Properties>
-                <Property name="toolTipText" type="java.lang.String" value="Redija n&#xed;vel desejado (ou as primeiras letras deste) para a pesquisa"/>
+                <Property name="toolTipText" type="java.lang.String" value="Digite o n&#xed;vel desejado (ou as primeiras letras deste) neste campo para a pesquisa"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btPesquisar">

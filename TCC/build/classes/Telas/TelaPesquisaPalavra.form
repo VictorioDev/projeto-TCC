@@ -138,6 +138,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txDescricaoPalavra">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Digite a palavra desejada (ou as primeiras letras desta) neste campo para a pesquisa"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txDescricaoPalavraActionPerformed"/>
           </Events>

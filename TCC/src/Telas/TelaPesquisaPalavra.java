@@ -187,6 +187,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         lbNomePalavra.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         lbNomePalavra.setText("Palavra:*");
 
+        txDescricaoPalavra.setToolTipText("Digite a palavra desejada (ou as primeiras letras desta) neste campo para a pesquisa");
         txDescricaoPalavra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txDescricaoPalavraActionPerformed(evt);

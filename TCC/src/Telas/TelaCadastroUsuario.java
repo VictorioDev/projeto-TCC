@@ -175,12 +175,17 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         lbNameUser.setFont(lbNameUser.getFont().deriveFont(lbNameUser.getFont().getSize()+1f));
         lbNameUser.setText("Nome de usuario:*");
 
+        txNomeUser.setToolTipText("Digite seu nome de usuário neste campo");
+
         lbsenha.setFont(lbsenha.getFont().deriveFont(lbsenha.getFont().getSize()+1f));
         lbsenha.setText("Senha:*");
+
+        txSenha.setToolTipText(" Digite sua senha de login neste campo");
 
         lbEmail.setFont(lbEmail.getFont().deriveFont(lbEmail.getFont().getSize()+1f));
         lbEmail.setText("Email:*");
 
+        txEmail.setToolTipText("Digite seu email neste campo. No formato: meuemail@email.com");
         txEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txEmailActionPerformed(evt);
@@ -215,6 +220,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                 btnEnvImagemActionPerformed(evt);
             }
         });
+
+        txNome.setToolTipText("Digite seu nome neste campo (preferencialmente o nome completo)");
 
         lbNome.setFont(lbNome.getFont().deriveFont(lbNome.getFont().getSize()+1f));
         lbNome.setText("Nome:*");

@@ -142,7 +142,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
         p4.setBackground(new java.awt.Color(153, 153, 225));
 
-        txCategoria.setToolTipText("Redija a categoria desejada (ou as primeiras letras desta) para a pesquisa");
+        txCategoria.setToolTipText("Digite a categoria desejada (ou as primeiras letras desta) neste campo para a pesquisa");
 
         btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btPesquisar.setText("Pesquisar");

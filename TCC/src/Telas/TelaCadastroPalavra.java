@@ -364,6 +364,8 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        txNome.setToolTipText("Digite a palavra neste campo para o cadastro");
+
         cbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione>>", " " }));
         cbCategoria.addActionListener(new java.awt.event.ActionListener() {

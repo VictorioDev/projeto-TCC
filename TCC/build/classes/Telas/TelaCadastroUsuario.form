@@ -150,6 +150,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txNomeUser">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Digite seu nome de usu&#xe1;rio neste campo"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbsenha">
           <Properties>
@@ -162,6 +165,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txSenha">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value=" Digite sua senha de login neste campo"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbEmail">
           <Properties>
@@ -174,6 +180,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txEmail">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Digite seu email neste campo. No formato: meuemail@email.com"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txEmailActionPerformed"/>
           </Events>
@@ -248,6 +257,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txNome">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Digite seu nome neste campo (preferencialmente o nome completo)"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbNome">
           <Properties>

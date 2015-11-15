@@ -141,6 +141,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 225));
 
+        TxaPergunta.setToolTipText("Digite a pergunta desejada (ou as primeiras letras desta) neste campo para a pesquisa");
         TxaPergunta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TxaPerguntaActionPerformed(evt);

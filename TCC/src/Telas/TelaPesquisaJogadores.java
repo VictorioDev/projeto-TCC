@@ -122,7 +122,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         lbNomePalavra.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         lbNomePalavra.setText("Descrição:*");
 
-        txDescricaoNomejog.setToolTipText("Redija o nome do jogador desejado (ou as primeiras letras deste) para a pesquisa");
+        txDescricaoNomejog.setToolTipText("Digite o nome do jogador desejado (ou as primeiras letras deste) neste campo para a pesquisa");
         txDescricaoNomejog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txDescricaoNomejogActionPerformed(evt);

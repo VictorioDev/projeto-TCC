@@ -178,7 +178,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
                 aux = false;
                 txAlternativa.setBackground(Color.pink);
 //                TabelaAlternativas.setToolTipText("Amiguinho, deve haver uma correta!!");
-                txAlternativa.setText("Amiguinho, deve haver uma correta!!");
+                txAlternativa.setText("Deve haver uma correta!!");
                 btAdd.setEnabled(false);// apenas no intento de não permitir o salvamento da frase acima dentre as demais alternativas
                 chxCorreta.setSelected(false);
             }
@@ -186,7 +186,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         }
         if (listalternativas.size() == 1) {
             aux = false;
-            txAlternativa.setText("Amiguinho, deve haver mais de uma");
+            txAlternativa.setText("Deve haver mais de uma");
         }
 
         return aux;
@@ -289,7 +289,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
 
         txaPergunta.setColumns(20);
         txaPergunta.setRows(5);
-        txaPergunta.setToolTipText("Redija aqui sua pergunta");
+        txaPergunta.setToolTipText("Digite sua pergunta neste campo");
         txaPergunta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txaPerguntaKeyPressed(evt);
@@ -300,6 +300,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alternativas*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
 
+        txAlternativa.setToolTipText("Digite neste campo as alternativas da pergunta");
         txAlternativa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txAlternativaMouseClicked(evt);
@@ -575,10 +576,9 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         }
         if (txAlternativa.getText().trim().equals("")) {
             txAlternativa.setBackground(Color.pink);
-            txAlternativa.setToolTipText("Amiguinho, você deve escrever a alternativa");
+            txAlternativa.setToolTipText("Você deve escrever as alternativas");
         } else {
             txAlternativa.setBackground(Color.white);
-            txAlternativa.setToolTipText("Amiguinho é isso aê, ESCREVA AQUI");
             alternativa.setDescricao(texto);
             texto = texto.trim();
             for (AlternativaBean alt : listalternativas) {

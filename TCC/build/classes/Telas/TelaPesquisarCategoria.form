@@ -106,7 +106,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextField" name="txCategoria">
               <Properties>
-                <Property name="toolTipText" type="java.lang.String" value="Redija a categoria desejada (ou as primeiras letras desta) para a pesquisa"/>
+                <Property name="toolTipText" type="java.lang.String" value="Digite a categoria desejada (ou as primeiras letras desta) neste campo para a pesquisa"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btPesquisar">

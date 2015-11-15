@@ -126,6 +126,7 @@ public class TelaNovaCategoria extends javax.swing.JDialog {
         lbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbCategoria.setText("Descrição:*");
 
+        txCategoria.setToolTipText("Digite a categoria neste campo para o cadastro");
         txCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txCategoriaActionPerformed(evt);
