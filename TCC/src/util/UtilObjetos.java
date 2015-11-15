@@ -8,7 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
@@ -22,6 +24,8 @@ public class UtilObjetos {
 
     public static JogadorBean jogadorLogado;
     private static NivelBean nivelSelecionado;
+    public static List<String> listaNiveisPJogar = new ArrayList<String>();
+    public static List<String> listaCategoriasPJogar = new ArrayList<String>();
 
     public static void Desconvertimg(byte[] bytes) throws IOException {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);

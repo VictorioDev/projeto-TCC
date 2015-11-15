@@ -5,6 +5,29 @@
  */
 package Telas;
 
+import Bean.CategoriaBean;
+import Bean.NivelBean;
+import Dao.CategoriaDao;
+import Dao.NivelDao;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
+import javax.swing.event.MouseInputAdapter;
+
 /**
  *
  * @author victo
@@ -14,8 +37,47 @@ public class ConfiguraJogo extends javax.swing.JFrame {
     /**
      * Creates new form ConfiguraJogo
      */
-    public ConfiguraJogo() {
+    private List<NivelBean> listaNiveis;
+    private List<CategoriaBean> listaCategorias;
+    private List<JCheckBox> listaCheckBoxNiveis = new ArrayList<JCheckBox>();
+    private List<JCheckBox> listaCheckBoxCategorias = new ArrayList<JCheckBox>();
+    private static String config = "";
+
+    public ConfiguraJogo(String tela) {
+        config = tela;
         initComponents();
+        ConfiguraTela();
+
+    }
+
+    private void ConfiguraTela() {
+        try {
+            listaNiveis = NivelDao.RetornaNiveis();
+            listaCategorias = CategoriaDao.retornaCategoria();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        pnNiveis.setLayout(new GridLayout((listaNiveis.size()), 1));
+        pnCategorias.setLayout(new GridLayout(listaCategorias.size(), 1));
+        for (NivelBean n : listaNiveis) {
+            listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
+        }
+
+        for (CategoriaBean c : listaCategorias) {
+            listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
+        }
+
+        for (JCheckBox j : listaCheckBoxNiveis) {
+            pnNiveis.add(j);
+        }
+
+        for (JCheckBox j : listaCheckBoxCategorias) {
+            pnCategorias.add(j);
+        }
+    }
+
+    private void ConfiguraCamponentes() {
+
     }
 
     /**
@@ -28,41 +90,217 @@ public class ConfiguraJogo extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        pnNiveis = new javax.swing.JPanel();
+        pnCategorias = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        btnJogar = new javax.swing.JButton();
+        btnSelecionarTudo = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(153, 153, 255));
 
+        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Categorias"));
+
+        pnNiveis.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnNiveis.setPreferredSize(new java.awt.Dimension(288, 292));
+        pnNiveis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnNiveisMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnNiveisMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnNiveisMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnNiveisLayout = new javax.swing.GroupLayout(pnNiveis);
+        pnNiveis.setLayout(pnNiveisLayout);
+        pnNiveisLayout.setHorizontalGroup(
+            pnNiveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 321, Short.MAX_VALUE)
+        );
+        pnNiveisLayout.setVerticalGroup(
+            pnNiveisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 258, Short.MAX_VALUE)
+        );
+
+        pnCategorias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnCategorias.setPreferredSize(new java.awt.Dimension(288, 292));
+
+        javax.swing.GroupLayout pnCategoriasLayout = new javax.swing.GroupLayout(pnCategorias);
+        pnCategorias.setLayout(pnCategoriasLayout);
+        pnCategoriasLayout.setHorizontalGroup(
+            pnCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 321, Short.MAX_VALUE)
+        );
+        pnCategoriasLayout.setVerticalGroup(
+            pnCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 258, Short.MAX_VALUE)
+        );
+
+        jPanel2.setBackground(java.awt.Color.yellow);
+
+        btnJogar.setText("Jogar");
+        btnJogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJogarActionPerformed(evt);
+            }
+        });
+
+        btnSelecionarTudo.setText("Selecionar Tudo");
+        btnSelecionarTudo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecionarTudoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(187, Short.MAX_VALUE)
+                .addComponent(btnSelecionarTudo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnJogar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(223, 223, 223))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnJogar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelecionarTudo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel1.setText("Niveis:");
+
+        jLabel2.setText("Categorias:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 304, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(pnCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void pnNiveisMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNiveisMouseEntered
+        // TODO add your handling code here:
+        pnNiveis.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
+    }//GEN-LAST:event_pnNiveisMouseEntered
+
+    private void pnNiveisMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNiveisMouseExited
+        // TODO add your handling code here:
+        pnNiveis.setBorder(null);
+    }//GEN-LAST:event_pnNiveisMouseExited
+
+    private void pnNiveisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNiveisMouseClicked
+        // TODO add your handling code here:
+        pnNiveis.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
+    }//GEN-LAST:event_pnNiveisMouseClicked
+
+    private void btnSelecionarTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarTudoActionPerformed
+        // TODO add your handling code here:
+        for (JCheckBox j : listaCheckBoxNiveis) {
+            j.setSelected(true);
+        }
+
+        for (JCheckBox jc : listaCheckBoxCategorias) {
+            jc.setSelected(true);
+        }
+
+    }//GEN-LAST:event_btnSelecionarTudoActionPerformed
+
+    private void btnJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJogarActionPerformed
+        // TODO add your handling code here:
+        listaNiveis.clear();
+        listaCategorias.clear();
+        int numNiveisSelected = 0;
+        int numCategoriasSelected = 0;
+        
+        //Veririfica quais niveis e quais perguntas foram selecionadas
+        for (JCheckBox j : listaCheckBoxNiveis) {
+            if (j.isSelected()) {
+                util.UtilObjetos.listaNiveisPJogar.add(j.getText());
+                numNiveisSelected++;
+            }
+        }
+
+        for (JCheckBox jc : listaCheckBoxCategorias) {
+            if (jc.isSelected()) {
+                util.UtilObjetos.listaCategoriasPJogar.add(jc.getText());
+                numCategoriasSelected++;
+            }
+
+        }
+
+        if (numNiveisSelected == 0 || numCategoriasSelected == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um Nivel e uma categoria para prosseguir!");
+        } else {
+            if (config.equalsIgnoreCase("palavra")) {
+                dispose();
+                new Telajogo().setVisible(true);
+            } else {
+                dispose();
+                new TelaJogoPerguntaResposta().setVisible(true);
+            }
+        }
+
+
+    }//GEN-LAST:event_btnJogarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,28 +316,40 @@ public class ConfiguraJogo extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConfiguraJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguraJogo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConfiguraJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguraJogo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConfiguraJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguraJogo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConfiguraJogo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConfiguraJogo.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConfiguraJogo().setVisible(true);
+                new ConfiguraJogo(config).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnJogar;
+    private javax.swing.JButton btnSelecionarTudo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel pnCategorias;
+    private javax.swing.JPanel pnNiveis;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,7 +18,7 @@ public class TelaAdmin extends javax.swing.JDialog {
      * Creates new form TelaAdmin
      */
     public TelaAdmin(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, false);
         initComponents();
         setTitle("Adminstrador");
         setSize(722, 449);
@@ -201,7 +201,7 @@ public class TelaAdmin extends javax.swing.JDialog {
 
     private void submenuJogarForcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuJogarForcaActionPerformed
         // TODO add your handling code here:
-        new Telajogo().setVisible(true);
+        //new ConfiguraJogo().setVisible(true);
     }//GEN-LAST:event_submenuJogarForcaActionPerformed
 
     private void submenuJogarPerguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuJogarPerguntasActionPerformed

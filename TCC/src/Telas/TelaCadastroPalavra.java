@@ -5,9 +5,11 @@
  */
 package Telas;
 
+import Bean.CategoriaBean;
 import Bean.DicaBean;
 import Bean.NivelBean;
 import Bean.PalavraBean;
+import Dao.CategoriaDao;
 import Dao.DicaDao;
 import Dao.NivelDao;
 import Dao.PalavraDao;
@@ -52,6 +54,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     private JFileChooser arquivo = new JFileChooser();
     private List<String> listanomedicas = new ArrayList<String>();
     private List<NivelBean> listaniveis = new ArrayList<NivelBean>();
+    private List<CategoriaBean> listaCategorias = new ArrayList<CategoriaBean>();
     private ImageIcon imagem;
     private ImageIcon image;
     private File som;
@@ -72,7 +75,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         initComponents();
         salvar = true;
         acoesComponentes();
-        AtualizaComboNiveis();
+        AtualizaCombos();
         if (listanomedicas.size() == 0) {
             btnRemover.setEnabled(false);
         }
@@ -105,8 +108,9 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     private void preencherCampos(PalavraBean p) throws SQLException {
 
         txNome.setText(p.getNome());
-        AtualizaComboNiveis();
+        AtualizaCombos();
         cbNiveis.setSelectedItem(p.getNivel().getDescricao());
+        cbCategoria.setSelectedItem(p.getCategoria().getDescricao());
         listadc = DicaDao.RetornaDicas(p);
         for (DicaBean pdc : listadc) {
             listanomedicas.add(pdc.getNomeDica());
@@ -120,6 +124,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         palavra.setNome(txNome.getText().trim());
         palavra.setDicas(listadc);
         palavra.setNivel(listaniveis.get(cbNiveis.getSelectedIndex() - 1));
+        palavra.setCategoria(listaCategorias.get(cbCategoria.getSelectedIndex() - 1));
         palavra.setIdPalavra(id);
         return palavra;
     }
@@ -169,7 +174,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 //        dc.setSom(null);
 //        return dc;
 //    }
-    private void AtualizaComboNiveis() {
+    private void AtualizaCombos() {
         try {
             cbNiveis.removeAllItems();
             cbNiveis.addItem("<<Selecione>>");
@@ -178,6 +183,13 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 cbNiveis.addItem(n.getDescricao());
 
             }
+            cbCategoria.removeAllItems();
+            cbCategoria.addItem("<<Selecione>>");
+            listaCategorias = CategoriaDao.retornaCategoria();
+            for (CategoriaBean c : listaCategorias) {
+                cbCategoria.addItem(c.getDescricao());
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(TelaCadastroPalavra.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -219,6 +231,8 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txNome = new javax.swing.JTextField();
+        cbCategoria = new javax.swing.JComboBox();
+        lbNivel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 225));
@@ -344,11 +358,22 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        cbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione>>", " " }));
+        cbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCategoriaActionPerformed(evt);
+            }
+        });
+
+        lbNivel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        lbNivel1.setText("Nivel pertencente:*");
 
         javax.swing.GroupLayout pnCadastroLayout = new javax.swing.GroupLayout(pnCadastro);
         pnCadastro.setLayout(pnCadastroLayout);
@@ -357,14 +382,19 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCadastroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnCadastroLayout.createSequentialGroup()
                         .addComponent(lbNivel)
-                        .addGap(54, 54, 54))
-                    .addComponent(cbNiveis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(32, 32, 32)
+                        .addComponent(lbNivel1))
+                    .addGroup(pnCadastroLayout.createSequentialGroup()
+                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnCadastroLayout.setVerticalGroup(
@@ -373,13 +403,15 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lbNivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbNivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbNivel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cbNiveis)
-                    .addComponent(txNome))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCategoria)
+                    .addComponent(cbNiveis))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -634,6 +666,10 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbNiveisActionPerformed
 
+    private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCategoriaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -682,6 +718,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private static javax.swing.JButton btnRemover;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox cbCategoria;
     private javax.swing.JComboBox cbDica;
     private javax.swing.JComboBox cbNiveis;
     private javax.swing.JLabel jLabel1;
@@ -689,6 +726,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbNivel;
+    private javax.swing.JLabel lbNivel1;
     private javax.swing.JPanel pnBotoes;
     private javax.swing.JPanel pnCadastro;
     private static javax.swing.JTable tabela;

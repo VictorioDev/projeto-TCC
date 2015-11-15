@@ -55,6 +55,58 @@ public class PerguntaDao {
 //                + "ORDER BY p.nome";
 //        }
 //    }
+    
+    
+    public static List<PerguntaBean> RetornaPerguntasSO(String nivel, String categoria) throws SQLException {
+        List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
+        Connection conexao = Conexao.getConexao();
+       String sql = "SELECT"
+                    + " p.idPergunta,"
+                    + " p.descricao,"
+                    + " n.idNivel,"
+                    + " n.descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao"
+                    + " FROM "
+                    + "Pergunta p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria AND "
+                    + "n.descricao = '" + nivel + "' "
+                    + "AND c.descricao = '" + categoria + "' "
+                    + "ORDER BY p.descricao";
+         System.err.println("Sql: "+sql);
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+             NivelBean n = new NivelBean();
+            n.setIdNivel(rs.getInt("idNivel"));
+            n.setDescricao(rs.getString("n.descricao"));
+
+            CategoriaBean cat = new CategoriaBean();
+            cat.setIdCategoria(rs.getInt("idCategoria"));
+            cat.setDescricao(rs.getString("c.descricao"));
+
+            PerguntaBean plv = new PerguntaBean();
+            plv.setIdPergunta(rs.getInt("idPergunta"));
+            plv.setDescricao(rs.getString("p.descricao"));
+            plv.setNivel(n);
+            plv.setCategoria(cat);
+            listaPl.add(plv);
+        }
+        rs.close();
+        stmt.close();
+        conexao.close();
+
+        return listaPl;
+
+    }
+     
+    
+    
+    
     public static PerguntaBean RetornaPerguntas(PerguntaBean per) throws SQLException {
         PerguntaBean pe = new PerguntaBean();
 //        String sql = "select * from Pergunta where descricao like'" + per.getDescricao() + "%'"; 

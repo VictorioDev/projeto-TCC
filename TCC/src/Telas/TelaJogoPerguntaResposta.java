@@ -8,13 +8,16 @@ package Telas;
 import Bean.AlternativaBean;
 import Bean.JogadorBean;
 import Bean.NivelBean;
+import Bean.PalavraBean;
 import Bean.PerguntaBean;
 import Bean.PerguntaJogadaBean;
 import Dao.AlternativaDao;
 import Dao.JogadorDao;
 import Dao.NivelDao;
+import Dao.PalavraDao;
 import Dao.PerguntaDao;
 import Dao.PerguntaJogadaDAO;
+import static Telas.Telajogo.listapalavrass;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
@@ -87,6 +90,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         initComponents();
         jtxaPergunta.setEditable(false);
         iconesBotoes();
+        PopulaListaPalavras();
         SorteiaPergunta();
         Configura();
         Contador cont = new Contador(lbTempo);
@@ -115,11 +119,31 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
     }
 
+    private void PopulaListaPalavras(){
+        try {
+            for (int i = 0; i < util.UtilObjetos.listaNiveisPJogar.size(); i++) {
+                for (int k = 0; k < util.UtilObjetos.listaCategoriasPJogar.size(); k++) {
+                    List<PerguntaBean> listaTemp = PerguntaDao.RetornaPerguntasSO(util.UtilObjetos.listaNiveisPJogar.get(i), util.UtilObjetos.listaCategoriasPJogar.get(k));
+                    for (PerguntaBean plv : listaTemp) {
+                        System.err.println("Nivel:" + plv.getNivel().getDescricao());
+                        System.err.println("Categoria: " + plv.getCategoria().getDescricao());
+                        System.err.println("Pergunta: " + plv.getDescricao());
+                        System.err.println("--------------------------------------------------------------------------");
+                        listaperguntas.add(plv);
+                    }
+                }
+
+            }
+           //listapalavrass = PalavraDao.RetornaPalavrasSP();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public String SorteiaPergunta() {
 
         p = new PerguntaBean();
         try {
-            listaperguntas = PerguntaDao.RetornaPerguntas();
+            //listaperguntas = PerguntaDao.RetornaPerguntas();
             Random ram = new Random();
             indicePergunta = ram.nextInt(listaperguntas.size());
             p = listaperguntas.get(indicePergunta);

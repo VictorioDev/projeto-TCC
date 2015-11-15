@@ -18,6 +18,7 @@ public class PalavraBean {
     private DicaBean dica;
     private NivelBean nivel; 
     private List<DicaBean> dicas;
+    private CategoriaBean categoria;
     
     
     /**
@@ -72,6 +73,20 @@ public class PalavraBean {
      */
     public void setNivel(NivelBean nivel) {
         this.nivel = nivel;
+    }
+
+    /**
+     * @return the categoria
+     */
+    public CategoriaBean getCategoria() {
+        return categoria;
+    }
+
+    /**
+     * @param categoria the categoria to set
+     */
+    public void setCategoria(CategoriaBean categoria) {
+        this.categoria = categoria;
     }
 
     

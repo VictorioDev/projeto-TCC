@@ -5,9 +5,11 @@
  */
 package Telas;
 
+import Bean.CategoriaBean;
 import Bean.DicaBean;
 import Bean.NivelBean;
 import Bean.PalavraBean;
+import Dao.CategoriaDao;
 import Dao.DicaDao;
 import Dao.NivelDao;
 import Dao.PalavraDao;
@@ -34,9 +36,10 @@ import util.UtilInterface;
  */
 public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
-    private List<PalavraBean> listapalavras;
+    private List<PalavraBean> listaPalavras;
     private List<NivelBean> listaNiveis;
-    private List<DicaBean> listadc;
+    private List<DicaBean> listaDicas;
+    private List<CategoriaBean> listaCategorias;
 
     /**
      * Creates new form TelaPesquisaPalavra
@@ -65,30 +68,31 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         txDescricaoPalavra.setFont(UtilInterface.FONTE_PADRAO);
         cbNiveis.setFont(UtilInterface.FONTE_PADRAO);
         cbFiltro.setFont(UtilInterface.FONTE_PADRAO);
+        cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
     }
     
     private void atualizaTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPesquisaPalavra.getModel();
         modelo.setNumRows(0);
         try {
-            listapalavras = PalavraDao.retornaPlvs(retornaObjeto(), cbNiveis.getSelectedItem().toString());
-            for (PalavraBean p : listapalavras) {
-                listadc = DicaDao.RetornaDicas(p);
+            listaPalavras = PalavraDao.retornaPlvs(retornaObjeto(), cbNiveis.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString());
+            for (PalavraBean p : listaPalavras) {
+                listaDicas = DicaDao.RetornaDicas(p);
                 modelo.addRow(new Object[]{
                     p.getNome(),
-                    p.getNivel().getDescricao(), listadc.size()
+                    p.getNivel().getDescricao(), p.getCategoria().getDescricao(),listaDicas.size()
                 });
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        if (listapalavras.size() == 0) {
+        if (listaPalavras.size() == 0) {
             txMensagemDeRetorno.setText("Não há registros!");
             txMensagemDeRetorno.setForeground(Color.red);
 
         } else {
-            if (tabelaPesquisaPalavra.getSelectedRow() == -1 || listapalavras.size() < 0) {
+            if (tabelaPesquisaPalavra.getSelectedRow() == -1 || listaPalavras.size() < 0) {
                 btnAlterar.setEnabled(false);
                 btnExcluir.setEnabled(false);
 
@@ -116,6 +120,14 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
     private void populaCombo() throws SQLException {
         listaNiveis = NivelDao.RetornaNiveis();
+        listaCategorias = CategoriaDao.retornaCategoria();
+        
+        cbCategoria.removeAllItems();
+        cbCategoria.addItem("<<Tudo>>");
+        for (CategoriaBean c : listaCategorias) {
+            cbCategoria.addItem(c.getDescricao());
+        }
+        
         cbNiveis.removeAllItems();;
         cbNiveis.addItem("<<Tudo>>");
         for (NivelBean n : listaNiveis) {
@@ -134,7 +146,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
+        pnTudo = new javax.swing.JPanel();
         lbNomePalavra = new javax.swing.JLabel();
         txDescricaoPalavra = new javax.swing.JTextField();
         btnPesquisar = new javax.swing.JButton();
@@ -149,6 +161,8 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         txMensagemDeRetorno = new javax.swing.JLabel();
         cbNiveis = new javax.swing.JComboBox();
         cbFiltro = new javax.swing.JLabel();
+        cbCategoria = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -162,11 +176,11 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 225));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 1, 12))); // NOI18N
-        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        pnTudo.setBackground(new java.awt.Color(153, 153, 225));
+        pnTudo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 1, 12))); // NOI18N
+        pnTudo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel1MouseMoved(evt);
+                pnTudoMouseMoved(evt);
             }
         });
 
@@ -192,7 +206,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Palavra(s) ", "Nivel", "NumDicas"
+                "Palavra(s) ", "Nivel", "Categoria", "NumDicas"
             }
         ));
         tabelaPesquisaPalavra.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -252,59 +266,70 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
         cbFiltro.setText("Filtro:");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Tudo>>" }));
+
+        jLabel1.setText("Categoria:");
+
+        javax.swing.GroupLayout pnTudoLayout = new javax.swing.GroupLayout(pnTudo);
+        pnTudo.setLayout(pnTudoLayout);
+        pnTudoLayout.setHorizontalGroup(
+            pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTudoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txDescricaoPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbNomePalavra))
+                    .addGroup(pnTudoLayout.createSequentialGroup()
+                        .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbNomePalavra)
+                            .addComponent(txDescricaoPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cbNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbFiltro))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnTudoLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(pnTudoLayout.createSequentialGroup()
+                                .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnTudoLayout.setVerticalGroup(
+            pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTudoLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbNomePalavra)
-                    .addComponent(cbFiltro))
+                    .addComponent(cbFiltro)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txDescricaoPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnTudo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnTudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -339,7 +364,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         int opc = JOptionPane.showConfirmDialog(null, "Deseja realmente alterar esta dica?");
         if (opc == JOptionPane.YES_OPTION) {
-            PalavraBean p = listapalavras.get(tabelaPesquisaPalavra.getSelectedRow());
+            PalavraBean p = listaPalavras.get(tabelaPesquisaPalavra.getSelectedRow());
             try {
                 new TelaCadastroPalavra(this, true, p).setVisible(true);
             } catch (SQLException ex) {
@@ -350,7 +375,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        PalavraBean p = listapalavras.get(tabelaPesquisaPalavra.getSelectedRow());
+        PalavraBean p = listaPalavras.get(tabelaPesquisaPalavra.getSelectedRow());
 
         try {
             PalavraDao.ExcluiPalavras(p);
@@ -407,10 +432,10 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formMouseMoved
 
-    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+    private void pnTudoMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnTudoMouseMoved
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jPanel1MouseMoved
+    }//GEN-LAST:event_pnTudoMouseMoved
 
     private PalavraBean retornaObjeto() {
         PalavraBean pl = new PalavraBean();
@@ -460,14 +485,16 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnNovaPalavra;
     private javax.swing.JButton btnPesquisar;
+    private javax.swing.JComboBox cbCategoria;
     private javax.swing.JLabel cbFiltro;
     private javax.swing.JComboBox cbNiveis;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbNomePalavra;
+    private javax.swing.JPanel pnTudo;
     private javax.swing.JTable tabelaPesquisaPalavra;
     private javax.swing.JTextField txDescricaoPalavra;
     private javax.swing.JLabel txMensagemDeRetorno;

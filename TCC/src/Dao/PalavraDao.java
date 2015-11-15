@@ -5,9 +5,11 @@
  */
 package Dao;
 
+import Bean.CategoriaBean;
 import Bean.DicaBean;
 import Bean.NivelBean;
 import Bean.PalavraBean;
+import Bean.PerguntaBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,11 +44,12 @@ public class PalavraDao {
 
     public static void salvarPalavra(PalavraBean palavra) throws SQLException {
 
-        String sql = "insert into Palavra (nome,idNivel) values (?,?)";
+        String sql = "insert into Palavra (nome,idNivel,idCategoria) values (?,?,?)";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setString(1, palavra.getNome());
         stmt.setInt(2, palavra.getNivel().getIdNivel());
+        stmt.setInt(3, palavra.getCategoria().getIdCategoria());
         stmt.execute();
         stmt.close();
 
@@ -107,37 +110,181 @@ public class PalavraDao {
         return listaPl;
 
     }
+    
+     public static List<PalavraBean> RetornaPalavrasSO(String nivel, String categoria) throws SQLException {
+        List<PalavraBean> listaPl = new ArrayList<PalavraBean>();
+        Connection conexao = Conexao.getConexao();
+       String sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome,"
+                    + " n.idNivel,"
+                    + " n.descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria AND "
+                    + "n.descricao = '" + nivel + "' "
+                    + "AND c.descricao = '" + categoria + "' "
+                    + "ORDER BY p.nome";
+         System.err.println("Sql: "+sql);
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+             NivelBean n = new NivelBean();
+            n.setIdNivel(rs.getInt("idNivel"));
+            n.setDescricao(rs.getString("descricao"));
 
-    public static List<PalavraBean> retornaPlvs(PalavraBean pl, String filtro) throws SQLException {
+            CategoriaBean cat = new CategoriaBean();
+            cat.setIdCategoria(rs.getInt("idCategoria"));
+            cat.setDescricao(rs.getString("c.descricao"));
+
+            PalavraBean plv = new PalavraBean();
+            plv.setIdPalavra(rs.getInt("idPalavra"));
+            plv.setNome(rs.getString("nome"));
+            plv.setNivel(n);
+            plv.setCategoria(cat);
+            listaPl.add(plv);
+        }
+        rs.close();
+        stmt.close();
+        conexao.close();
+
+        return listaPl;
+
+    }
+     
+     
+     public static List<PerguntaBean> RetornaPerguntasSO(String nivel, String categoria) throws SQLException {
+        List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
+        Connection conexao = Conexao.getConexao();
+       String sql = "SELECT"
+                    + " p.idPergunta,"
+                    + " p.descricao,"
+                    + " n.idNivel,"
+                    + " n.descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao"
+                    + " FROM "
+                    + "Pergunta p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria AND "
+                    + "n.descricao = '" + nivel + "' "
+                    + "AND c.descricao = '" + categoria + "' "
+                    + "ORDER BY p.nome";
+         System.err.println("Sql: "+sql);
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+             NivelBean n = new NivelBean();
+            n.setIdNivel(rs.getInt("idNivel"));
+            n.setDescricao(rs.getString("descricao"));
+
+            CategoriaBean cat = new CategoriaBean();
+            cat.setIdCategoria(rs.getInt("idCategoria"));
+            cat.setDescricao(rs.getString("c.descricao"));
+
+            PerguntaBean plv = new PerguntaBean();
+            plv.setIdPergunta(rs.getInt("idPergunta"));
+            plv.setDescricao(rs.getString("p.descricao"));
+            plv.setNivel(n);
+            plv.setCategoria(cat);
+            listaPl.add(plv);
+        }
+        rs.close();
+        stmt.close();
+        conexao.close();
+
+        return listaPl;
+
+    }
+     
+     
+
+    public static List<PalavraBean> retornaPlvs(PalavraBean pl, String filtroNivel, String filtroCategoria) throws SQLException {
         List<PalavraBean> listaPl = new ArrayList<PalavraBean>();
         String sql = null;
-        if (filtro.equalsIgnoreCase("<<Tudo>>")) {
+        if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
             sql = "SELECT"
                     + " p.idPalavra,"
                     + " p.nome,"
                     + " n.idNivel,"
-                    + " n.descricao"
+                    + " n.descricao,"
+                    + " c.idCategoria,"
+                    + " c.descricao"
                     + " FROM "
                     + "Palavra p,"
-                    + "Nivel n "
+                    + "Nivel n, "
+                    + "Categoria c "
                     + "WHERE "
-                    + "p.idNivel = n.idNivel"
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria"
                     + " AND p.nome like'" + pl.getNome() + "%'"
                     + "ORDER BY p.nome";
+            System.err.println(sql);
+        } else if (!filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome,"
+                    + " n.idNivel,"
+                    + " n.descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria "
+                    + "AND p.nome like'" + pl.getNome() + "%' and n.descricao = '" + filtroNivel + "' "
+                    + "ORDER BY p.nome";
+            System.err.println(sql);
+        } else if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && !filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome,"
+                    + " n.idNivel,"
+                    + " n.descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria "
+                    + "AND p.nome like'" + pl.getNome() + "%' and c.descricao = '" + filtroCategoria + "' "
+                    + "ORDER BY p.nome";
+            System.err.println(sql);
         } else {
 
             sql = "SELECT"
                     + " p.idPalavra,"
                     + " p.nome,"
                     + " n.idNivel,"
-                    + " n.descricao"
+                    + " n.descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao"
                     + " FROM "
                     + "Palavra p,"
-                    + "Nivel n "
+                    + "Nivel n, "
+                    + "Categoria c "
                     + "WHERE "
-                    + "p.idNivel = n.idNivel"
-                    + " AND p.nome like'" + pl.getNome() + "%' and n.descricao = '" + filtro + "'"
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria "
+                    + "AND p.nome like'" + pl.getNome() + "%' and n.descricao = '" + filtroNivel + "' "
+                    + "AND c.descricao = '" + filtroCategoria + "' "
                     + "ORDER BY p.nome";
+            System.err.println(sql);
         }
 
         Connection conexao = Conexao.getConexao();
@@ -149,10 +296,15 @@ public class PalavraDao {
             n.setIdNivel(rs.getInt("idNivel"));
             n.setDescricao(rs.getString("descricao"));
 
+            CategoriaBean cat = new CategoriaBean();
+            cat.setIdCategoria(rs.getInt("idCategoria"));
+            cat.setDescricao(rs.getString("c.descricao"));
+
             PalavraBean plv = new PalavraBean();
             plv.setIdPalavra(rs.getInt("idPalavra"));
             plv.setNome(rs.getString("nome"));
             plv.setNivel(n);
+            plv.setCategoria(cat);
 
             listaPl.add(plv);
 
@@ -225,9 +377,8 @@ public class PalavraDao {
         ResultSet rs = stmt.executeQuery();
         return rs;
     }
-    
-    
-    public static ResultSet RetornaPalavrasEAlternativasRs(PalavraBean p) throws SQLException{
+
+    public static ResultSet RetornaPalavrasEAlternativasRs(PalavraBean p) throws SQLException {
         String sql = "select p.nome as descricaoPalavra, d.texto, d.nomeDica, d.som, d.imagem from palavra p inner join dica d on d.idPalavra = p.idPalavra order by descricaoPalavra";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);

@@ -95,11 +95,13 @@ public class Telajogo extends javax.swing.JFrame {
     private boolean canEnableButton = false;
 
     public Telajogo() {
+
         initComponents();
         //setSize(1200, 650);
         setResizable(true);
         DefineIcones();
         PreeencherCampos(util.UtilObjetos.jogadorLogado);
+        PopulaListaPalavras();
         configIni();
 
     }
@@ -252,7 +254,7 @@ public class Telajogo extends javax.swing.JFrame {
     private void ComprarDica(PalavraBean p, String tipo) {
         System.err.println("Numero de dicas em texto: " + numDicaTexto);
         System.err.println("Numero de dicas em imagem: " + numDicaImagem);
-        System.err.println("NUmero de dicas em som: "+numDicaSom);
+        System.err.println("NUmero de dicas em som: " + numDicaSom);
         DicaBean d = new DicaBean();
         int acept = JOptionPane.showConfirmDialog(null, "Tem certeza? Isso ira lhe custar 5 pontos.");
         if (acept == JOptionPane.YES_OPTION) {
@@ -292,7 +294,7 @@ public class Telajogo extends javax.swing.JFrame {
                 ImageIcon i = new ImageIcon("src\\imgUsers\\imdica.jpg");
                 i.setImage(i.getImage().getScaledInstance(500, 500, 100));
                 JLabel label = new JLabel(i);
-               // label.setSize(800, 800);
+                // label.setSize(800, 800);
                 JOptionPane.showMessageDialog(null, label, "Preste atenção", 1);
                 numDicaImagem--;
 
@@ -322,14 +324,31 @@ public class Telajogo extends javax.swing.JFrame {
         HabilitaBotaoCompra();
     }
 
-    public String SorteiaPalavra() {
-
+    private void PopulaListaPalavras() {
         try {
-            listapalavrass = PalavraDao.RetornaPalavrasSP();
+            for (int i = 0; i < util.UtilObjetos.listaNiveisPJogar.size(); i++) {
+                for (int k = 0; k < util.UtilObjetos.listaCategoriasPJogar.size(); k++) {
+                    List<PalavraBean> listaTemp = PalavraDao.RetornaPalavrasSO(util.UtilObjetos.listaNiveisPJogar.get(i), util.UtilObjetos.listaCategoriasPJogar.get(k));
+                    for (PalavraBean plv : listaTemp) {
+                        System.err.println("Nivel:" + plv.getNivel().getDescricao());
+                        System.err.println("Categoria: " + plv.getCategoria().getDescricao());
+                        System.err.println("Palavra: " + plv.getNome());
+                        System.err.println("--------------------------------------------------------------------------");
+                        listapalavrass.add(plv);
+                    }
+                }
+
+            }
+            //listapalavrass = PalavraDao.RetornaPalavrasSP();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String SorteiaPalavra() {
+
         Random ram = new Random();
+        System.err.println("Tamanho: " + listapalavrass.size());
         indicePalavra = ram.nextInt(listapalavrass.size());
         p = listapalavrass.get(indicePalavra);
         palavraa = p.getNome();
@@ -538,8 +557,6 @@ public class Telajogo extends javax.swing.JFrame {
         }.start();
 
     }
-    
-   
 
     /**
      *
