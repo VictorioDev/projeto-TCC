@@ -142,6 +142,8 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
         p4.setBackground(new java.awt.Color(153, 153, 225));
 
+        txCategoria.setToolTipText("Redija a categoria desejada (ou as primeiras letras desta) para a pesquisa");
+
         btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btPesquisar.setText("Pesquisar");
         btPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -275,6 +277,8 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
         // TODO add your handling code here:
+        lbCategoria.setForeground(Color.black);
+        lbMensg.setText("");
         new TelaNovaCategoria(null, true).setVisible(true);
     }//GEN-LAST:event_btNovoActionPerformed
 
@@ -316,6 +320,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
         if (txCategoria.getText().length() > 1) {
             AtualizaTabCategoria();
         } else {
+            lbCategoria.setForeground(Color.red);
             lbMensg.setText("A pesquisa deve ter ao menos 2 carcateres");
             lbMensg.setForeground(Color.red);
             DefaultTableModel modelo = (DefaultTableModel) tabelaCategoria.getModel();

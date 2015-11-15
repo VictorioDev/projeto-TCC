@@ -32,7 +32,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
      * Creates new form TelaPesquisaJogadores
      */
     public static List<JogadorBean> listaj = new ArrayList<JogadorBean>();
-    
+
     public TelaPesquisaJogadores(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -41,7 +41,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         configuraComponentes();
         setLocationRelativeTo(null);
     }
-    
+
     private void configuraComponentes() {
         btnNovaPalavra.setIcon(UtilInterface.ICONE_NOVO);
         btnExcluir.setIcon(UtilInterface.ICONE_DELETAR);
@@ -49,13 +49,13 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         btnAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
         btnImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
     }
-    
+
     private JogadorBean retornaObjeto() {
         JogadorBean j = new JogadorBean();
         j.setNome(txDescricaoNomejog.getText());
         return j;
     }
-    
+
     private void atualizaTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPesquisaJogadores.getModel();
         modelo.setNumRows(0);
@@ -69,23 +69,23 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         if (listaj.size() == 0) {
             lbMensagem.setText("Não há registros!");
             lbMensagem.setForeground(Color.red);
-            
+
         }
     }
-    
+
     private void VerificaBotoes() {
         if (tabelaPesquisaJogadores.getSelectedRow() == -1 || listaj.size() < 0) {
             btnAlterar.setEnabled(false);
             btnExcluir.setEnabled(false);
-            
+
         } else {
             btnAlterar.setEnabled(true);
             btnExcluir.setEnabled(true);
-            
+
         }
     }
 
@@ -122,6 +122,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         lbNomePalavra.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         lbNomePalavra.setText("Descrição:*");
 
+        txDescricaoNomejog.setToolTipText("Redija o nome do jogador desejado (ou as primeiras letras deste) para a pesquisa");
         txDescricaoNomejog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txDescricaoNomejogActionPerformed(evt);
@@ -260,6 +261,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
             atualizaTabela();
             VerificaBotoes();
         } else {
+            lbNomePalavra.setForeground(Color.red);
             lbMensagem.setText("A pesquisa deve ter ao menos 2 caracteres");
             lbMensagem.setForeground(Color.red);
             DefaultTableModel modelo = (DefaultTableModel) tabelaPesquisaJogadores.getModel();
@@ -275,12 +277,13 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnNovaPalavraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPalavraActionPerformed
+        lbNomePalavra.setForeground(Color.black);
+        lbMensagem.setText("");
         new TelaCadastroUsuario(this, true).setVisible(true);
-
     }//GEN-LAST:event_btnNovaPalavraActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        
+
         JogadorBean j = listaj.get(tabelaPesquisaJogadores.getSelectedRow());
         new TelaCadastroUsuario(this, true, j).setVisible(true);
     }//GEN-LAST:event_btnAlterarActionPerformed
@@ -295,7 +298,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Não foi");
-            
+
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -306,7 +309,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Não foi");
-            
+
         } catch (JRException ex) {
             ex.printStackTrace();
         }

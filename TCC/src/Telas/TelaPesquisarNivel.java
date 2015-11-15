@@ -143,6 +143,8 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbNivel.setText("Nível:*");
 
+        txNivel.setToolTipText("Redija nível desejado (ou as primeiras letras deste) para a pesquisa");
+
         btPesquisar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btPesquisar.setText("Pesquisar");
         btPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -279,6 +281,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         if (txNivel.getText().length() > 1) {
             AtualizaTabNivel();
         } else {
+            lbNivel.setForeground(Color.red);
             lbMensg.setText("A pesquisa deve ter ao menos 2 carcateres");
             lbMensg.setForeground(Color.red);
             DefaultTableModel modelo = (DefaultTableModel) tabelaNivel.getModel();
@@ -288,6 +291,8 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
         // TODO add your handling code here:
+        lbNivel.setForeground(Color.black);
+        lbMensg.setText("");
         new TelaNovoNivel().setVisible(true);
     }//GEN-LAST:event_btNovoActionPerformed
 
