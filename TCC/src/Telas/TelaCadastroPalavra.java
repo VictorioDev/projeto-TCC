@@ -232,7 +232,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         txNome = new javax.swing.JTextField();
         cbCategoria = new javax.swing.JComboBox();
-        lbNivel1 = new javax.swing.JLabel();
+        lbCategoria = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 225));
@@ -374,8 +374,8 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             }
         });
 
-        lbNivel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        lbNivel1.setText("Nivel pertencente:*");
+        lbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        lbCategoria.setText("Categoria pertencente:");
 
         javax.swing.GroupLayout pnCadastroLayout = new javax.swing.GroupLayout(pnCadastro);
         pnCadastro.setLayout(pnCadastroLayout);
@@ -391,7 +391,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                     .addGroup(pnCadastroLayout.createSequentialGroup()
                         .addComponent(lbNivel)
                         .addGap(32, 32, 32)
-                        .addComponent(lbNivel1))
+                        .addComponent(lbCategoria))
                     .addGroup(pnCadastroLayout.createSequentialGroup()
                         .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -406,7 +406,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lbNivel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbNivel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -727,8 +727,8 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbNivel;
-    private javax.swing.JLabel lbNivel1;
     private javax.swing.JPanel pnBotoes;
     private javax.swing.JPanel pnCadastro;
     private static javax.swing.JTable tabela;
