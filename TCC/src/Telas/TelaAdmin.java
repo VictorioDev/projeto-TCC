@@ -5,7 +5,17 @@
  */
 package Telas;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import util.UtilInterface;
 
 /**
@@ -17,15 +27,19 @@ public class TelaAdmin extends javax.swing.JDialog {
     /**
      * Creates new form TelaAdmin
      */
+    private static JLabel lb;
+    private static List<JLabel> listaLabels = new ArrayList<JLabel>();
+
     public TelaAdmin(java.awt.Frame parent, boolean modal) {
         super(parent, false);
         initComponents();
         setTitle("Adminstrador");
-        setSize(722, 449);
+        setSize(720, 320);
         ImageIcon img = new ImageIcon("src\\Telas\\imagens\\3d_bars-2560x1440.jpg");
         img.setImage(img.getImage().getScaledInstance(725, 453, 100));
-        lbFundo.setIcon(img);
+//        lbFundo.setIcon(img);
         configuraComponentes();
+
     }
 
     private void configuraComponentes() {
@@ -35,10 +49,226 @@ public class TelaAdmin extends javax.swing.JDialog {
         submenuGerenciarNiveis.setIcon(UtilInterface.ICONE_NIVEL);
         submenuGerenciarPalavras.setIcon(UtilInterface.ICONE_PALAVRA);
         submenuGerenciarPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA);
-        
+
         //Menu Jogar
-        submenuJogarForca.setIcon(UtilInterface.ICONE_FORCA);
-        submenuJogarPerguntas.setIcon(UtilInterface.ICONE_JOGOPERGUNTA);
+//        submenuJogarForca.setIcon(UtilInterface.ICONE_FORCA);
+//        submenuJogarPerguntas.setIcon(UtilInterface.ICONE_JOGOPERGUNTA);
+
+        //Botões da tela com os devidos ícones
+        for (int i = 0; i < 6; i++) {
+            lb = new JLabel("");
+            lb.setName("icone" + i);
+            lb.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+            if (i == 0) {
+                lb.setIcon(UtilInterface.ICONE_IMAGEMUSERPADRAO);
+                lb.setToolTipText("Clique para gerenciar os jogadores do sistema");
+                lb.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //new TelaPesquisaJogadores(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        new TelaPesquisaJogadores(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+            } else if (i == 1) {
+                lb.setIcon(UtilInterface.ICONE_CATEGORIA);
+                lb.setToolTipText("Clique para gerenciar as categorias do sistema");
+                lb.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        // new TelaPesquisaJogadores(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        new TelaPesquisarCategoria(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+            } else if (i == 2) {
+                lb.setIcon(UtilInterface.ICONE_NIVEL);
+                lb.setToolTipText("Clique para gerenciar os níveis do sistema");
+                lb.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //new TelaPesquisaJogadores(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        new TelaPesquisarNivel(null,true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+            } else if (i == 3) {
+                lb.setIcon(UtilInterface.ICONE_PALAVRA);
+                lb.setToolTipText("Clique para gerenciar as palavras (Jogo da Forca) do sistema");
+                lb.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //new TelaPesquisaJogadores(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        new TelaPesquisaPalavra().setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+            } else if (i == 4) {
+                lb.setIcon(UtilInterface.ICONE_PERGUNTA);
+                lb.setToolTipText("Clique para gerenciar as perguntas (Jogo de Perguntas e Respostas) do sistema");
+                lb.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //new TelaPesquisaJogadores(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        new TelaPesquisarPergunta().setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+            } else {
+                lb.setIcon(UtilInterface.ICONE_JOGAR);
+                lb.setToolTipText("Clique para ir à tela de escolha entre os jogos");
+                lb.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //new TelaPesquisaJogadores(null, true).setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        new TelaInicial().setVisible(true);
+                        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+                });
+            }
+            listaLabels.add(lb);
+            lbPn.add(lb);
+        }
+
+        //lbJogadores.setIcon(UtilInterface.ICONE_IMAGEMUSERPADRAO);
+        //lbCategorias.setIcon(UtilInterface.ICONE_CATEGORIA);
+        //lbNiveis.setIcon(UtilInterface.ICONE_NIVEL);
+        //lbPalavras.setIcon(UtilInterface.ICONE_PALAVRA);
+        //lbPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA);
+        //lbForca.setIcon(UtilInterface.ICONE_FORCA);
+//        lbJogPerguntas.setIcon(UtilInterface.ICONE_JOGOPERGUNTA);
     }
 
     /**
@@ -50,11 +280,11 @@ public class TelaAdmin extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbFundo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        lbPn = new javax.swing.JPanel();
         Menu = new javax.swing.JMenuBar();
         menuSobre = new javax.swing.JMenu();
-        submenuJogarForca = new javax.swing.JMenuItem();
-        submenuJogarPerguntas = new javax.swing.JMenuItem();
         menuGerenciar = new javax.swing.JMenu();
         submenuGerenciarJogadores = new javax.swing.JMenuItem();
         submenuGerenciarCategorias = new javax.swing.JMenuItem();
@@ -62,31 +292,61 @@ public class TelaAdmin extends javax.swing.JDialog {
         submenuGerenciarPalavras = new javax.swing.JMenuItem();
         submenuGerenciarPerguntas = new javax.swing.JMenuItem();
         menuRelatorios = new javax.swing.JMenu();
+        submenuRelatorios = new javax.swing.JMenuItem();
         menuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
-        getContentPane().add(lbFundo);
-        lbFundo.setBounds(0, 0, 720, 450);
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
+
+        jLabel1.setFont(new java.awt.Font("Monotype Corsiva", 2, 36)); // NOI18N
+        jLabel1.setText("Joga da Forca e Jogo de Perguntas e Respostas ");
+
+        lbPn.setBackground(new java.awt.Color(153, 153, 255));
+        lbPn.setLayout(new java.awt.GridLayout(1, 6));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(lbPn, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(lbPn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 720, 310);
 
         menuSobre.setText("Jogar");
-
-        submenuJogarForca.setText("Jogo da Forca");
-        submenuJogarForca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submenuJogarForcaActionPerformed(evt);
+        menuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSobreMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                menuSobreMouseReleased(evt);
             }
         });
-        menuSobre.add(submenuJogarForca);
-
-        submenuJogarPerguntas.setText("Jogo de Perguntas e Respostas");
-        submenuJogarPerguntas.addActionListener(new java.awt.event.ActionListener() {
+        menuSobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submenuJogarPerguntasActionPerformed(evt);
+                menuSobreActionPerformed(evt);
             }
         });
-        menuSobre.add(submenuJogarPerguntas);
-
         Menu.add(menuSobre);
 
         menuGerenciar.setText("Gerenciar");
@@ -144,6 +404,15 @@ public class TelaAdmin extends javax.swing.JDialog {
         Menu.add(menuGerenciar);
 
         menuRelatorios.setText("Relatórios");
+
+        submenuRelatorios.setText("Tela de Relatórios");
+        submenuRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submenuRelatoriosActionPerformed(evt);
+            }
+        });
+        menuRelatorios.add(submenuRelatorios);
+
         Menu.add(menuRelatorios);
 
         menuSair.setText("Sair");
@@ -161,6 +430,7 @@ public class TelaAdmin extends javax.swing.JDialog {
 
     private void submenuGerenciarJogadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuGerenciarJogadoresActionPerformed
         // TODO add your handling code here:
+
         new TelaPesquisaJogadores(this, true).setVisible(true);
     }//GEN-LAST:event_submenuGerenciarJogadoresActionPerformed
 
@@ -199,15 +469,23 @@ public class TelaAdmin extends javax.swing.JDialog {
         new TelaPesquisarPergunta().setVisible(true);
     }//GEN-LAST:event_submenuGerenciarPerguntasActionPerformed
 
-    private void submenuJogarForcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuJogarForcaActionPerformed
+    private void submenuRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuRelatoriosActionPerformed
         // TODO add your handling code here:
-        //new ConfiguraJogo().setVisible(true);
-    }//GEN-LAST:event_submenuJogarForcaActionPerformed
+        new TelaRelatorio(null, true).setVisible(true);
+    }//GEN-LAST:event_submenuRelatoriosActionPerformed
 
-    private void submenuJogarPerguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submenuJogarPerguntasActionPerformed
+    private void menuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSobreActionPerformed
         // TODO add your handling code here:
-        new TelaJogoPerguntaResposta().setVisible(true);
-    }//GEN-LAST:event_submenuJogarPerguntasActionPerformed
+    }//GEN-LAST:event_menuSobreActionPerformed
+
+    private void menuSobreMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSobreMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuSobreMouseReleased
+
+    private void menuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSobreMouseClicked
+        // TODO add your handling code here:
+        new TelaInicial().setVisible(true);
+    }//GEN-LAST:event_menuSobreMouseClicked
 
     /**
      * @param args the command line arguments
@@ -253,7 +531,9 @@ public class TelaAdmin extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar Menu;
-    private javax.swing.JLabel lbFundo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel lbPn;
     private javax.swing.JMenu menuGerenciar;
     private javax.swing.JMenu menuRelatorios;
     private javax.swing.JMenu menuSair;
@@ -263,7 +543,7 @@ public class TelaAdmin extends javax.swing.JDialog {
     private javax.swing.JMenuItem submenuGerenciarNiveis;
     private javax.swing.JMenuItem submenuGerenciarPalavras;
     private javax.swing.JMenuItem submenuGerenciarPerguntas;
-    private javax.swing.JMenuItem submenuJogarForca;
-    private javax.swing.JMenuItem submenuJogarPerguntas;
+    private javax.swing.JMenuItem submenuRelatorios;
     // End of variables declaration//GEN-END:variables
+
 }

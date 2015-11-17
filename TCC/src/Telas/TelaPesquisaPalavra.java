@@ -55,9 +55,10 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         VerificaBotoes();
         txDescricaoPalavra.setDocument(new LimitaCaracteres());
         configuraComponentes();
+        setLocationRelativeTo(null);
     }
 
-     private void configuraComponentes(){
+    private void configuraComponentes() {
         btnAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
         btnExcluir.setIcon(UtilInterface.ICONE_REMOVER);
         btnImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
@@ -70,7 +71,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         cbFiltro.setFont(UtilInterface.FONTE_PADRAO);
         cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
     }
-    
+
     private void atualizaTabela() {
         DefaultTableModel modelo = (DefaultTableModel) tabelaPesquisaPalavra.getModel();
         modelo.setNumRows(0);
@@ -80,7 +81,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
                 listaDicas = DicaDao.RetornaDicas(p);
                 modelo.addRow(new Object[]{
                     p.getNome(),
-                    p.getNivel().getDescricao(), p.getCategoria().getDescricao(),listaDicas.size()
+                    p.getNivel().getDescricao(), p.getCategoria().getDescricao(), listaDicas.size()
                 });
             }
         } catch (SQLException e) {
@@ -121,13 +122,13 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private void populaCombo() throws SQLException {
         listaNiveis = NivelDao.RetornaNiveis();
         listaCategorias = CategoriaDao.retornaCategoria();
-        
+
         cbCategoria.removeAllItems();
         cbCategoria.addItem("<<Tudo>>");
         for (CategoriaBean c : listaCategorias) {
             cbCategoria.addItem(c.getDescricao());
         }
-        
+
         cbNiveis.removeAllItems();;
         cbNiveis.addItem("<<Tudo>>");
         for (NivelBean n : listaNiveis) {
@@ -166,7 +167,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
         jMenuItem1.setText("jMenuItem1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Palavras");
         setBackground(new java.awt.Color(153, 153, 225));
         setResizable(false);
@@ -350,6 +351,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         } else {
             txMensagemDeRetorno.setText("A pesquisa deve ter ao menos 2 caracteres");
             txMensagemDeRetorno.setForeground(Color.red);
+            lbNomePalavra.setForeground(Color.red);
             DefaultTableModel modelo = (DefaultTableModel) tabelaPesquisaPalavra.getModel();
             modelo.setNumRows(0);
         }
@@ -357,7 +359,8 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnNovaPalavraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPalavraActionPerformed
-
+        lbNomePalavra.setForeground(Color.black);
+        txMensagemDeRetorno.setText("");
         new TelaCadastroPalavra(this, true).setVisible(true);
 
     }//GEN-LAST:event_btnNovaPalavraActionPerformed
@@ -401,8 +404,8 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         btnG.add(c2);
         panel.add(c1);
         panel.add(c2);
-        JOptionPane.showMessageDialog(null, panel,"Radio Test",JOptionPane.QUESTION_MESSAGE);
-        if(c1.isSelected()){
+        JOptionPane.showMessageDialog(null, panel, "Radio Test", JOptionPane.QUESTION_MESSAGE);
+        if (c1.isSelected()) {
             System.err.println("selecionou primeiro");
         }
         try {

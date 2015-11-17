@@ -34,6 +34,7 @@ public class TelaRelatorio extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     private boolean ValidaCampos() {
@@ -101,7 +102,7 @@ public class TelaRelatorio extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btGeraRelatorio = new javax.swing.JButton();
         txDataInicial = new javax.swing.JFormattedTextField();
         txDataFinal = new javax.swing.JFormattedTextField();
         lbDataInicial = new javax.swing.JLabel();
@@ -110,15 +111,16 @@ public class TelaRelatorio extends javax.swing.JDialog {
         lbCbRelatorio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tela de Relatórios");
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
         jPanel2.setBackground(java.awt.Color.yellow);
 
-        jButton1.setText("Gerar Relatório");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btGeraRelatorio.setText("Gerar Relatório");
+        btGeraRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btGeraRelatorioActionPerformed(evt);
             }
         });
 
@@ -128,14 +130,14 @@ public class TelaRelatorio extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(142, 142, 142)
-                .addComponent(jButton1)
+                .addComponent(btGeraRelatorio)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addComponent(btGeraRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -216,7 +218,7 @@ public class TelaRelatorio extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btGeraRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGeraRelatorioActionPerformed
         if (ValidaCampos()) {
             String arrayDIncial[] = new String[3];
             String arrayDFinal[] = new String[3];
@@ -263,7 +265,7 @@ public class TelaRelatorio extends javax.swing.JDialog {
             }
 
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btGeraRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,8 +310,8 @@ public class TelaRelatorio extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btGeraRelatorio;
     private javax.swing.JComboBox cbRelatorio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbCbRelatorio;

@@ -28,9 +28,7 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form TelaInicial
      */
-   
     public static List<JogadorBean> listaj = new ArrayList<JogadorBean>();
-   
 
     private JogadorBean jogadorLogado;
 
@@ -38,14 +36,14 @@ public class TelaInicial extends javax.swing.JFrame {
         initComponents();
         setSize(420, 410);
         setResizable(false);
-       
+        setLocationRelativeTo(null);
 
     }
 
     public TelaInicial(JogadorBean jogador) {
         initComponents();
-       setSize(420, 410);
-       //setSize(639, 442);
+        setSize(420, 410);
+        //setSize(639, 442);
         setResizable(false);
 
         jogadorLogado = jogador;
@@ -55,10 +53,9 @@ public class TelaInicial extends javax.swing.JFrame {
             Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
         }
         ImageIcon img = new ImageIcon("src/imgUsers/imgger.jpg");
-        img.setImage(img.getImage().getScaledInstance(243,219, 100));
+        img.setImage(img.getImage().getScaledInstance(243, 219, 100));
         lbImagemJog.setIcon(img);
         lbNome.setText(jogadorLogado.getNome());
-        
     }
 
     /**
@@ -77,7 +74,8 @@ public class TelaInicial extends javax.swing.JFrame {
         lbNome = new javax.swing.JLabel();
         lbImagemJog = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tela Inicial");
         setBackground(new java.awt.Color(204, 255, 204));
         getContentPane().setLayout(null);
 
@@ -169,18 +167,15 @@ public class TelaInicial extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         new ConfiguraJogo("palavra").setVisible(true);
-       
+
     }//GEN-LAST:event_btnForcaActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) throws InterruptedException {
-        
-      
-        
-        /* Set the Nimbus look and feel */
 
+        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -205,7 +200,7 @@ public class TelaInicial extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaInicial().setVisible(true);
-                
+
             }
         });
     }

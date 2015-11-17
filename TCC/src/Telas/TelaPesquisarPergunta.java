@@ -136,7 +136,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         lbMensg = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Perguntas");
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 225));
@@ -295,6 +295,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         } else {
             lbMensg.setText("A pesquisa deve ter ao menos 2 caracteres");
             lbMensg.setForeground(Color.red);
+            lbPergunta.setForeground(Color.red);
             DefaultTableModel modelo = (DefaultTableModel) tabelaPergunta.getModel();
             modelo.setNumRows(0);
         }
@@ -302,6 +303,8 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
         // TODO add your handling code here:
+        lbPergunta.setForeground(Color.black);
+        lbMensg.setText("");
         new TelaNovaPergunta(this, true).setVisible(true);
     }//GEN-LAST:event_btNovoActionPerformed
 

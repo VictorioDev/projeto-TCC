@@ -27,6 +27,8 @@ public class UtilInterface {
     public final static ImageIcon ICONE_PALAVRA = new ImageIcon("src\\icones\\palavrasicon.png");
     public final static ImageIcon ICONE_PERGUNTA = new ImageIcon("src\\icones\\questionicon.png");
     public final static ImageIcon ICONE_CATEGORIA = new ImageIcon("src\\icones\\categorieicon.png");
+    public final static ImageIcon ICONE_JOGAR = new ImageIcon("src\\icones\\icone_jogo.jpg");
+    
     
     
 
