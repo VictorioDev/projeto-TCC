@@ -18,6 +18,7 @@ public class UtilInterface {
     public final static ImageIcon ICONE_REMOVER = new ImageIcon("src\\icones\\Delete-icon16.png");
     public final static ImageIcon ICONE_RELATORIO = new ImageIcon("src\\icones\\icone-imprimir.png");
     public final static ImageIcon ICONE_IMAGEMUSERPADRAO = new ImageIcon("src\\icones\\usericon_1.png");
+    public final static ImageIcon ICONE_IMAGEMUSERPADRAO_GRANDE = new ImageIcon("src\\icones\\usericonadmin.png");
     public final static ImageIcon ICONE_FORCA = new ImageIcon("src\\icones\\forcaicone.png");
     public final static ImageIcon ICONE_JOGOPERGUNTA = new ImageIcon("src\\icones\\iconepergunta.jpg");
     public final static ImageIcon ICONE_DICASOM = new ImageIcon("src\\icones\\iconesom.png");
@@ -25,12 +26,15 @@ public class UtilInterface {
     public final static ImageIcon ICONE_DICAIMAGEM = new ImageIcon("src\\icones\\iconeimagem.png");
     public final static ImageIcon ICONE_NIVEL = new ImageIcon("src\\icones\\niveisicon.png");
     public final static ImageIcon ICONE_PALAVRA = new ImageIcon("src\\icones\\palavrasicon.png");
+    public final static ImageIcon ICONE_PALAVRA_GRANDE = new ImageIcon("src\\icones\\palavraicon72.png");
+    public final static ImageIcon ICONE_PERGUNTA_GRANDE = new ImageIcon("src\\icones\\question-icon.png");
     public final static ImageIcon ICONE_PERGUNTA = new ImageIcon("src\\icones\\questionicon.png");
-    public final static ImageIcon ICONE_CATEGORIA = new ImageIcon("src\\icones\\categorieicon.png");
-    public final static ImageIcon ICONE_JOGAR = new ImageIcon("src\\icones\\icone_jogo.jpg");
-    
-    
-    
+    public final static ImageIcon ICONE_CATEGORIA = new ImageIcon("src\\icones\\categorieicon32.png");
+    public final static ImageIcon ICONE_CATEGORIA_GRANDE = new ImageIcon("src\\icones\\categorieicon72.png");
+    public final static ImageIcon ICONE_NIVEL_GRANDE = new ImageIcon("src\\icones\\nivelicon72.png");
+    public final static ImageIcon ICONE_JOGAR = new ImageIcon("src\\icones\\playicon32.jpg");
+    public final static ImageIcon ICONE_JOGAR_GRANDE = new ImageIcon("src\\icones\\playicon72.png");
+    public final static ImageIcon ICONE_SAIR = new ImageIcon("src\\icones\\back64.png");
 
     public final static Color COR_ERRO = Color.RED;
     public final static Font FONTE_PADRAO = new Font("Comic Sans MS", 0, 12);

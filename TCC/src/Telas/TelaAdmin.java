@@ -39,6 +39,7 @@ public class TelaAdmin extends javax.swing.JDialog {
         img.setImage(img.getImage().getScaledInstance(725, 453, 100));
 //        lbFundo.setIcon(img);
         configuraComponentes();
+        //lbPn.setSize(6 * lb.getWidth(), lb.getHeight());
 
     }
 
@@ -48,7 +49,8 @@ public class TelaAdmin extends javax.swing.JDialog {
         submenuGerenciarCategorias.setIcon(UtilInterface.ICONE_CATEGORIA);
         submenuGerenciarNiveis.setIcon(UtilInterface.ICONE_NIVEL);
         submenuGerenciarPalavras.setIcon(UtilInterface.ICONE_PALAVRA);
-        submenuGerenciarPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA);
+        submenuGerenciarPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA_GRANDE);
+        lbSair.setIcon(UtilInterface.ICONE_SAIR);
 
         //Menu Jogar
 //        submenuJogarForca.setIcon(UtilInterface.ICONE_FORCA);
@@ -60,7 +62,7 @@ public class TelaAdmin extends javax.swing.JDialog {
             lb.setName("icone" + i);
             lb.setHorizontalAlignment((int) CENTER_ALIGNMENT);
             if (i == 0) {
-                lb.setIcon(UtilInterface.ICONE_IMAGEMUSERPADRAO);
+                lb.setIcon(UtilInterface.ICONE_IMAGEMUSERPADRAO_GRANDE);
                 lb.setToolTipText("Clique para gerenciar os jogadores do sistema");
                 lb.addMouseListener(new MouseListener() {
 
@@ -93,7 +95,7 @@ public class TelaAdmin extends javax.swing.JDialog {
                     }
                 });
             } else if (i == 1) {
-                lb.setIcon(UtilInterface.ICONE_CATEGORIA);
+                lb.setIcon(UtilInterface.ICONE_CATEGORIA_GRANDE);
                 lb.setToolTipText("Clique para gerenciar as categorias do sistema");
                 lb.addMouseListener(new MouseListener() {
 
@@ -116,7 +118,7 @@ public class TelaAdmin extends javax.swing.JDialog {
 
                     @Override
                     public void mouseEntered(MouseEvent e) {
-
+                           //lb.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
                         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                     }
 
@@ -126,7 +128,7 @@ public class TelaAdmin extends javax.swing.JDialog {
                     }
                 });
             } else if (i == 2) {
-                lb.setIcon(UtilInterface.ICONE_NIVEL);
+                lb.setIcon(UtilInterface.ICONE_NIVEL_GRANDE);
                 lb.setToolTipText("Clique para gerenciar os níveis do sistema");
                 lb.addMouseListener(new MouseListener() {
 
@@ -159,7 +161,7 @@ public class TelaAdmin extends javax.swing.JDialog {
                     }
                 });
             } else if (i == 3) {
-                lb.setIcon(UtilInterface.ICONE_PALAVRA);
+                lb.setIcon(UtilInterface.ICONE_PALAVRA_GRANDE);
                 lb.setToolTipText("Clique para gerenciar as palavras (Jogo da Forca) do sistema");
                 lb.addMouseListener(new MouseListener() {
 
@@ -192,7 +194,7 @@ public class TelaAdmin extends javax.swing.JDialog {
                     }
                 });
             } else if (i == 4) {
-                lb.setIcon(UtilInterface.ICONE_PERGUNTA);
+                lb.setIcon(UtilInterface.ICONE_PERGUNTA_GRANDE);
                 lb.setToolTipText("Clique para gerenciar as perguntas (Jogo de Perguntas e Respostas) do sistema");
                 lb.addMouseListener(new MouseListener() {
 
@@ -225,7 +227,7 @@ public class TelaAdmin extends javax.swing.JDialog {
                     }
                 });
             } else {
-                lb.setIcon(UtilInterface.ICONE_JOGAR);
+                lb.setIcon(UtilInterface.ICONE_JOGAR_GRANDE);
                 lb.setToolTipText("Clique para ir à tela de escolha entre os jogos");
                 lb.addMouseListener(new MouseListener() {
 
@@ -283,6 +285,7 @@ public class TelaAdmin extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lbPn = new javax.swing.JPanel();
+        lbSair = new javax.swing.JLabel();
         Menu = new javax.swing.JMenuBar();
         menuSobre = new javax.swing.JMenu();
         menuGerenciar = new javax.swing.JMenu();
@@ -301,33 +304,45 @@ public class TelaAdmin extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
         jLabel1.setFont(new java.awt.Font("Monotype Corsiva", 2, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Joga da Forca e Jogo de Perguntas e Respostas ");
 
         lbPn.setBackground(new java.awt.Color(153, 153, 255));
         lbPn.setLayout(new java.awt.GridLayout(1, 6));
+
+        lbSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbSairMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(71, 71, 71)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(lbPn, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbPn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(38, 38, 38)))
                 .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(lbPn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(lbPn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -487,6 +502,11 @@ public class TelaAdmin extends javax.swing.JDialog {
         new TelaInicial().setVisible(true);
     }//GEN-LAST:event_menuSobreMouseClicked
 
+    private void lbSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbSairMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_lbSairMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -534,6 +554,7 @@ public class TelaAdmin extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel lbPn;
+    private javax.swing.JLabel lbSair;
     private javax.swing.JMenu menuGerenciar;
     private javax.swing.JMenu menuRelatorios;
     private javax.swing.JMenu menuSair;
