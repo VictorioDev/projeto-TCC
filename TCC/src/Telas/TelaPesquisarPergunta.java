@@ -4,7 +4,11 @@
  */
 package Telas;
 
+import Bean.CategoriaBean;
+import Bean.NivelBean;
 import Bean.PerguntaBean;
+import Dao.CategoriaDao;
+import Dao.NivelDao;
 import Dao.PerguntaDao;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -36,8 +40,15 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 //    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
 //    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
 
+    
+    
     public TelaPesquisarPergunta() {
         initComponents();
+         try {
+            populaCombo();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
+        }
         TxaPergunta.setDocument(new limitadorPesquisaPergunta());
         setResizable(false);
         configuraComponentes();
@@ -48,7 +59,9 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     }
 
     private List<PerguntaBean> listaPerguntas;
-
+    private List<NivelBean> listaNiveis;
+    private List<CategoriaBean> listaCategorias;
+    
     private PerguntaBean retornaObjeto() {
         PerguntaBean pergunta = new PerguntaBean();
         pergunta.setDescricao(TxaPergunta.getText().trim());
@@ -64,7 +77,10 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         lbMensg.setFont(UtilInterface.FONTE_PADRAO);
         lbPergunta.setFont(UtilInterface.FONTE_PADRAO);
         TxaPergunta.setFont(UtilInterface.FONTE_PADRAO);
-        cbOrdenacao.setFont(UtilInterface.FONTE_PADRAO);
+        lbNivel.setFont(UtilInterface.FONTE_PADRAO);
+        lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
+        cbNivel.setFont(UtilInterface.FONTE_PADRAO);
+        cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
     }
     
     private void iconeBotoes() {
@@ -85,17 +101,33 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         }
         
     }
-    
+     private void populaCombo() throws SQLException {
+        listaNiveis = NivelDao.RetornaNiveis();
+        listaCategorias = CategoriaDao.retornaCategoria();
+
+        cbCategoria.removeAllItems();
+        cbCategoria.addItem("<<Tudo>>");
+        for (CategoriaBean c : listaCategorias) {
+            cbCategoria.addItem(c.getDescricao());
+        }
+
+        cbNivel.removeAllItems();;
+        cbNivel.addItem("<<Tudo>>");
+        for (NivelBean n : listaNiveis) {
+            cbNivel.addItem(n.getDescricao());
+
+        }
+    }
      private void AtualizaTabPergunta() {
         try {
-            listaPerguntas = PerguntaDao.RetornaPerguntas(retornaObjeto(),cbOrdenacao.getSelectedItem().toString());
+            listaPerguntas = PerguntaDao.retornaPergs(retornaObjeto(),cbNivel.getSelectedItem().toString(),cbCategoria.getSelectedItem().toString());
             DefaultTableModel modeloperg = (DefaultTableModel) tabelaPergunta.getModel();
             modeloperg.setNumRows(0);
             for (PerguntaBean per : listaPerguntas) {
                 modeloperg.addRow(new Object[]{
                     per.getDescricao(),
-                    per.getCategoria().getDescricao(),
-                    per.getNivel().getDescricao()});
+                    per.getNivel().getDescricao(),
+                    per.getCategoria().getDescricao()});
             }
 
             if (listaPerguntas.size() == 0) {
@@ -123,8 +155,8 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         TxaPergunta = new javax.swing.JTextField();
         lbPergunta = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        cbOrdenacao = new javax.swing.JComboBox();
+        lbNivel = new javax.swing.JLabel();
+        cbNivel = new javax.swing.JComboBox();
         btPesquisar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaPergunta = new javax.swing.JTable();
@@ -135,6 +167,8 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         btImprimir = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lbMensg = new javax.swing.JLabel();
+        lbCategoria = new javax.swing.JLabel();
+        cbCategoria = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Perguntas");
@@ -151,13 +185,13 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         lbPergunta.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         lbPergunta.setText("Pergunta:*");
 
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        jLabel1.setText("Ordenar:");
+        lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        lbNivel.setText("Nível:");
 
-        cbOrdenacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Pergunta", "Categoria", "Nível" }));
-        cbOrdenacao.addActionListener(new java.awt.event.ActionListener() {
+        cbNivel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Tudo>>" }));
+        cbNivel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbOrdenacaoActionPerformed(evt);
+                cbNivelActionPerformed(evt);
             }
         });
 
@@ -174,7 +208,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Pergunta(s)", "Categoria", "Nível"
+                "Pergunta(s)", "Nível", "Categoria"
             }
         ));
         tabelaPergunta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -225,6 +259,10 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 0));
         jPanel3.add(lbMensg);
 
+        lbCategoria.setText("Categoria:");
+
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Tudo>>" }));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -234,39 +272,42 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TxaPergunta)
-                            .addComponent(lbPergunta))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(lbPergunta)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(TxaPergunta))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbNivel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbCategoria)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(cbOrdenacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(20, 20, 20))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                                .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPergunta)
-                    .addComponent(jLabel1))
-                .addGap(5, 5, 5)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxaPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbOrdenacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btPesquisar))
+                    .addComponent(lbCategoria)
+                    .addComponent(lbNivel)
+                    .addComponent(lbPergunta))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbCategoria)
+                    .addComponent(cbNivel)
+                    .addComponent(TxaPergunta)
+                    .addComponent(btPesquisar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -349,14 +390,14 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btAlterarActionPerformed
 
-    private void cbOrdenacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbOrdenacaoActionPerformed
+    private void cbNivelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNivelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbOrdenacaoActionPerformed
+    }//GEN-LAST:event_cbNivelActionPerformed
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
         try {
-            Relatorio.gerarRelatorio("Relatorios\\RelatorioPergunta.jasper", PerguntaDao.retornaRs(retornaObjeto(), cbOrdenacao.getSelectedItem().toString()));
+            Relatorio.gerarRelatorio("Relatorios\\RelatorioPergunta.jasper", PerguntaDao.retornaRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
         } catch (SQLException e) {
             e.printStackTrace();
             
@@ -415,13 +456,15 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     private javax.swing.JButton btImprimir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btPesquisar;
-    private javax.swing.JComboBox cbOrdenacao;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox cbCategoria;
+    private javax.swing.JComboBox cbNivel;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbCategoria;
     private javax.swing.JLabel lbMensg;
+    private javax.swing.JLabel lbNivel;
     private javax.swing.JLabel lbPergunta;
     private javax.swing.JTable tabelaPergunta;
     // End of variables declaration//GEN-END:variables

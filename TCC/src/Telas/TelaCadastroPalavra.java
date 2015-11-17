@@ -273,10 +273,11 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         lbNomePalavra.setText("Nome:*");
 
         lbNivel.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        lbNivel.setText("Nivel pertencente:*");
+        lbNivel.setText("Nivel da palavra:*");
 
         cbNiveis.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         cbNiveis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione>>", " " }));
+        cbNiveis.setToolTipText("Selecione a categoria da palavra");
         cbNiveis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbNiveisActionPerformed(evt);
@@ -288,6 +289,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 
         cbDica.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         cbDica.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione>>", "Texto", "Imagem", "Som" }));
+        cbDica.setToolTipText("Selecione o tipo da dica");
         cbDica.setFocusable(false);
         cbDica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,6 +302,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 
         btnAdicionar.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.setToolTipText("Clique para adicionar a(s) dica(s) desejada(s)");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarActionPerformed(evt);
@@ -308,6 +311,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 
         btnRemover.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         btnRemover.setText("Remover");
+        btnRemover.setToolTipText("Clique para remover a(s) dica(s) desejada(s) ");
         btnRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoverActionPerformed(evt);
@@ -332,6 +336,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        tabela.setToolTipText("As dicas adicionadas para a palavra");
         jScrollPane1.setViewportView(tabela);
 
         pnBotoes.setBackground(java.awt.Color.yellow);
@@ -339,6 +344,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 
         btnSalvar.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.setToolTipText("Clique para salvar a palavra com sua(s) dica(s)");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -348,6 +354,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 
         btnCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Clique para cancelar esta operação");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -396,6 +403,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
 
         cbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione>>", " " }));
+        cbCategoria.setToolTipText("Selecione o nível da palavra ");
         cbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbCategoriaActionPerformed(evt);
@@ -403,7 +411,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         });
 
         lbCategoria.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        lbCategoria.setText("Categoria pertencente:");
+        lbCategoria.setText("Categoria da palavra:*");
 
         javax.swing.GroupLayout pnCadastroLayout = new javax.swing.GroupLayout(pnCadastro);
         pnCadastro.setLayout(pnCadastroLayout);

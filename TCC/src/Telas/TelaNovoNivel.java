@@ -131,6 +131,7 @@ public class TelaNovoNivel extends javax.swing.JFrame {
 
         btSalvar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btSalvar.setText("Salvar");
+        btSalvar.setToolTipText("Clique para salvar o nível");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
@@ -140,6 +141,7 @@ public class TelaNovoNivel extends javax.swing.JFrame {
 
         btCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btCancelar.setText("Cancelar");
+        btCancelar.setToolTipText("Clique para cancelar esta operação");
         btCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelarActionPerformed(evt);

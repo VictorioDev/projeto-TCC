@@ -289,7 +289,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
 
         txaPergunta.setColumns(20);
         txaPergunta.setRows(5);
-        txaPergunta.setToolTipText("Digite sua pergunta neste campo");
+        txaPergunta.setToolTipText("Digite a pergunta neste campo para o cadastro");
         txaPergunta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txaPerguntaKeyPressed(evt);
@@ -300,7 +300,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alternativas*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
 
-        txAlternativa.setToolTipText("Digite neste campo as alternativas da pergunta");
+        txAlternativa.setToolTipText("Digite as alternativas da pergunta neste campo");
         txAlternativa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txAlternativaMouseClicked(evt);
@@ -329,7 +329,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
 
         btAdd.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btAdd.setText("Adicionar");
-        btAdd.setToolTipText("Adicione uma alternativa à tabela");
+        btAdd.setToolTipText("Clique para adicionar as alternativas desejadas");
         btAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAddActionPerformed(evt);
@@ -339,7 +339,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
 
         btRemover.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btRemover.setText("Remover");
-        btRemover.setToolTipText("Remova alternativas, se necessário");
+        btRemover.setToolTipText("Clique para remover a(s) alternativa(s) desejada(s)");
         btRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btRemoverActionPerformed(evt);
@@ -355,7 +355,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
                 "Alternativa", "Situação"
             }
         ));
-        TabelaAlternativas.setToolTipText("As alternativas da pergunta acima descrita");
+        TabelaAlternativas.setToolTipText("As alternativas adicionadas para a pergunta");
         TabelaAlternativas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TabelaAlternativasMouseClicked(evt);
@@ -387,7 +387,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         );
 
         jPanel10.setBackground(new java.awt.Color(153, 153, 225));
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nível da Pergunta*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nível da pergunta*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
         jPanel10.setToolTipText("");
 
         cbNivel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione um nível>>" }));
@@ -416,7 +416,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         );
 
         jPanel11.setBackground(new java.awt.Color(153, 153, 225));
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria da Pergunta*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categoria da pergunta*", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 12))); // NOI18N
 
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione uma Categoria>>" }));
         cbCategoria.setToolTipText("Selecione a categoria da pergunta");
@@ -447,7 +447,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
 
         btSalvar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btSalvar.setText("SALVAR");
-        btSalvar.setToolTipText("Para salvar a pergunta e suas alternativas");
+        btSalvar.setToolTipText("Clique para salvar a pergunta com suas alternativas");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
@@ -457,7 +457,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
 
         btCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btCancelar.setText("CANCELAR");
-        btCancelar.setToolTipText("Para cancelar esta operação");
+        btCancelar.setToolTipText("Clique para cancelar esta operação");
         btCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelarActionPerformed(evt);

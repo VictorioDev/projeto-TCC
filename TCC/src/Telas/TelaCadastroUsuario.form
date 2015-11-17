@@ -218,6 +218,7 @@
                   </FontInfo>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Salvar"/>
+                <Property name="toolTipText" type="java.lang.String" value="Clique para salvar o jogador e seus dados"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
@@ -231,6 +232,7 @@
                   </FontInfo>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cancelar"/>
+                <Property name="toolTipText" type="java.lang.String" value="Clique para cancelar esta opera&#xe7;&#xe3;o"/>
               </Properties>
             </Component>
           </SubComponents>

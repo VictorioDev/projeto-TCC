@@ -82,12 +82,12 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="cbNiveis" min="-2" pref="106" max="-2" attributes="0"/>
-                              <Component id="cbFiltro" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbNivel" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbCategoria" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
@@ -107,8 +107,8 @@
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbNomePalavra" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cbFiltro" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbNivel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -260,9 +260,9 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="cbFiltro">
+        <Component class="javax.swing.JLabel" name="lbNivel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Filtro:"/>
+            <Property name="text" type="java.lang.String" value="N&#xed;vel:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbCategoria">
@@ -274,7 +274,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="lbCategoria">
           <Properties>
             <Property name="text" type="java.lang.String" value="Categoria:"/>
           </Properties>

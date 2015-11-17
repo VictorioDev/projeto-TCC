@@ -266,6 +266,113 @@ public class PerguntaDao {
 
     }
 
+    public static List<PerguntaBean> retornaPergs(PerguntaBean per, String filtroNivel, String filtroCategoria) throws SQLException {
+        List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
+        String sql = null;
+        if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ca.descricao as descricaoCat,"
+                    + " ca.idCategoria, "
+                    + " ni.idNivel, "
+                    + " ni.descricao as descricaoNiv "
+                    + " FROM "
+                    + " Pergunta pe, "
+                    + " Categoria ca, "
+                    + " Nivel ni "
+                    + " WHERE "
+                    + " pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                    + " pe.descricao like '" + per.getDescricao() + "%' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else if (!filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as descricaoNiv, "
+                    + " ca.idCategoria,"
+                    + " ca.descricao as descricaoCat "
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria "
+                    + " AND pe.descricao like'" + per.getDescricao() + "%' and ni.descricao = '" + filtroNivel + "' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && !filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as descricaoNiv,"
+                    + " ca.idCategoria,"
+                    + " ca.descricao as descricaoCat"
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria "
+                    + " AND pe.descricao like'" + per.getDescricao() + "%' and ca.descricao = '" + filtroCategoria + "' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else {
+
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as descricaoNiv,"
+                    + " ca.idCategoria,"
+                    + " ca.descricao as descricaoCat"
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria "
+                    + " AND pe.descricao like'" + per.getDescricao() + "%' and ni.descricao = '" + filtroNivel + "' "
+                    + " AND ca.descricao = '" + filtroCategoria + "' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        }
+
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+
+            NivelBean n = new NivelBean();
+            n.setIdNivel(rs.getInt("idNivel"));
+            n.setDescricao(rs.getString("descricaoNiv"));
+
+            CategoriaBean cat = new CategoriaBean();
+            cat.setIdCategoria(rs.getInt("idCategoria"));
+            cat.setDescricao(rs.getString("descricaoCat"));
+
+            PerguntaBean perg = new PerguntaBean();
+            perg.setIdPergunta(rs.getInt("idPergunta"));
+            perg.setDescricao(rs.getString("descricao"));
+            perg.setNivel(n);
+            perg.setCategoria(cat);
+
+            listaPl.add(perg);
+
+        }
+
+        conexao.close();
+        stmt.close();
+        rs.close();
+        return listaPl;
+    }
+
     public static List<PerguntaBean> RetornaPerguntas() throws SQLException {
         List<PerguntaBean> listaPer = new ArrayList<PerguntaBean>();
         String sql = "select * from Pergunta ";

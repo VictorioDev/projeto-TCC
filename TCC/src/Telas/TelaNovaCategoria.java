@@ -137,6 +137,7 @@ public class TelaNovaCategoria extends javax.swing.JDialog {
 
         btSalvar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btSalvar.setText("Salvar");
+        btSalvar.setToolTipText("Clique para salvar a categoria");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSalvarActionPerformed(evt);
@@ -146,6 +147,7 @@ public class TelaNovaCategoria extends javax.swing.JDialog {
 
         btCancelar.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
         btCancelar.setText("Cancelar");
+        btCancelar.setToolTipText("Clique para cancelar esta operação");
         btCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelarActionPerformed(evt);

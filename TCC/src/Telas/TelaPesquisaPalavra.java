@@ -67,8 +67,9 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         txMensagemDeRetorno.setFont(UtilInterface.FONTE_PADRAO);
         lbNomePalavra.setFont(UtilInterface.FONTE_PADRAO);
         txDescricaoPalavra.setFont(UtilInterface.FONTE_PADRAO);
+        lbNivel.setFont(UtilInterface.FONTE_PADRAO);
+        lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
         cbNiveis.setFont(UtilInterface.FONTE_PADRAO);
-        cbFiltro.setFont(UtilInterface.FONTE_PADRAO);
         cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
     }
 
@@ -161,9 +162,9 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         txMensagemDeRetorno = new javax.swing.JLabel();
         cbNiveis = new javax.swing.JComboBox();
-        cbFiltro = new javax.swing.JLabel();
+        lbNivel = new javax.swing.JLabel();
         cbCategoria = new javax.swing.JComboBox();
-        jLabel1 = new javax.swing.JLabel();
+        lbCategoria = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -266,11 +267,11 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
 
         cbNiveis.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Tudo>>" }));
 
-        cbFiltro.setText("Filtro:");
+        lbNivel.setText("Nível:");
 
         cbCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Tudo>>" }));
 
-        jLabel1.setText("Categoria:");
+        lbCategoria.setText("Categoria:");
 
         javax.swing.GroupLayout pnTudoLayout = new javax.swing.GroupLayout(pnTudo);
         pnTudo.setLayout(pnTudoLayout);
@@ -289,11 +290,11 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbNiveis, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbFiltro))
+                            .addComponent(lbNivel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnTudoLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lbCategoria)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(pnTudoLayout.createSequentialGroup()
                                 .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,8 +307,8 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbNomePalavra)
-                    .addComponent(cbFiltro)
-                    .addComponent(jLabel1))
+                    .addComponent(lbNivel)
+                    .addComponent(lbCategoria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnTudoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txDescricaoPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -490,13 +491,13 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
     private javax.swing.JButton btnNovaPalavra;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JComboBox cbCategoria;
-    private javax.swing.JLabel cbFiltro;
     private javax.swing.JComboBox cbNiveis;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbCategoria;
+    private javax.swing.JLabel lbNivel;
     private javax.swing.JLabel lbNomePalavra;
     private javax.swing.JPanel pnTudo;
     private javax.swing.JTable tabelaPesquisaPalavra;

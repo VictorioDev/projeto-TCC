@@ -202,6 +202,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
         btnSalvar.setFont(btnSalvar.getFont().deriveFont(btnSalvar.getFont().getSize()+1f));
         btnSalvar.setText("Salvar");
+        btnSalvar.setToolTipText("Clique para salvar o jogador e seus dados");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -211,6 +212,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
         btnCancelar.setFont(btnCancelar.getFont().deriveFont(btnCancelar.getFont().getSize()+1f));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Clique para cancelar esta operação");
         jPanel2.add(btnCancelar);
 
         btnEnvImagem.setFont(btnEnvImagem.getFont().deriveFont(btnEnvImagem.getFont().getSize()+1f));
