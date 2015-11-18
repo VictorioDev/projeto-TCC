@@ -49,7 +49,8 @@ public class TelaAdmin extends javax.swing.JDialog {
         submenuGerenciarCategorias.setIcon(UtilInterface.ICONE_CATEGORIA);
         submenuGerenciarNiveis.setIcon(UtilInterface.ICONE_NIVEL);
         submenuGerenciarPalavras.setIcon(UtilInterface.ICONE_PALAVRA);
-        submenuGerenciarPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA_GRANDE);
+        submenuGerenciarPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA);
+        submenuRelatorios.setIcon(UtilInterface.ICONE_RELATORIO);
         lbSair.setIcon(UtilInterface.ICONE_SAIR);
 
         //Menu Jogar
@@ -305,11 +306,12 @@ public class TelaAdmin extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Monotype Corsiva", 2, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Joga da Forca e Jogo de Perguntas e Respostas ");
+        jLabel1.setText("Jogo da Forca e Jogo de Perguntas e Respostas ");
 
         lbPn.setBackground(new java.awt.Color(153, 153, 255));
         lbPn.setLayout(new java.awt.GridLayout(1, 6));
 
+        lbSair.setToolTipText("Clique para sair da Tela");
         lbSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbSairMouseClicked(evt);
@@ -327,7 +329,7 @@ public class TelaAdmin extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbPn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(38, 38, 38)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbSair, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)

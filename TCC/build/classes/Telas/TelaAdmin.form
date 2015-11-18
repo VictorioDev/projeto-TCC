@@ -138,7 +138,7 @@
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="52" max="32767" attributes="0"/>
+                  <EmptySpace pref="53" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -168,7 +168,7 @@
               <Font name="Monotype Corsiva" size="36" style="2"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Joga da Forca e Jogo de Perguntas e Respostas "/>
+            <Property name="text" type="java.lang.String" value="Jogo da Forca e Jogo de Perguntas e Respostas "/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="lbPn">
@@ -184,6 +184,9 @@
           </Layout>
         </Container>
         <Component class="javax.swing.JLabel" name="lbSair">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Clique para sair da Tela"/>
+          </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbSairMouseClicked"/>
           </Events>
