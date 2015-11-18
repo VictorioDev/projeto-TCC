@@ -290,7 +290,6 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         btResponder = new javax.swing.JButton();
         btPular1 = new javax.swing.JButton();
-        btRanking = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         txAcertos = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
@@ -373,7 +372,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         });
 
         btPular1.setBackground(new java.awt.Color(153, 153, 153));
-        btPular1.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
+        btPular1.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         btPular1.setForeground(new java.awt.Color(255, 51, 51));
         btPular1.setText("PULAR");
         btPular1.addActionListener(new java.awt.event.ActionListener() {
@@ -382,36 +381,23 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             }
         });
 
-        btRanking.setBackground(new java.awt.Color(153, 153, 153));
-        btRanking.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-        btRanking.setForeground(new java.awt.Color(255, 51, 51));
-        btRanking.setText("RANKING");
-        btRanking.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRankingActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btResponder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(btRanking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btPular1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btResponder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btPular1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addComponent(btResponder, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btPular1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btResponder, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                    .addComponent(btPular1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 225));
@@ -596,7 +582,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(pnPaiDeTodos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnPaiDeTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -630,10 +616,6 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             f++;
         }
     }//GEN-LAST:event_btResponderActionPerformed
-
-    private void btRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRankingActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btRankingActionPerformed
 
     private void btPular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPular1ActionPerformed
         // TODO add your handling code here:
@@ -694,7 +676,6 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPular1;
-    private javax.swing.JButton btRanking;
     private javax.swing.JButton btResponder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList jList1;

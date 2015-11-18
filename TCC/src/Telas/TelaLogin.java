@@ -65,7 +65,7 @@ public class TelaLogin extends javax.swing.JDialog {
         pnCampos.setBackground(new java.awt.Color(153, 153, 255));
 
         lbLogin.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
-        lbLogin.setText("Login:*");
+        lbLogin.setText("Usuário:*");
 
         txLogin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -111,17 +111,16 @@ public class TelaLogin extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnCamposLayout.createSequentialGroup()
-                        .addComponent(lbLogin)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txLogin))
+                        .addComponent(pnBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 1, Short.MAX_VALUE))
                     .addGroup(pnCamposLayout.createSequentialGroup()
+                        .addGroup(pnCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbLogin)
+                            .addComponent(lbSenha))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnCamposLayout.createSequentialGroup()
-                                .addComponent(lbSenha)
-                                .addGap(1, 1, 1)
-                                .addComponent(txSenha))
-                            .addComponent(pnBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 1, Short.MAX_VALUE)))
+                            .addComponent(txSenha)
+                            .addComponent(txLogin))))
                 .addContainerGap())
         );
         pnCamposLayout.setVerticalGroup(
