@@ -28,16 +28,20 @@ NumVezesJogadas desc]]>
 		<band/>
 	</background>
 	<title>
-		<band height="72">
+		<band height="100">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="1a821e9e-565a-4de3-8fa7-7a3e301c9bdd"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="1a821e9e-565a-4de3-8fa7-7a3e301c9bdd"/>
 				<staticText>
-					<reportElement x="0" y="0" width="297" height="92" forecolor="#FFFFFF" uuid="9c61fa89-b5f6-40c3-9988-b040068a897e"/>
+					<reportElement x="298" y="0" width="297" height="92" forecolor="#000000" uuid="9c61fa89-b5f6-40c3-9988-b040068a897e"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Pergunta(s) mais jogada(s)]]></text>
 				</staticText>
+				<image>
+					<reportElement x="0" y="0" width="232" height="120" uuid="5279dd61-abcb-4ce9-b04e-748fb32de752"/>
+					<imageExpression><![CDATA["ifpr.jpg"]]></imageExpression>
+				</image>
 			</frame>
 		</band>
 	</title>
@@ -50,14 +54,14 @@ NumVezesJogadas desc]]>
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="900fced1-0730-47d8-9924-be2f9e7d3bbb"/>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="24de9ce4-0f8c-498c-bb18-1a09c88f28f8"/>
+				<reportElement mode="Opaque" x="0" y="0" width="277" height="20" forecolor="#33CC04" backcolor="#F0F0F0" uuid="24de9ce4-0f8c-498c-bb18-1a09c88f28f8"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Descricao]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="277" y="0" width="277" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b7664be2-9809-45c9-a480-98e50e7b313a"/>
+				<reportElement mode="Opaque" x="277" y="0" width="277" height="20" forecolor="#33CC04" backcolor="#F0F0F0" uuid="b7664be2-9809-45c9-a480-98e50e7b313a"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -107,6 +111,23 @@ NumVezesJogadas desc]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="260">
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="0" width="554" height="260" uuid="e5577d26-c8f7-4c5d-9364-c3abb014c31a"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{descricao}]]></keyExpression>
+					<valueExpression><![CDATA[$F{NumVezesJogadas}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
 	</summary>
 </jasperReport>

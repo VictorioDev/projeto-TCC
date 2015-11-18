@@ -31,16 +31,20 @@ ORDER BY
 		<band/>
 	</background>
 	<title>
-		<band height="72">
+		<band height="100">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="435951e9-0b26-473e-8627-9ab3a3d8f0a3"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="435951e9-0b26-473e-8627-9ab3a3d8f0a3"/>
 				<staticText>
-					<reportElement x="0" y="0" width="313" height="92" forecolor="#FFFFFF" uuid="e7d508c6-98c8-4cba-bcee-c1698d2ea044"/>
+					<reportElement x="282" y="0" width="313" height="92" forecolor="#000000" uuid="e7d508c6-98c8-4cba-bcee-c1698d2ea044"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Palavra(s) mais acertada(s)]]></text>
 				</staticText>
+				<image>
+					<reportElement x="0" y="0" width="232" height="120" uuid="097d3a41-9b53-498f-b2a5-6810410f0a85"/>
+					<imageExpression><![CDATA["ifpr.jpg"]]></imageExpression>
+				</image>
 			</frame>
 		</band>
 	</title>
@@ -53,21 +57,21 @@ ORDER BY
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="9ba3e98d-b020-4946-83c8-b5ad20e1eb48"/>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="61ad7c72-a8d5-4223-a412-2b52e8fa1d88"/>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#33CC04" backcolor="#F0F0F0" uuid="61ad7c72-a8d5-4223-a412-2b52e8fa1d88"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="2b5326bd-b44e-47db-ba70-37374daebf0c"/>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#33CC04" backcolor="#F0F0F0" uuid="2b5326bd-b44e-47db-ba70-37374daebf0c"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[QtdeAcertos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9d26d18e-7682-4176-811e-159d3ccdef21"/>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#33CC04" backcolor="#F0F0F0" uuid="9d26d18e-7682-4176-811e-159d3ccdef21"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -124,6 +128,23 @@ ORDER BY
 		</band>
 	</pageFooter>
 	<summary>
-		<band/>
+		<band height="260">
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="0" width="555" height="260" uuid="b0778665-7ae7-49ef-882e-dd837e569896"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{nome}]]></keyExpression>
+					<valueExpression><![CDATA[$F{QtdeAcertos}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
 	</summary>
 </jasperReport>

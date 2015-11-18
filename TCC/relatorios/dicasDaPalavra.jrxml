@@ -14,23 +14,13 @@
 		<groupExpression><![CDATA[$F{descricaoPalavra}]]></groupExpression>
 		<groupHeader>
 			<band height="33">
-				<line>
-					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="d82b24b3-02d4-4688-86d1-94a6262e4255"/>
-				</line>
 				<textField>
-					<reportElement mode="Opaque" x="152" y="1" width="403" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="f28e9a0b-756b-494b-82e2-3258c919625d"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
+					<reportElement mode="Opaque" x="0" y="1" width="555" height="32" forecolor="#006699" backcolor="#FFFFFF" uuid="f28e9a0b-756b-494b-82e2-3258c919625d"/>
+					<textElement verticalAlignment="Middle">
 						<font size="24" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descricaoPalavra}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement mode="Opaque" x="0" y="0" width="152" height="33" forecolor="#666666" backcolor="#E6E6E6" uuid="764664ca-6aa1-4d25-8cf6-106a7cac691d"/>
-					<textElement>
-						<font size="12"/>
-					</textElement>
-					<text><![CDATA[Dicas]]></text>
-				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -41,23 +31,20 @@
 		<band/>
 	</background>
 	<title>
-		<band height="72">
+		<band height="100">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="d3ca46d7-f035-43fe-9d40-708eb93fbead"/>
+				<reportElement mode="Opaque" x="-20" y="-22" width="595" height="120" backcolor="#FFFFFF" uuid="d3ca46d7-f035-43fe-9d40-708eb93fbead"/>
 				<staticText>
-					<reportElement x="0" y="0" width="277" height="92" forecolor="#FFFFFF" uuid="41569a36-8096-4e56-9353-88ca09c87301"/>
+					<reportElement x="318" y="0" width="277" height="92" forecolor="#000000" uuid="41569a36-8096-4e56-9353-88ca09c87301"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Palavras e suas dicas]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="d4b482ff-ecf2-45d8-ad89-21b38b41920d"/>
-					<textElement textAlignment="Right">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Add a description here]]></text>
-				</staticText>
+				<image>
+					<reportElement x="0" y="0" width="232" height="120" uuid="1f42c572-851f-4f0a-ae64-6680ad79b6fd"/>
+					<imageExpression><![CDATA["ifpr.jpg"]]></imageExpression>
+				</image>
 			</frame>
 		</band>
 	</title>
@@ -70,8 +57,8 @@
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="7db022f6-ad9f-46ce-8fbe-070869adc6e1"/>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3f3afe56-0710-481d-b67c-b6e7c45bfbb9"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="20" forecolor="#33CC04" backcolor="#F0F0F0" uuid="3f3afe56-0710-481d-b67c-b6e7c45bfbb9"/>
+				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Palavra]]></text>
@@ -79,14 +66,11 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="3de7e0f0-5cb6-4c56-843b-3e13e4c95101"/>
-			</line>
+		<band height="40">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="555" height="20" uuid="6bd79311-3136-4b51-b057-55ae669cab60"/>
+				<reportElement x="0" y="0" width="555" height="40" uuid="6bd79311-3136-4b51-b057-55ae669cab60"/>
 				<textElement>
-					<font size="14"/>
+					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nomeDica}]]></textFieldExpression>
 			</textField>
