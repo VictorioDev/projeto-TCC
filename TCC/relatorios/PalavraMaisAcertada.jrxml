@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
+	<queryString>
 		<![CDATA[SELECT
 	p.idPalavra,
 	p.nome,
@@ -18,13 +18,18 @@ FROM
 WHERE
 	pj.idPalavra = p.idPalavra
 GROUP BY
-	pj.idPalavra
+	p.idPalavra
 ORDER BY
  QtdeAcertos desc]]>
 	</queryString>
+	<field name="idPalavra" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="nome" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="NumVezesJogadas" class="java.lang.Long"/>
+	<field name="DataJogo" class="java.lang.String"/>
 	<field name="QtdeAcertos" class="java.math.BigDecimal"/>
 	<field name="MediaPalpites" class="java.math.BigDecimal"/>
 	<background>

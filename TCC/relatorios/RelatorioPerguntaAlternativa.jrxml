@@ -22,7 +22,7 @@ FROM
 					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="b25606ce-2732-4bd3-a01e-63df676c0aaa"/>
 				</line>
 				<textField>
-					<reportElement mode="Opaque" x="26" y="0" width="278" height="33" forecolor="#006699" backcolor="#FFFFFF" uuid="d4ecac15-c257-4ac5-80e3-0465621d00e9"/>
+					<reportElement mode="Opaque" x="26" y="0" width="529" height="33" forecolor="#006699" backcolor="#FFFFFF" uuid="d4ecac15-c257-4ac5-80e3-0465621d00e9"/>
 					<textElement>
 						<font size="24" isBold="true"/>
 					</textElement>
@@ -94,11 +94,7 @@ FROM
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="c81717f4-22c8-45d2-8ff7-9811dda9304c"/>
-			</line>
-		</band>
+		<band height="20"/>
 	</detail>
 	<columnFooter>
 		<band/>

@@ -64,7 +64,7 @@ FROM
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="f01262dc-0d9f-407e-9d63-40c04dfba1db"/>
 				<staticText>
-					<reportElement x="268" y="0" width="327" height="92" forecolor="#000000" uuid="9f8b032b-6038-4e5b-9d44-29799de2f150"/>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="9f8b032b-6038-4e5b-9d44-29799de2f150"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
