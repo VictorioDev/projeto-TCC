@@ -103,7 +103,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         txNome.setDocument(new LimitaCaracteres());
         txNomeUser.setDocument(new LimitaCaracteres());
         configuraComponentes();
-        setResizable(false);
+        setResizable(true);
     }
 
     public TelaCadastroUsuario(java.awt.Dialog parent, boolean modal, JogadorBean j) {
@@ -129,7 +129,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         txNomeUser.setText(j.getLogin());
         txEmail.setText(j.getEmail());
         try {
-            util.VoltaImagemJPG.Desconvertimg(j.getImgUser());
+            util.VoltaImagemJPG.Desconvertimg(j.getImgUser(), "src/imgUsers/imgger.jpg");
         } catch (IOException ex) {
             Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,20 +298,18 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lbImagemUser, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -375,10 +373,18 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             btnCam.setText("Tirar");
         } else {
 
+            isAction = false;
+            myThread.runnable = false;
+            btnCam.setText("Webcam");
+            Imgcodecs.imwrite("src/imgUsers/imgger.jpg", frame);
+            ImageIcon im = new ImageIcon("src/imgUsers/imgger.jpg");
+            im.setImage(im.getImage().getScaledInstance(148, 136, 100));
+            imageReturn = im;
+            lbImagemUser.setIcon(im);
 //            int accept = jFileChooser1.showSaveDialog(this);
 //            if (accept == JFileChooser.APPROVE_OPTION) {
 //                File file = jFileChooser1.getSelectedFile();
-//                Imgcodecs.imwrite(file.getPath(), frame);
+//                Imgcodecs.imwrite("src/Telas/imagens/imguser.jpg", frame);
 //            } else {
 //                System.err.println("Cancelado!");
 //            }
@@ -472,7 +478,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         int salvar = arquivoSelect.showOpenDialog(null);
         if (salvar == JFileChooser.APPROVE_OPTION) {
             ImageIcon imagemSelec = new ImageIcon(arquivoSelect.getSelectedFile().getPath());
-            imagemSelec.setImage(imagemSelec.getImage().getScaledInstance(243, 219, 100));
+            imagemSelec.setImage(imagemSelec.getImage().getScaledInstance(148, 136, 100));
             imageReturn = imagemSelec;
         }
 
@@ -482,8 +488,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         BufferedImage imagemB = ImageIO.read(new File(imageReturn.getDescription()));
         // System.out.println (imagemB);
         //REDIMENSIONAR A IMAGEM
-        int width = 148; //200
-        int height = 136;
+        int width = 500; //200
+        int height = 500;
 
         BufferedImage ImagemRedimensionada = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         ImagemRedimensionada.getGraphics().drawImage(imagemB, 0, 0, width, height, new Color(240, 240, 240), null);

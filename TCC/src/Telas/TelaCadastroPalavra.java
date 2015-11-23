@@ -49,7 +49,7 @@ import util.UtilInterface;
  * @author Victório
  */
 public class TelaCadastroPalavra extends javax.swing.JDialog {
-    
+
     private boolean salvar = true;
     private JFileChooser arquivo = new JFileChooser();
     private List<String> listanomedicas = new ArrayList<String>();
@@ -74,28 +74,26 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         salvar = true;
-        acoesComponentes();
+        acoesComponentes("");
         AtualizaCombos();
-        if (listanomedicas.size() == 0) {
-            btnRemover.setEnabled(false);
-        }
+
         txNome.setDocument(new LimitaCaracteres());
         configuraComponentes();
         setLocationRelativeTo(null);
     }
-    
+
     public TelaCadastroPalavra(java.awt.Frame parent, boolean modal, PalavraBean pl) throws SQLException {
         super(parent, modal);
         initComponents();
         salvar = false;
         id = pl.getIdPalavra();
-        
-        acoesComponentes();
+
+        acoesComponentes("");
         txNome.setDocument(new LimitaCaracteres());
         configuraComponentes();
         preencherCampos(pl);
     }
-    
+
     private void configuraComponentes() {
         btnSalvar.setIcon(UtilInterface.ICONE_SALVAR);
         btnCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
@@ -105,9 +103,9 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         UtilInterface.setFontes(pnCadastro.getComponents());
         UtilInterface.setFontes(pnBotoes.getComponents());
     }
-    
+
     private void preencherCampos(PalavraBean p) throws SQLException {
-        
+
         txNome.setText(p.getNome());
         AtualizaCombos();
         cbNiveis.setSelectedItem(p.getNivel().getDescricao());
@@ -117,9 +115,9 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             listanomedicas.add(pdc.getNomeDica());
         }
         atualizaTabelaDicas();
-        
+
     }
-    
+
     private PalavraBean retornaObjetoPalavra() {
         PalavraBean palavra = new PalavraBean();
         palavra.setNome(txNome.getText().trim());
@@ -182,7 +180,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             listaniveis = NivelDao.RetornaNiveis();
             for (NivelBean n : listaniveis) {
                 cbNiveis.addItem(n.getDescricao());
-                
+
             }
             cbCategoria.removeAllItems();
             cbCategoria.addItem("<<Selecione>>");
@@ -190,13 +188,13 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             for (CategoriaBean c : listaCategorias) {
                 cbCategoria.addItem(c.getDescricao());
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(TelaCadastroPalavra.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     private boolean verificacampos() {
         boolean aux = false;
         if (txNome.getText().trim().equals("")) {
@@ -337,6 +335,14 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             }
         });
         tabela.setToolTipText("As dicas adicionadas para a palavra");
+        tabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabelaMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabela);
 
         pnBotoes.setBackground(java.awt.Color.yellow);
@@ -474,20 +480,20 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 listanomedicas.get(i)
             });
         }
-        
+
     }
-    
+
     private void PegarNome(FileNameExtensionFilter filtro) {
         arquivo.setFileFilter(filtro);
         arquivo.setAcceptAllFileFilterUsed(false);
-        
+
         arquivo.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        
+
         File file = new File("");
         String caminho_padrao = "G:";
         File pathInicial = new File(caminho_padrao);
         arquivo.setCurrentDirectory(pathInicial);
-        
+
         int salvar = arquivo.showOpenDialog(null);
         if (salvar == JFileChooser.APPROVE_OPTION) {
             ImageIcon image = new ImageIcon(arquivo.getSelectedFile().getPath());
@@ -498,17 +504,17 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             nomeDica = arquivo.getSelectedFile().getName();
             listanomedicas.add(arquivo.getSelectedFile().getName());
             atualizaTabelaDicas();
-            
+
         }
-        
+
     }
-    
+
     public byte[] converter() {
-        
+
         BufferedInputStream bis = null;
-        
+
         byte[] bFile = new byte[(int) som.length()];
-        
+
         try {
             bis = new BufferedInputStream(new FileInputStream(som));
             bis.read(bFile);
@@ -526,10 +532,10 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 e.printStackTrace();
             }
         }
-        
+
         return new byte[0];
     }
-    
+
     public byte[] ConvertImgByte() throws IOException {
         BufferedImage imagemB = ImageIO.read(new File(imagem.getDescription()));
         // System.out.println (imagemB);
@@ -545,10 +551,10 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             width = imagemB.getWidth();
             height = imagemB.getHeight();
         }
-        
+
         BufferedImage ImagemRedimensionada = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         ImagemRedimensionada.getGraphics().drawImage(imagemB, 0, 0, width, height, new Color(240, 240, 240), null);
-        
+
         ByteArrayOutputStream bytesImg = new ByteArrayOutputStream();
         ImageIO.write((BufferedImage) ImagemRedimensionada, "png", bytesImg);//seta a imagem para bytesImg 
 
@@ -559,15 +565,15 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         d.setImagem(byteArray);
         byte[] img = d.getImagem();
         return img;
-        
+
     }
-    
+
     private int posicaoImagens() {
         int tamanho = 0;
         for (int i = 0; i < listanomedicas.size(); i++) {
             listanomedicas.get(i);
         }
-        
+
         return tamanho;
     }
 
@@ -622,23 +628,23 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 dica.setImagem(ConvertImgByte());
                 dica.setNomeDica(nomeDica);
                 dica.setTipo("Imagem");
-                
+
             } catch (IOException ex) {
-                Logger.getLogger(TelaCadastroPalavra.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem!");
             }
-            acoesComponentes();
-            
+            acoesComponentes("btn");
+
         } else if (cbDica.getSelectedIndex() == 3) {
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Sons", "mp3", "WMV");
-            
+
             PegarNome(filtro);
             dica.setNomeDica(nomeDica);
             dica.setSom(converter());
             dica.setTipo("Som");
-            acoesComponentes();
+            acoesComponentes("btn");
         }
         if (cbDica.getSelectedIndex() == 1) {
-            String dicatexto = JOptionPane.showInputDialog(null,"Insira a dica!");
+            String dicatexto = JOptionPane.showInputDialog(null, "Insira a dica!");
             if (dicatexto.trim().equals("")) {
                 lbTipoDica.setForeground(Color.red);
             } else {
@@ -650,7 +656,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 if (listanomedicas.size() > 0) {
                     lbTipoDica.setForeground(Color.black);
                 }
-                acoesComponentes();
+                acoesComponentes("btn");
             }
         }
         listadc.add(dica);
@@ -687,24 +693,24 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
-        if (tabela.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Nenhuma dica selecionada para a exclusão!");
-            
-        } else {
-            int opc = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir esta dica?");
-            if (opc == JOptionPane.YES_OPTION) {
-                listanomedicas.remove(tabela.getSelectedRow());
-                listadc.remove(tabela.getSelectedRow());
-                atualizaTabelaDicas();
-                acoesComponentes();
-                
-            }
-            
+//        if (tabela.getSelectedRow() == -1) {
+//            JOptionPane.showMessageDialog(null, "Nenhuma dica selecionada para a exclusão!");
+//
+//        } else {
+        int opc = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir esta dica?");
+        if (opc == JOptionPane.YES_OPTION) {
+            listanomedicas.remove(tabela.getSelectedRow());
+            listadc.remove(tabela.getSelectedRow());
+            atualizaTabelaDicas();
+            acoesComponentes("btn");
+
         }
+
+
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void cbDicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDicaActionPerformed
-        acoesComponentes();
+        acoesComponentes("combo");
     }//GEN-LAST:event_cbDicaActionPerformed
 
     private void cbNiveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNiveisActionPerformed
@@ -714,6 +720,22 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbCategoriaActionPerformed
+
+    private void tabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseClicked
+        // TODO add your handling code here:
+        //acoesComponentes("btn");
+//        if (tabela.getSelectedRow() != -1) {
+//            btnRemover.setEnabled(true);
+//            System.err.println("Clicou");
+//        } else {
+//            btnRemover.setEnabled(false);
+//        }
+    }//GEN-LAST:event_tabelaMouseClicked
+
+    private void tabelaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMouseReleased
+        // TODO add your handling code here:
+        acoesComponentes("btn");
+    }//GEN-LAST:event_tabelaMouseReleased
 
     /**
      * @param args the command line arguments
@@ -753,7 +775,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
-                
+
             }
         });
     }
@@ -778,21 +800,46 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
     private javax.swing.JTextField txNome;
     // End of variables declaration//GEN-END:variables
 
-    private void acoesComponentes() {
-        if (listanomedicas.size() > 0) {
-            btnRemover.setEnabled(true);
-            
-        } else {
-            btnRemover.setEnabled(false);
-        }
+    private void acoesComponentes(String comp) {
+//        if (listanomedicas.size() > 0) {
+//            btnRemover.setEnabled(true);
+//            
+//        } else {
+//            btnRemover.setEnabled(false);
+//        }
         // TODO add your handling code here:
-        if (cbDica.getSelectedIndex() == 0) {
-            btnAdicionar.setEnabled(false);
-            
+
+        if (comp.equalsIgnoreCase("combo")) {
+            if (cbDica.getSelectedIndex() == 0) {
+                btnAdicionar.setEnabled(false);
+
+            } else {
+
+                btnAdicionar.setEnabled(true);
+            }
+        } else if (comp.equalsIgnoreCase("btn")) {
+            if (listanomedicas.size() > 0 && tabela.getSelectedRow() != -1) {
+                btnRemover.setEnabled(true);
+
+            } else {
+                btnRemover.setEnabled(false);
+            }
         } else {
-            
-            btnAdicionar.setEnabled(true);
+            if (cbDica.getSelectedIndex() == 0) {
+                btnAdicionar.setEnabled(false);
+
+            } else {
+
+                btnAdicionar.setEnabled(true);
+            }
+
+            if (listanomedicas.size() > 0) {
+                btnRemover.setEnabled(true);
+
+            } else {
+                btnRemover.setEnabled(false);
+            }
         }
-        
+
     }
 }

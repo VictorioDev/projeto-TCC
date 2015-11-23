@@ -38,6 +38,8 @@ public class UtilInterface {
 
     public final static Color COR_ERRO = Color.RED;
     public final static Font FONTE_PADRAO = new Font("Comic Sans MS", 0, 12);
+     public final static Font FONTE_PADRAO_ADMIN =  new Font("Comic Sans MS", 0, 25);
+    
 
     public static void setFontes(Component[] vetComp) {
         for (Component c : vetComp) {

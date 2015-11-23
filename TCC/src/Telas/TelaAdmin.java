@@ -52,7 +52,7 @@ public class TelaAdmin extends javax.swing.JDialog {
         submenuGerenciarPerguntas.setIcon(UtilInterface.ICONE_PERGUNTA);
         submenuRelatorios.setIcon(UtilInterface.ICONE_RELATORIO);
         lbSair.setIcon(UtilInterface.ICONE_SAIR);
-
+        lbTela.setFont(UtilInterface.FONTE_PADRAO_ADMIN);
         //Menu Jogar
 //        submenuJogarForca.setIcon(UtilInterface.ICONE_FORCA);
 //        submenuJogarPerguntas.setIcon(UtilInterface.ICONE_JOGOPERGUNTA);
@@ -284,7 +284,7 @@ public class TelaAdmin extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbTela = new javax.swing.JLabel();
         lbPn = new javax.swing.JPanel();
         lbSair = new javax.swing.JLabel();
         Menu = new javax.swing.JMenuBar();
@@ -304,9 +304,9 @@ public class TelaAdmin extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
-        jLabel1.setFont(new java.awt.Font("Monotype Corsiva", 2, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Jogo da Forca e Jogo de Perguntas e Respostas ");
+        lbTela.setFont(new java.awt.Font("Monotype Corsiva", 2, 36)); // NOI18N
+        lbTela.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbTela.setText("Jogo da Forca e Jogo de Perguntas e Respostas ");
 
         lbPn.setBackground(new java.awt.Color(153, 153, 255));
         lbPn.setLayout(new java.awt.GridLayout(1, 6));
@@ -325,7 +325,7 @@ public class TelaAdmin extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbTela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbPn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(38, 38, 38)))
@@ -339,7 +339,7 @@ public class TelaAdmin extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addComponent(jLabel1)
+                .addComponent(lbTela)
                 .addGap(33, 33, 33)
                 .addComponent(lbPn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -553,10 +553,10 @@ public class TelaAdmin extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar Menu;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel lbPn;
     private javax.swing.JLabel lbSair;
+    private javax.swing.JLabel lbTela;
     private javax.swing.JMenu menuGerenciar;
     private javax.swing.JMenu menuRelatorios;
     private javax.swing.JMenu menuSair;

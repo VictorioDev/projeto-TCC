@@ -45,14 +45,13 @@ public class TelaInicial extends javax.swing.JFrame {
         setSize(420, 410);
         //setSize(639, 442);
         setResizable(false);
-
         jogadorLogado = jogador;
         try {
-            util.VoltaImagemJPG.Desconvertimg(jogadorLogado.getImgUser());
+            util.VoltaImagemJPG.Desconvertimg(jogadorLogado.getImgUser(),"src/imgUsers/imgger.jpg");
         } catch (IOException ex) {
             Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ImageIcon img = new ImageIcon("src/imgUsers/imgger.jpg");
+        ImageIcon img = new ImageIcon("src\\imgUsers\\imgger.jpg");
         img.setImage(img.getImage().getScaledInstance(243, 219, 100));
         lbImagemJog.setIcon(img);
         lbNome.setText(jogadorLogado.getNome());

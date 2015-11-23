@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -99,15 +100,15 @@ public class Telajogo extends javax.swing.JFrame {
         initComponents();
         //setSize(1200, 650);
         setResizable(true);
-        DefineIcones();
-        PreeencherCampos(util.UtilObjetos.jogadorLogado);
-        PopulaListaPalavras();
+        defineIcones();
+        preeencherCampos(util.UtilObjetos.jogadorLogado);
+        populaListaPalavras();
         configIni();
 
     }
 
     //Verifica quiantidade de dicas de cada tipo e preenche o List de cada tipo de dica
-    private void VerificaDicas() {
+    private void verificaDicas() {
         List<DicaBean> listdica = new ArrayList<DicaBean>();
 
         try {
@@ -122,6 +123,8 @@ public class Telajogo extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Telajogo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // Saber a quantidade de dicas de cada tipo
         for (DicaBean d : listdica) {
             if (d.getTipo().equalsIgnoreCase("texto")) {
                 numDicaTexto += 1;
@@ -135,7 +138,7 @@ public class Telajogo extends javax.swing.JFrame {
         }
     }
 
-    private void DefineIcones() {
+    private void defineIcones() {
         util.UtilInterface.ICONE_DICATEXTO.setImage(util.UtilInterface.ICONE_DICATEXTO.getImage().getScaledInstance(32, 32, 100));
         util.UtilInterface.ICONE_DICAIMAGEM.setImage(util.UtilInterface.ICONE_DICAIMAGEM.getImage().getScaledInstance(32, 32, 100));
         util.UtilInterface.ICONE_DICASOM.setImage(util.UtilInterface.ICONE_DICASOM.getImage().getScaledInstance(32, 32, 100));
@@ -161,12 +164,12 @@ public class Telajogo extends javax.swing.JFrame {
         chances = 10;
         imageForca.setImage(imageForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
         lbImgForca.setIcon(imageForca);
-        VoltaBotoes();
+        voltaBotoes();
         tfchances.setText(chances + "");
         txPt.setText(pontosJog + "");
         pontosP = 0;
         trac = "";
-        palavrad = SorteiaPalavra().toUpperCase();
+        palavrad = sorteiaPalavra().toUpperCase();
         vetrac = new char[palavrad.length()];
         for (int i = 0; i < palavrad.length(); i++) {
             if (palavrad.charAt(i) == ' ') {
@@ -179,13 +182,13 @@ public class Telajogo extends javax.swing.JFrame {
         for (int i = 0; i < vetrac.length; i++) {
             trac += vetrac[i] + " ";
         }
-        VerificaDicas();
-        HabilitaBotaoCompra();
+        verificaDicas();
+        habilitaBotaoCompra();
         tfpalavra.setText(trac);
 
     }
 
-    private void HabilitaBotaoCompra() {
+    private void habilitaBotaoCompra() {
         if (j.getPontos() > 0) {
             canEnableButton = true;
             if (numDicaTexto > 0) {
@@ -213,13 +216,13 @@ public class Telajogo extends javax.swing.JFrame {
         }
     }
 
-    private void PreeencherCampos(JogadorBean j) {
+    private void preeencherCampos(JogadorBean j) {
         tfnome.setText(j.getNome());
         txPt.setText(j.getPontos() + "");
 
     }
 
-    private void VoltaBotoes() {
+    private void voltaBotoes() {
         btnQ.setEnabled(true);
         btnW.setEnabled(true);
         btnE.setEnabled(true);
@@ -251,7 +254,7 @@ public class Telajogo extends javax.swing.JFrame {
         btnL.setEnabled(true);
     }
 
-    private void ComprarDica(PalavraBean p, String tipo) {
+    private void comprarDica(PalavraBean p, String tipo) {
         System.err.println("Numero de dicas em texto: " + numDicaTexto);
         System.err.println("Numero de dicas em imagem: " + numDicaImagem);
         System.err.println("NUmero de dicas em som: " + numDicaSom);
@@ -287,7 +290,7 @@ public class Telajogo extends javax.swing.JFrame {
                 d = listaDicaImagem.get(indice);
                 listaDicaImagem.remove(indice);
                 try {
-                    util.VoltaImagemJPG.Desconvertimg(d.getImagem());
+                    util.VoltaImagemJPG.Desconvertimg(d.getImagem(),"src/imgUsers/imdica.jpg");
                 } catch (IOException ex) {
                     Logger.getLogger(Telajogo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -313,7 +316,7 @@ public class Telajogo extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(Telajogo.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                TocarSom("src\\Sons\\dicaSom.mp3");
+                tocarSom("src\\Sons\\dicaSom.mp3");
                 numDicaSom--;
             }
 
@@ -321,10 +324,10 @@ public class Telajogo extends javax.swing.JFrame {
 
         System.err.println("Numero de dicas em texto: " + numDicaTexto);
         System.err.println("Numero de dicas em imagem: " + numDicaImagem);
-        HabilitaBotaoCompra();
+        habilitaBotaoCompra();
     }
 
-    private void PopulaListaPalavras() {
+    private void populaListaPalavras() {
         try {
             for (int i = 0; i < util.UtilObjetos.listaNiveisPJogar.size(); i++) {
                 for (int k = 0; k < util.UtilObjetos.listaCategoriasPJogar.size(); k++) {
@@ -345,7 +348,7 @@ public class Telajogo extends javax.swing.JFrame {
         }
     }
 
-    public String SorteiaPalavra() {
+    public String sorteiaPalavra() {
 
         Random ram = new Random();
         System.err.println("Tamanho: " + listapalavrass.size());
@@ -355,7 +358,7 @@ public class Telajogo extends javax.swing.JFrame {
         return palavraa;
     }
 
-    private void AtualizaImagemForca(int chances) {
+    private void atualizaImagemForca(int chances) {
         if (chances == 9) {
             imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca1.jpg");
             imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
@@ -396,18 +399,37 @@ public class Telajogo extends javax.swing.JFrame {
         }
     }
 
-    private void AumentaPontos() {
+    private void aumentaPontos() {
         pontosJog += 5;
         j.setPontos(pontosJog);
     }
 
-    public void AtualizaCampoPalavra(char palpite) {
+    public static char removerAcentos(String str) {
+        str = Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        return str.charAt(0);
+    }
+
+    public void atualizaCampoPalavra(char palpite) {
         boolean certo = false;
         trac = "";
 
-        for (int i = 0; i < palavrad.length(); i++) {
-            if (palavrad.charAt(i) == palpite) {
-                vetrac[i] = palpite;
+        //funcionando
+//        for (int i = 0; i < palavrad.length(); i++) {
+//            if (palavrad.charAt(i) == palpite) {
+//                vetrac[i] = palpite;
+//                pontosP++;
+//                certo = true;
+//            } else {
+//                contaErr++;
+//            }
+//
+//        }
+        
+        
+        //modificado
+         for (int i = 0; i < palavrad.length(); i++) {
+            if (removerAcentos(palavrad.charAt(i)+"") == palpite) {
+                vetrac[i] = palavrad.charAt(i);
                 pontosP++;
                 certo = true;
             } else {
@@ -415,8 +437,9 @@ public class Telajogo extends javax.swing.JFrame {
             }
 
         }
+        
         if (certo) {
-            TocarSom("src\\Sons\\Street Fighter sound Hadouken.mp3");
+            tocarSom("src\\Sons\\Street Fighter sound Hadouken.mp3");
         }
         if (contaErr == palavrad.length()) {
             chances--;
@@ -426,7 +449,7 @@ public class Telajogo extends javax.swing.JFrame {
 
         }
         System.err.println(chances);
-        AtualizaImagemForca(chances);
+        atualizaImagemForca(chances);
 //        if (chances == 9) {
 //            imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca1.jpg");
 //            imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(200, 200, 100));
@@ -454,7 +477,7 @@ public class Telajogo extends javax.swing.JFrame {
             j.setPontos(pontosJog);
             try {
                 JogadorDao.UpdatePontos(j);
-                PalavraJogadaDAO.SalvarPalavraJogada(RetornaObjeto());
+                PalavraJogadaDAO.SalvarPalavraJogada(retornaObjeto());
 
             } catch (SQLException ex) {
                 Logger.getLogger(Telajogo.class
@@ -475,10 +498,10 @@ public class Telajogo extends javax.swing.JFrame {
             System.out.println(tempoGasto);
             JOptionPane.showMessageDialog(null, "Parabens você acertou a palavra!");
             acertou = true;
-            AumentaPontos();
+            aumentaPontos();
             try {
                 JogadorDao.UpdatePontos(j);
-                PalavraJogadaDAO.SalvarPalavraJogada(RetornaObjeto());
+                PalavraJogadaDAO.SalvarPalavraJogada(retornaObjeto());
 
             } catch (SQLException ex) {
                 Logger.getLogger(Telajogo.class
@@ -493,7 +516,7 @@ public class Telajogo extends javax.swing.JFrame {
         //txPt.setText(pontosJog + "");
     }
 
-    private PalavraJogadaBean RetornaObjeto() {
+    private PalavraJogadaBean retornaObjeto() {
         PalavraJogadaBean pjb = new PalavraJogadaBean();
         pjb.setJogador(util.UtilObjetos.jogadorLogado);
         pjb.setPalavra(p);
@@ -530,7 +553,7 @@ public class Telajogo extends javax.swing.JFrame {
 //
 //        System.out.println(imageFile.getPath());
 //    }
-    public void TocarSom(String url) {
+    public void tocarSom(String url) {
 
         new Thread("Tocando") {
             @Override
@@ -1073,7 +1096,7 @@ public class Telajogo extends javax.swing.JFrame {
 
     private void btnQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQActionPerformed
         btnQ.setEnabled(false);
-        AtualizaCampoPalavra('Q');
+        atualizaCampoPalavra('Q');
         contPalpites++;
 
     }//GEN-LAST:event_btnQActionPerformed
@@ -1081,21 +1104,21 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAActionPerformed
         // TODO add your handling code here:
         btnA.setEnabled(false);
-        AtualizaCampoPalavra('A');
+        atualizaCampoPalavra('A');
         contPalpites++;
     }//GEN-LAST:event_btnAActionPerformed
 
     private void btnZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZActionPerformed
         // TODO add your handling code here:
         btnZ.setEnabled(false);
-        AtualizaCampoPalavra('Z');
+        atualizaCampoPalavra('Z');
         contPalpites++;
     }//GEN-LAST:event_btnZActionPerformed
 
     private void btnWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWActionPerformed
         // TODO add your handling code here:
         btnW.setEnabled(false);
-        AtualizaCampoPalavra('W');
+        atualizaCampoPalavra('W');
         contPalpites++;
 
     }//GEN-LAST:event_btnWActionPerformed
@@ -1103,7 +1126,7 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSActionPerformed
         // TODO add your handling code here:
         btnS.setEnabled(false);
-        AtualizaCampoPalavra('S');
+        atualizaCampoPalavra('S');
         contPalpites++;
 
     }//GEN-LAST:event_btnSActionPerformed
@@ -1111,7 +1134,7 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXActionPerformed
         // TODO add your handling code here:
         btnX.setEnabled(false);
-        AtualizaCampoPalavra('X');
+        atualizaCampoPalavra('X');
         contPalpites++;
 
     }//GEN-LAST:event_btnXActionPerformed
@@ -1119,7 +1142,7 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEActionPerformed
         // TODO add your handling code here:
         btnE.setEnabled(false);
-        AtualizaCampoPalavra('E');
+        atualizaCampoPalavra('E');
         contPalpites++;
 
     }//GEN-LAST:event_btnEActionPerformed
@@ -1127,28 +1150,28 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDActionPerformed
         // TODO add your handling code here:
         btnD.setEnabled(false);
-        AtualizaCampoPalavra('D');
+        atualizaCampoPalavra('D');
         contPalpites++;
     }//GEN-LAST:event_btnDActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
         // TODO add your handling code here:
         btnC.setEnabled(false);
-        AtualizaCampoPalavra('C');
+        atualizaCampoPalavra('C');
         contPalpites++;
     }//GEN-LAST:event_btnCActionPerformed
 
     private void btnRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRActionPerformed
         // TODO add your handling code here:
         btnR.setEnabled(false);
-        AtualizaCampoPalavra('R');
+        atualizaCampoPalavra('R');
         contPalpites++;
     }//GEN-LAST:event_btnRActionPerformed
 
     private void btnFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFActionPerformed
         // TODO add your handling code here:
         btnF.setEnabled(false);
-        AtualizaCampoPalavra('F');
+        atualizaCampoPalavra('F');
         contPalpites++;
 
 
@@ -1157,28 +1180,28 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVActionPerformed
         // TODO add your handling code here:
         btnV.setEnabled(false);
-        AtualizaCampoPalavra('V');
+        atualizaCampoPalavra('V');
         contPalpites++;
     }//GEN-LAST:event_btnVActionPerformed
 
     private void btnTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTActionPerformed
         // TODO add your handling code here:
         btnT.setEnabled(false);
-        AtualizaCampoPalavra('T');
+        atualizaCampoPalavra('T');
         contPalpites++;
     }//GEN-LAST:event_btnTActionPerformed
 
     private void btnGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGActionPerformed
         // TODO add your handling code here:
         btnG.setEnabled(false);
-        AtualizaCampoPalavra('G');
+        atualizaCampoPalavra('G');
         contPalpites++;
     }//GEN-LAST:event_btnGActionPerformed
 
     private void btnBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBActionPerformed
         // TODO add your handling code here:
         btnB.setEnabled(false);
-        AtualizaCampoPalavra('B');
+        atualizaCampoPalavra('B');
         contPalpites++;
 
     }//GEN-LAST:event_btnBActionPerformed
@@ -1186,7 +1209,7 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnYActionPerformed
         // TODO add your handling code here:
         btnY.setEnabled(false);
-        AtualizaCampoPalavra('Y');
+        atualizaCampoPalavra('Y');
         contPalpites++;
 
     }//GEN-LAST:event_btnYActionPerformed
@@ -1194,7 +1217,7 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHActionPerformed
         // TODO add your handling code here:
         btnH.setEnabled(false);
-        AtualizaCampoPalavra('H');
+        atualizaCampoPalavra('H');
         contPalpites++;
 
     }//GEN-LAST:event_btnHActionPerformed
@@ -1202,70 +1225,70 @@ public class Telajogo extends javax.swing.JFrame {
     private void btnNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNActionPerformed
         // TODO add your handling code here:
         btnN.setEnabled(false);
-        AtualizaCampoPalavra('N');
+        atualizaCampoPalavra('N');
         contPalpites++;
     }//GEN-LAST:event_btnNActionPerformed
 
     private void btnUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUActionPerformed
         // TODO add your handling code here:
         btnU.setEnabled(false);
-        AtualizaCampoPalavra('U');
+        atualizaCampoPalavra('U');
         contPalpites++;
     }//GEN-LAST:event_btnUActionPerformed
 
     private void btnJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJActionPerformed
         // TODO add your handling code here:
         btnJ.setEnabled(false);
-        AtualizaCampoPalavra('J');
+        atualizaCampoPalavra('J');
         contPalpites++;
     }//GEN-LAST:event_btnJActionPerformed
 
     private void btnMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMActionPerformed
         // TODO add your handling code here:
         btnM.setEnabled(false);
-        AtualizaCampoPalavra('M');
+        atualizaCampoPalavra('M');
         contPalpites++;
     }//GEN-LAST:event_btnMActionPerformed
 
     private void btnIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIActionPerformed
         // TODO add your handling code here:
         btnI.setEnabled(false);
-        AtualizaCampoPalavra('I');
+        atualizaCampoPalavra('I');
         contPalpites++;
     }//GEN-LAST:event_btnIActionPerformed
 
     private void btnKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKActionPerformed
         // TODO add your handling code here:
         btnK.setEnabled(false);
-        AtualizaCampoPalavra('K');
+        atualizaCampoPalavra('K');
         contPalpites++;
     }//GEN-LAST:event_btnKActionPerformed
 
     private void btnOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOActionPerformed
         // TODO add your handling code here:
         btnO.setEnabled(false);
-        AtualizaCampoPalavra('O');
+        atualizaCampoPalavra('O');
         contPalpites++;
     }//GEN-LAST:event_btnOActionPerformed
 
     private void btnÇActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnÇActionPerformed
         // TODO add your handling code here:
         btnÇ.setEnabled(false);
-        AtualizaCampoPalavra('Ç');
+        atualizaCampoPalavra('Ç');
         contPalpites++;
     }//GEN-LAST:event_btnÇActionPerformed
 
     private void btnLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLActionPerformed
         // TODO add your handling code here:
         btnL.setEnabled(false);
-        AtualizaCampoPalavra('L');
+        atualizaCampoPalavra('L');
         contPalpites++;
     }//GEN-LAST:event_btnLActionPerformed
 
     private void btnPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPActionPerformed
         // TODO add your handling code here:
         btnP.setEnabled(false);
-        AtualizaCampoPalavra('P');
+        atualizaCampoPalavra('P');
         contPalpites++;
 
     }//GEN-LAST:event_btnPActionPerformed
@@ -1331,8 +1354,8 @@ public class Telajogo extends javax.swing.JFrame {
     private void lbTextoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTextoMouseClicked
         // TODO add your handling code here:
         if (numDicaTexto > 0 && canEnableButton) {
-            ComprarDica(p, "texto");
-            HabilitaBotaoCompra();
+            comprarDica(p, "texto");
+            habilitaBotaoCompra();
         }
 
 
@@ -1341,8 +1364,8 @@ public class Telajogo extends javax.swing.JFrame {
     private void lbImagemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbImagemMouseClicked
         // TODO add your handling code here:
         if (numDicaImagem > 0 && canEnableButton) {
-            ComprarDica(p, "imagem");
-            HabilitaBotaoCompra();
+            comprarDica(p, "imagem");
+            habilitaBotaoCompra();
         }
 
     }//GEN-LAST:event_lbImagemMouseClicked
@@ -1350,8 +1373,8 @@ public class Telajogo extends javax.swing.JFrame {
     private void lbSomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbSomMouseClicked
         // TODO add your handling code here:
         if (numDicaSom > 0 && canEnableButton) {
-            ComprarDica(p, "som");
-            HabilitaBotaoCompra();
+            comprarDica(p, "som");
+            habilitaBotaoCompra();
 
         }
     }//GEN-LAST:event_lbSomMouseClicked

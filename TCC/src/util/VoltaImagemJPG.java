@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
@@ -22,7 +23,7 @@ import javax.imageio.stream.ImageInputStream;
  * @author Victorio
  */
 public class VoltaImagemJPG {
-     public static void Desconvertimg(byte[] bytes) throws IOException{
+     public static void Desconvertimg(byte[] bytes, String caminho) throws IOException{
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         Iterator<?> readers = ImageIO.getImageReadersByFormatName("png");
  
@@ -45,7 +46,9 @@ public class VoltaImagemJPG {
         Graphics2D g2 = bufferedImage.createGraphics();
         g2.drawImage(image, null, null);
         
-        File imageFile = new File("src/imgUsers/imdica.jpg");
+        //File imageFile = new File("src/imgUsers/imdica.jpg");
+        File imageFile = new File(caminho);
+       
         ImageIO.write(bufferedImage, "jpg", imageFile);
  
         System.out.println(imageFile.getPath());
