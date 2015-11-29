@@ -22,7 +22,7 @@ import util.Conexao;
 public class JogadorDao {
 
     public static void SalvarJogador(JogadorBean j) throws SQLException {
-        String sql = "insert into Jogador (nome,login,senha,email,imagemJogador,pontos) values (?,?,password(?),?,?,0)";
+        String sql = "insert into Jogador (nome,login,senha,email,imagemJogador,pontos,sexo) values (?,?,password(?),?,?,0,?)";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setString(1, j.getNome());
@@ -30,6 +30,7 @@ public class JogadorDao {
         stmt.setString(3, j.getPassword());
         stmt.setString(4, j.getEmail());
         stmt.setBytes(5, j.getImgUser());
+        stmt.setString(6, j.getSexo());
 
         stmt.execute();
         stmt.close();

@@ -103,7 +103,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         txNome.setDocument(new LimitaCaracteres());
         txNomeUser.setDocument(new LimitaCaracteres());
         configuraComponentes();
-        setResizable(true);
+        setSize(481,460);
+        setResizable(false);
     }
 
     public TelaCadastroUsuario(java.awt.Dialog parent, boolean modal, JogadorBean j) {
@@ -113,6 +114,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         id = j.getIdJogador();
         PreencherCampos(j);
         configuraComponentes();
+        setSize(481,460);
         setResizable(false);
 
     }
@@ -122,6 +124,10 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         btnCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
         UtilInterface.setFontes(jPanel1.getComponents());
         UtilInterface.setFontes(jPanel2.getComponents());
+        webSource = new VideoCapture(0);
+        if(webSource != null){
+            btnCam.setEnabled(true);
+        }
     }
 
     public void PreencherCampos(JogadorBean j) {
@@ -161,9 +167,12 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnEnvImagem = new javax.swing.JButton();
         txNome = new javax.swing.JTextField();
         lbNome = new javax.swing.JLabel();
+        lbSexo = new javax.swing.JLabel();
+        cbSexo = new javax.swing.JComboBox();
+        jPanel3 = new javax.swing.JPanel();
+        btnEnvImagem = new javax.swing.JButton();
         btnCam = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -183,7 +192,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         txSenha.setToolTipText(" Digite sua senha de login neste campo");
 
         lbEmail.setFont(lbEmail.getFont().deriveFont(lbEmail.getFont().getSize()+1f));
-        lbEmail.setText("Email:*");
+        lbEmail.setText("Email:");
 
         txEmail.setToolTipText("Digite seu email neste campo. No formato: meuemail@email.com");
         txEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -215,6 +224,19 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         btnCancelar.setToolTipText("Clique para cancelar esta operação");
         jPanel2.add(btnCancelar);
 
+        txNome.setToolTipText("Digite seu nome neste campo (preferencialmente o nome completo)");
+
+        lbNome.setFont(lbNome.getFont().deriveFont(lbNome.getFont().getSize()+1f));
+        lbNome.setText("Nome:*");
+
+        lbSexo.setText("Sexo:*");
+
+        cbSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<<Selecione>>", "Masculino", "Feminino" }));
+
+        jPanel3.setBackground(new java.awt.Color(153, 153, 255));
+        jPanel3.setForeground(new java.awt.Color(153, 153, 255));
+        jPanel3.setLayout(new java.awt.GridLayout(2, 1));
+
         btnEnvImagem.setFont(btnEnvImagem.getFont().deriveFont(btnEnvImagem.getFont().getSize()+1f));
         btnEnvImagem.setText("Enviar Imagem");
         btnEnvImagem.addActionListener(new java.awt.event.ActionListener() {
@@ -222,18 +244,16 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                 btnEnvImagemActionPerformed(evt);
             }
         });
-
-        txNome.setToolTipText("Digite seu nome neste campo (preferencialmente o nome completo)");
-
-        lbNome.setFont(lbNome.getFont().deriveFont(lbNome.getFont().getSize()+1f));
-        lbNome.setText("Nome:*");
+        jPanel3.add(btnEnvImagem);
 
         btnCam.setText("webcam");
+        btnCam.setEnabled(false);
         btnCam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCamActionPerformed(evt);
             }
         });
+        jPanel3.add(btnCam);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -246,25 +266,27 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                         .addComponent(lbNome)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txNome, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txConfirmSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
-                            .addComponent(lbNameUser, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbsenha, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbSenhaConfirm, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txNomeUser, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txSenha, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txNome)
+                            .addComponent(txConfirmSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                            .addComponent(lbNameUser)
+                            .addComponent(lbEmail)
+                            .addComponent(lbsenha)
+                            .addComponent(lbSenhaConfirm)
+                            .addComponent(txNomeUser)
+                            .addComponent(txEmail)
+                            .addComponent(txSenha)
+                            .addComponent(lbSexo)
+                            .addComponent(cbSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lbImagemUser, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                            .addComponent(btnEnvImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnCam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(31, 31, 31))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +294,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(lbNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -280,25 +302,28 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txNomeUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbSexo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbEmail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbsenha)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEnvImagem))
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbSenhaConfirm)
-                            .addComponent(btnCam))
+                        .addComponent(txSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txConfirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbImagemUser, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(lbSenhaConfirm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txConfirmSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbImagemUser, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -363,7 +388,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     private void btnCamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCamActionPerformed
         // TODO add your handling code here:
         if (!isAction) {
-            webSource = new VideoCapture(0); //video capture form default cam
+            //video capture form default cam
+            //webSource = new VideoCapture(0);
             myThread = new DaemonThread(); //create object of tjreat class
             Thread t = new Thread(myThread);
             t.setDaemon(true);
@@ -372,7 +398,6 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             isAction = true;
             btnCam.setText("Tirar");
         } else {
-
             isAction = false;
             myThread.runnable = false;
             btnCam.setText("Webcam");
@@ -381,6 +406,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             im.setImage(im.getImage().getScaledInstance(148, 136, 100));
             imageReturn = im;
             lbImagemUser.setIcon(im);
+            webSource.release();
 //            int accept = jFileChooser1.showSaveDialog(this);
 //            if (accept == JFileChooser.APPROVE_OPTION) {
 //                File file = jFileChooser1.getSelectedFile();
@@ -401,6 +427,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         jog.setEmail(txEmail.getText());
         jog.setImgUser(ConvertByte());
         jog.setIdJogador(id);
+        jog.setSexo(cbSexo.getSelectedItem().toString());
 
         return jog;
     }
@@ -428,11 +455,13 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             lbNome.setForeground(Color.BLACK);
         }
 
-        if (txEmail.getText().trim().equals("") || !validarEmail(txEmail.getText().trim())) {
-            lbEmail.setForeground(Color.red);
-            err++;
-        } else {
-            lbEmail.setForeground(Color.BLACK);
+        if (!txEmail.getText().trim().equals("")) {
+            if (!validarEmail(txEmail.getText().trim())) {
+                lbEmail.setForeground(Color.red);
+                err++;
+            } else {
+                lbEmail.setForeground(Color.BLACK);
+            }
         }
 
         if (txNomeUser.getText().trim().equals("")) {
@@ -454,6 +483,13 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             err++;
         } else {
             lbSenhaConfirm.setForeground(Color.BLACK);
+        }
+
+        if (cbSexo.getSelectedIndex() == 0) {
+            lbSexo.setForeground(Color.red);
+            err++;
+        } else {
+            lbSexo.setForeground(Color.BLACK);
         }
 
         if (err == 0) {
@@ -552,14 +588,17 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEnvImagem;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox cbSexo;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbImagemUser;
     private javax.swing.JLabel lbNameUser;
     private javax.swing.JLabel lbNome;
     private javax.swing.JLabel lbSenhaConfirm;
+    private javax.swing.JLabel lbSexo;
     private javax.swing.JLabel lbsenha;
     private javax.swing.JPasswordField txConfirmSenha;
     private javax.swing.JTextField txEmail;

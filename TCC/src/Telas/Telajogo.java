@@ -123,7 +123,7 @@ public class Telajogo extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Telajogo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         // Saber a quantidade de dicas de cada tipo
         for (DicaBean d : listdica) {
             if (d.getTipo().equalsIgnoreCase("texto")) {
@@ -290,7 +290,7 @@ public class Telajogo extends javax.swing.JFrame {
                 d = listaDicaImagem.get(indice);
                 listaDicaImagem.remove(indice);
                 try {
-                    util.VoltaImagemJPG.Desconvertimg(d.getImagem(),"src/imgUsers/imdica.jpg");
+                    util.VoltaImagemJPG.Desconvertimg(d.getImagem(), "src/imgUsers/imdica.jpg");
                 } catch (IOException ex) {
                     Logger.getLogger(Telajogo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -351,10 +351,17 @@ public class Telajogo extends javax.swing.JFrame {
     public String sorteiaPalavra() {
 
         Random ram = new Random();
-        System.err.println("Tamanho: " + listapalavrass.size());
-        indicePalavra = ram.nextInt(listapalavrass.size());
-        p = listapalavrass.get(indicePalavra);
-        palavraa = p.getNome();
+        if (listapalavrass.size() > 0) {
+            System.err.println("Tamanho: " + listapalavrass.size());
+            indicePalavra = ram.nextInt(listapalavrass.size());
+            p = listapalavrass.get(indicePalavra);
+            palavraa = p.getNome();
+            listapalavrass.remove(indicePalavra);
+        }else{
+            JOptionPane.showMessageDialog(null, "Você jogou todas as palavras disponíveis!");
+            dispose();
+            new ConfiguraJogo("palavra").setVisible(true);
+        }
         return palavraa;
     }
 
@@ -424,11 +431,9 @@ public class Telajogo extends javax.swing.JFrame {
 //            }
 //
 //        }
-        
-        
         //modificado
-         for (int i = 0; i < palavrad.length(); i++) {
-            if (removerAcentos(palavrad.charAt(i)+"") == palpite) {
+        for (int i = 0; i < palavrad.length(); i++) {
+            if (removerAcentos(palavrad.charAt(i) + "") == palpite) {
                 vetrac[i] = palavrad.charAt(i);
                 pontosP++;
                 certo = true;
@@ -437,7 +442,7 @@ public class Telajogo extends javax.swing.JFrame {
             }
 
         }
-        
+
         if (certo) {
             tocarSom("src\\Sons\\Street Fighter sound Hadouken.mp3");
         }

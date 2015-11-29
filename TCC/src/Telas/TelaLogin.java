@@ -190,11 +190,11 @@ public class TelaLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_lbCadastreseMouseClicked
 
     private void txLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txLoginMouseClicked
-        try {
-            ativaTeclado();
-        } catch (AWTException ex) {
-            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            ativaTeclado();
+//        } catch (AWTException ex) {
+//            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_txLoginMouseClicked
 
     private boolean VerificaCampos() {

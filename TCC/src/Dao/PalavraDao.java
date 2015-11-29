@@ -44,46 +44,46 @@ public class PalavraDao {
 
     public static ResultSet RetornaPalavraMaisJogadaAcertada(String dataInicial, String dataFinal, int escolha) throws SQLException {
         String sql = "";
-        if(escolha == 1){
-             sql = "SELECT\n"
-                + "	p.idPalavra,\n"
-                + "	p.nome,\n"
-                + "	count(*) as NumVezesJogadas,\n"
-                + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
-                + "	sum(pj.acertou) QtdeAcertos,\n"
-                + "	(sum(pj.palpites) / count(*)) as MediaPalpites\n"
-                + "\n"
-                + "FROM\n"
-                + "	palavrajogada pj,\n"
-                + "	palavra p \n"
-                + "WHERE\n"
-                + "	pj.idPalavra = p.idPalavra\n"
-                + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
-                + "GROUP BY\n"
-                + "	pj.idPalavra\n"
-                + "ORDER BY\n"
-                + "NumVezesJogadas desc";
-        }else{
+        if (escolha == 1) {
             sql = "SELECT\n"
-                + "	p.idPalavra,\n"
-                + "	p.nome,\n"
-                + "	count(*) as NumVezesJogadas,\n"
-                + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
-                + "	sum(pj.acertou) QtdeAcertos,\n"
-                + "	(sum(pj.palpites) / count(*)) as MediaPalpites\n"
-                + "\n"
-                + "FROM\n"
-                + "	palavrajogada pj,\n"
-                + "	palavra p \n"
-                + "WHERE\n"
-                + "	pj.idPalavra = p.idPalavra\n"
-                + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
-                + "GROUP BY\n"
-                + " pj.idPalavra\n"
-                + " ORDER BY\n"
-                + "QtdeAcertos desc";
+                    + "	p.idPalavra,\n"
+                    + "	p.nome,\n"
+                    + "	count(*) as NumVezesJogadas,\n"
+                    + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
+                    + "	sum(pj.acertou) QtdeAcertos,\n"
+                    + "	(sum(pj.palpites) / count(*)) as MediaPalpites\n"
+                    + "\n"
+                    + "FROM\n"
+                    + "	palavrajogada pj,\n"
+                    + "	palavra p \n"
+                    + "WHERE\n"
+                    + "	pj.idPalavra = p.idPalavra\n"
+                    + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
+                    + "GROUP BY\n"
+                    + "	pj.idPalavra\n"
+                    + "ORDER BY\n"
+                    + "NumVezesJogadas desc";
+        } else {
+            sql = "SELECT\n"
+                    + "	p.idPalavra,\n"
+                    + "	p.nome,\n"
+                    + "	count(*) as NumVezesJogadas,\n"
+                    + "	DATE_FORMAT(pj.`data`,'%d/%m/%Y') as DataJogo,\n"
+                    + "	sum(pj.acertou) QtdeAcertos,\n"
+                    + "	(sum(pj.palpites) / count(*)) as MediaPalpites\n"
+                    + "\n"
+                    + "FROM\n"
+                    + "	palavrajogada pj,\n"
+                    + "	palavra p \n"
+                    + "WHERE\n"
+                    + "	pj.idPalavra = p.idPalavra\n"
+                    + " and pj.`data` between '" + dataInicial + "' and '" + dataFinal + "'\n"
+                    + "GROUP BY\n"
+                    + " pj.idPalavra\n"
+                    + " ORDER BY\n"
+                    + "QtdeAcertos desc";
         }
-      
+
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
@@ -421,6 +421,50 @@ public class PalavraDao {
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         return rs;
+    }
+
+    public static boolean RetornaQtdePalavrasNivECat(String parametro, String nivOrCat) throws SQLException {
+        int qtde = 0;
+        String sql = "";
+        if (nivOrCat.equalsIgnoreCase("Nivel")) {
+            sql = "SELECT count(*) "
+                    + "FROM nivel n, palavra "
+                    + "p where n.idNivel = p.idNivel AND n.descricao like '" + parametro + "' ";
+        } else {
+            sql = "SELECT count(*) "
+                    + "FROM categoria c, palavra "
+                    + "p where c.idCategoria = p.idCategoria AND c.descricao like '" + parametro + "' ";
+        }
+
+//            sql = "SELECT"
+//                    + " p.idPalavra,"
+//                    + " p.nome,"
+//                    + " n.idNivel,"
+//                    + " n.descricao"
+//                    + " FROM "
+//                    + "Palavra p,"
+//                    + "Nivel n "
+//                    + "WHERE "
+//                    + "p.idNivel = n.idNivel"
+//                    + " AND p.nome like'" + p.getNome() + "%' "
+//                    + "ORDER BY p.nome";
+
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            qtde = rs.getInt(1);
+        }
+
+        stmt.close();
+        conexao.close();
+        if (qtde > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public static ResultSet RetornaPalavrasEAlternativasRs(PalavraBean p) throws SQLException {

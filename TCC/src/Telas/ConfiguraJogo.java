@@ -9,6 +9,7 @@ import Bean.CategoriaBean;
 import Bean.NivelBean;
 import Dao.CategoriaDao;
 import Dao.NivelDao;
+import Dao.PalavraDao;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
@@ -46,11 +47,15 @@ public class ConfiguraJogo extends javax.swing.JFrame {
     public ConfiguraJogo(String tela) {
         config = tela;
         initComponents();
-        ConfiguraTela();
+        try {
+            ConfiguraTela();
+        } catch (SQLException ex) {
+            Logger.getLogger(ConfiguraJogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
-    private void ConfiguraTela() {
+    private void ConfiguraTela() throws SQLException {
         try {
             listaNiveis = NivelDao.RetornaNiveis();
             listaCategorias = CategoriaDao.retornaCategoria();
@@ -60,11 +65,19 @@ public class ConfiguraJogo extends javax.swing.JFrame {
         pnNiveis.setLayout(new GridLayout((listaNiveis.size()), 1));
         pnCategorias.setLayout(new GridLayout(listaCategorias.size(), 1));
         for (NivelBean n : listaNiveis) {
-            listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
+            // Verifica se há palavras desse determinado nivel
+            if (PalavraDao.RetornaQtdePalavrasNivECat(n.getDescricao(), "Nivel")) {
+                listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
+            }
+
         }
 
         for (CategoriaBean c : listaCategorias) {
-            listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
+            // Verifica se há palavras dessa determinada categoria
+            if (PalavraDao.RetornaQtdePalavrasNivECat(c.getDescricao(), "Categoria")) {
+                listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
+            }
+
         }
 
         for (JCheckBox j : listaCheckBoxNiveis) {
@@ -270,7 +283,7 @@ public class ConfiguraJogo extends javax.swing.JFrame {
         listaCategorias.clear();
         int numNiveisSelected = 0;
         int numCategoriasSelected = 0;
-        
+
         //Veririfica quais niveis e quais perguntas foram selecionadas
         for (JCheckBox j : listaCheckBoxNiveis) {
             if (j.isSelected()) {

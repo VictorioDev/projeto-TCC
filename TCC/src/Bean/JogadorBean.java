@@ -17,6 +17,7 @@ public class JogadorBean {
     private byte[] imgUser;
     private String email;
     private int pontos;
+    private String sexo;
 
     /**
      * @return the nome
@@ -114,6 +115,20 @@ public class JogadorBean {
      */
     public void setPontos(int pontos) {
         this.pontos = pontos;
+    }
+
+    /**
+     * @return the sexo
+     */
+    public String getSexo() {
+        return sexo;
+    }
+
+    /**
+     * @param sexo the sexo to set
+     */
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
     
     
