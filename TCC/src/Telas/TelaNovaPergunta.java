@@ -57,7 +57,6 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
     public boolean aux2 = false;
     public List<PerguntaBean> listaPerguntas;
 
-        
     public TelaNovaPergunta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         salvar = true;
@@ -146,6 +145,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
     }
 
     private boolean verificaCampos() {
+        int contCorreta = 0;
         boolean aux = true;
         if (txaPergunta.getText().equals("") || txaPergunta.getText().trim().equals("") || txaPergunta.getText().length() < 3) {
             aux = false;
@@ -172,18 +172,18 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         } else {
             txAlternativa.setBackground(Color.white);
         }
+        //Modifiquei aki luizao
         for (AlternativaBean alt : listalternativas) {
-
-            if (auxilio != 1) {
-                aux = false;
-                txAlternativa.setBackground(Color.pink);
-//                TabelaAlternativas.setToolTipText("Amiguinho, deve haver uma correta!!");
-                txAlternativa.setText("Deve haver uma correta!!");
-                btAdd.setEnabled(false);// apenas no intento de não permitir o salvamento da frase acima dentre as demais alternativas
-                chxCorreta.setSelected(false);
+            if (alt.getCorreta().equalsIgnoreCase("correta")) {
+                contCorreta++;
             }
 
         }
+        if (contCorreta == 0) {
+            aux = false;
+            txAlternativa.setText("Deve haver uma correta");
+        }
+
         if (listalternativas.size() == 1) {
             aux = false;
             txAlternativa.setText("Deve haver mais de uma");
@@ -584,7 +584,6 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
             for (AlternativaBean alt : listalternativas) {
                 if (texto.equals(alt.getDescricao().trim())) {
                     aux2 = true;
-
                 }
             }
             //blocos abaixo responsáveis por analisar se há alternativas iguais (e lógica desenvolvida para poder ou não selecionar a chck box correta)
@@ -593,7 +592,7 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
                 txAlternativa.setText("");
                 txAlternativa.requestFocus();
             } else {
-                JOptionPane.showMessageDialog(null, "Alternativa já existente para a pergunta!", "ERRO1", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Alternativa já existente para a pergunta!", "ERRO", JOptionPane.ERROR_MESSAGE);
                 aux2 = false;
                 txAlternativa.setText("");
                 txAlternativa.requestFocus();
