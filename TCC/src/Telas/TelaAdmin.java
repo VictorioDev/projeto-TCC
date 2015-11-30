@@ -33,6 +33,7 @@ public class TelaAdmin extends javax.swing.JDialog {
     public TelaAdmin(java.awt.Frame parent, boolean modal) {
         super(parent, false);
         initComponents();
+        setLocationRelativeTo(null);
         setTitle("Adminstrador");
         setSize(720, 320);
         ImageIcon img = new ImageIcon("src\\Telas\\imagens\\3d_bars-2560x1440.jpg");

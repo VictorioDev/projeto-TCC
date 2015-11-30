@@ -138,6 +138,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
             } else if (listaPerguntas.size() == 1) {
                 lbMensg.setText("Há apenas uma pergunta registrada");
             } else {
+                lbPergunta.setForeground(Color.black);
                 lbMensg.setText("Há " + listaPerguntas.size() + " perguntas registradas");
             }
             lbMensg.setForeground(Color.black);

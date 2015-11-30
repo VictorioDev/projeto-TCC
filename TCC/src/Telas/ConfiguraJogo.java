@@ -48,6 +48,7 @@ public class ConfiguraJogo extends javax.swing.JFrame {
     public ConfiguraJogo(String tela) {
         config = tela;
         initComponents();
+        setLocationRelativeTo(null);
         try {
             ConfiguraTela();
         } catch (SQLException ex) {
@@ -72,10 +73,6 @@ public class ConfiguraJogo extends javax.swing.JFrame {
                 if (PalavraDao.RetornaQtdePalavrasNivECat(n.getDescricao(), "Nivel")) {
                     listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
                 }
-                //Verifica se há perguntas
-//            if(PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel")){
-//                listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
-//            }
             }
 
             for (CategoriaBean c : listaCategorias) {
@@ -83,40 +80,23 @@ public class ConfiguraJogo extends javax.swing.JFrame {
                 if ((PalavraDao.RetornaQtdePalavrasNivECat(c.getDescricao(), "Categoria"))) {
                     listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
                 }
-                // verifica se há perguntas
-//            if(PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria")){
-//                listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
-//            }
-
             }
-
-        }else{
+        } else {
             for (NivelBean n : listaNiveis) {
-                // Verifica se há palavras desse determinado nivel
+                // Verifica se há perguntas desse determinado nivel
                 if ((PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel"))) {
                     listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
                 }
-                //Verifica se há perguntas
-//            if(PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel")){
-//                listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
-//            }
             }
-            
-            
-             for (CategoriaBean c : listaCategorias) {
-                // Verifica se há palavras dessa determinada categoria
+
+            for (CategoriaBean c : listaCategorias) {
+                // Verifica se há perguntas dessa determinada categoria
                 if (PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria")) {
                     listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
                 }
-                // verifica se há perguntas
-//            if(PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria")){
-//                listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
-//            }
-
             }
-            
         }
-
+//        adiciona as categorias e niveis apos filtragem
         for (JCheckBox j : listaCheckBoxNiveis) {
             pnNiveis.add(j);
         }
@@ -148,11 +128,12 @@ public class ConfiguraJogo extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Configuração do Jogo");
         setBackground(new java.awt.Color(153, 153, 255));
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Categorias"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Configuração"));
 
         pnNiveis.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnNiveis.setPreferredSize(new java.awt.Dimension(288, 292));
