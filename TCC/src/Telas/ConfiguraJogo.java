@@ -65,28 +65,56 @@ public class ConfiguraJogo extends javax.swing.JFrame {
         }
         pnNiveis.setLayout(new GridLayout((listaNiveis.size()), 1));
         pnCategorias.setLayout(new GridLayout(listaCategorias.size(), 1));
-        for (NivelBean n : listaNiveis) {
-            // Verifica se há palavras desse determinado nivel
-            if ((PalavraDao.RetornaQtdePalavrasNivECat(n.getDescricao(), "Nivel")) || (PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel"))) {
-                listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
-            }
-            //Verifica se há perguntas
+
+        if (config.equalsIgnoreCase("palavra")) {
+            for (NivelBean n : listaNiveis) {
+                // Verifica se há palavras desse determinado nivel
+                if (PalavraDao.RetornaQtdePalavrasNivECat(n.getDescricao(), "Nivel")) {
+                    listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
+                }
+                //Verifica se há perguntas
 //            if(PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel")){
 //                listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
 //            }
-
-        }
-
-        for (CategoriaBean c : listaCategorias) {
-            // Verifica se há palavras dessa determinada categoria
-            if ((PalavraDao.RetornaQtdePalavrasNivECat(c.getDescricao(), "Categoria")) || (PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria"))) {
-                listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
             }
-            // verifica se há perguntas
+
+            for (CategoriaBean c : listaCategorias) {
+                // Verifica se há palavras dessa determinada categoria
+                if ((PalavraDao.RetornaQtdePalavrasNivECat(c.getDescricao(), "Categoria"))) {
+                    listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
+                }
+                // verifica se há perguntas
 //            if(PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria")){
 //                listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
 //            }
 
+            }
+
+        }else{
+            for (NivelBean n : listaNiveis) {
+                // Verifica se há palavras desse determinado nivel
+                if ((PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel"))) {
+                    listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
+                }
+                //Verifica se há perguntas
+//            if(PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel")){
+//                listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
+//            }
+            }
+            
+            
+             for (CategoriaBean c : listaCategorias) {
+                // Verifica se há palavras dessa determinada categoria
+                if (PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria")) {
+                    listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
+                }
+                // verifica se há perguntas
+//            if(PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria")){
+//                listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
+//            }
+
+            }
+            
         }
 
         for (JCheckBox j : listaCheckBoxNiveis) {
