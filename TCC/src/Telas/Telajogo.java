@@ -99,7 +99,7 @@ public class Telajogo extends javax.swing.JFrame {
 
         initComponents();
         //setSize(1200, 650);
-        setResizable(true);
+        setResizable(false);
         defineIcones();
         preeencherCampos(util.UtilObjetos.jogadorLogado);
         populaListaPalavras();

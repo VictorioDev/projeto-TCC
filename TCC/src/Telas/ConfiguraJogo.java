@@ -10,6 +10,7 @@ import Bean.NivelBean;
 import Dao.CategoriaDao;
 import Dao.NivelDao;
 import Dao.PalavraDao;
+import Dao.PerguntaDao;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
@@ -66,17 +67,25 @@ public class ConfiguraJogo extends javax.swing.JFrame {
         pnCategorias.setLayout(new GridLayout(listaCategorias.size(), 1));
         for (NivelBean n : listaNiveis) {
             // Verifica se há palavras desse determinado nivel
-            if (PalavraDao.RetornaQtdePalavrasNivECat(n.getDescricao(), "Nivel")) {
+            if ((PalavraDao.RetornaQtdePalavrasNivECat(n.getDescricao(), "Nivel")) || (PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel"))) {
                 listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
             }
+            //Verifica se há perguntas
+//            if(PerguntaDao.RetornaQtdePerguntasNivECat(n.getDescricao(), "Nivel")){
+//                listaCheckBoxNiveis.add(new JCheckBox(n.getDescricao()));
+//            }
 
         }
 
         for (CategoriaBean c : listaCategorias) {
             // Verifica se há palavras dessa determinada categoria
-            if (PalavraDao.RetornaQtdePalavrasNivECat(c.getDescricao(), "Categoria")) {
+            if ((PalavraDao.RetornaQtdePalavrasNivECat(c.getDescricao(), "Categoria")) || (PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria"))) {
                 listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
             }
+            // verifica se há perguntas
+//            if(PerguntaDao.RetornaQtdePerguntasNivECat(c.getDescricao(), "Categoria")){
+//                listaCheckBoxCategorias.add(new JCheckBox(c.getDescricao()));
+//            }
 
         }
 

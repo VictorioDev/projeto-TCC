@@ -299,7 +299,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnCam">
               <Properties>
-                <Property name="text" type="java.lang.String" value="webcam"/>
+                <Property name="text" type="java.lang.String" value="Webcam"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>

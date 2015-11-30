@@ -525,4 +525,77 @@ public class PerguntaDao {
         return rs;
     }
 
+    public static ResultSet RetornaPerguntasPorNiveisRs(PerguntaBean p, String parametro) throws SQLException {
+
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN pergunta "
+                    + "p ON n.idNivel = p.idNivel "
+                    + "order by nivel_descricao";
+        } else {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN pergunta "
+                    + "p ON n.idNivel = p.idNivel AND n.descricao like '" + parametro + "' "
+                    + "order by nivel_descricao and pergunta_descricao";
+        }
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
+    public static boolean RetornaQtdePerguntasNivECat(String parametro, String nivOrCat) throws SQLException {
+        int qtde = 0;
+        String sql = "";
+        if (nivOrCat.equalsIgnoreCase("Nivel")) {
+            sql = "SELECT count(*) "
+                    + "FROM nivel n, pergunta "
+                    + "p where n.idNivel = p.idNivel AND n.descricao like '" + parametro + "' ";
+        } else {
+            sql = "SELECT count(*) "
+                    + "FROM categoria c, pergunta "
+                    + "p where c.idCategoria = p.idCategoria AND c.descricao like '" + parametro + "' ";
+        }
+
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            qtde = rs.getInt(1);
+        }
+
+        stmt.close();
+        conexao.close();
+        if (qtde > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static ResultSet RetornaPerguntasEAlternativasRs(PerguntaBean p) throws SQLException {
+//        String sql = "select p.nome as descricaoPalavra, d.texto, d.nomeDica, d.som, d.imagem from palavra p inner join dica d on d.idPalavra = p.idPalavra order by descricaoPalavra";
+
+        String sql = "SELECT p.descricao as pergunta_descricao, "
+                + "a.descricao as alternativa_descricao, a.correta as alternativa_correta "
+                + "FROM p pergunta INNER JOIN a alternativa "
+                + "ON p.idPergunta = a.idPergunta ";
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
 }

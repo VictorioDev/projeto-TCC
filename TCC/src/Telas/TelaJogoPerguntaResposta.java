@@ -65,6 +65,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
     public static boolean gameOver;
     public static int pontos;
+    public static int erros;
     public static int tempoGasto;
     public static boolean acertou;
     long start = 0;
@@ -99,7 +100,6 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             System.err.println("Objeto vazio!");
             
         }
-        btResponder.setIcon(UtilInterface.ICONE_JOGOPERGUNTA);
         setSize(800, 600);
     }
 
@@ -226,7 +226,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         
             tempoGasto = (int) ((System.currentTimeMillis() - start) / 1000);
             System.out.println(tempoGasto);
-            j.setPontos(pontos);
+            j.setPontos(pontos-erros);
             try {
                 JogadorDao.UpdatePontos(j);
                 PerguntaJogadaDAO.SalvarPerguntaJogada(RetornaObjeto());
@@ -246,7 +246,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             //Coloca Nivel no label
             PerguntaBean a = PerguntaDao.RetornaPerguntas(p);
             lbNivel.setText(a.getNivel().getDescricao());
-            //lbcategoria.setText(a.getCategoria().getDescricao());
+//            lbcategoria.setText(a.getCategoria().getDescricao());
         } catch (SQLException ex) {
             Logger.getLogger(TelaJogoPerguntaResposta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -295,7 +295,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         txErros = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbPontuacao = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         lbNivel = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -447,8 +447,8 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(153, 153, 225));
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Pontuação"));
 
-        jLabel1.setFont(new java.awt.Font("Vrinda", 2, 36)); // NOI18N
-        jLabel1.setText("0 PONTO(S)");
+        lbPontuacao.setFont(new java.awt.Font("Vrinda", 2, 36)); // NOI18N
+        lbPontuacao.setText("0 PONTO");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -456,14 +456,14 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(lbPontuacao, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lbPontuacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(153, 153, 225));
@@ -604,10 +604,32 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
             if (button.isSelected()) {
                 if (f == corretaIndex) {
-                    JOptionPane.showMessageDialog(null, "Acertou!!!!");
                     pontos++;
+                    txAcertos.setText(pontos + " ");
+                    if((pontos-erros == 0) || (pontos-erros == 1)){
+                        lbPontuacao.setText(pontos-erros + " ponto");
+                    }else if(pontos-erros < 0){
+                        lbPontuacao.setText("0 ponto");
+                    }else{
+                        lbPontuacao.setText(pontos-erros + " pontos");
+                    }
+                    JOptionPane.showMessageDialog(null, "Acertou!!!!");
                     acertou = true;
-                    gameOver = true;
+                    AtualizarBanco();
+                    SorteiaPergunta();
+                    Configura();
+                }else{
+                    erros++;
+                    txErros.setText(erros + " ");
+                    if((pontos-erros == 0) || (pontos-erros == 1)){
+                        lbPontuacao.setText(pontos-erros + " ponto");
+                    }else if(pontos-erros < 0){
+                        lbPontuacao.setText("0 ponto");
+                    }else{
+                        lbPontuacao.setText(pontos-erros + " pontos");
+                    }
+                    JOptionPane.showMessageDialog(null, "Errou");
+                    acertou = false;
                     AtualizarBanco();
                     SorteiaPergunta();
                     Configura();
@@ -627,9 +649,10 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         }
         //se pular tres vezes perde o jogo
         if (qtdepula == 3) {
-            pausarCronometro();
-            JOptionPane.showMessageDialog(this, "PERDEU POR PULAR 3 QUESTÕES");
-            dispose();
+            btPular1.setEnabled(false);
+//            pausarCronometro();
+//            JOptionPane.showMessageDialog(this, "PERDEU POR PULAR 3 QUESTÕES");
+//            dispose();
         }
     }//GEN-LAST:event_btPular1ActionPerformed
 
@@ -677,7 +700,6 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPular1;
     private javax.swing.JButton btResponder;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -691,6 +713,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextArea jtxaPergunta;
     private javax.swing.JLabel lbNivel;
+    private javax.swing.JLabel lbPontuacao;
     private javax.swing.JLabel lbTempo;
     private javax.swing.JLabel lbcategoria;
     private javax.swing.JPanel pnAlternativas;

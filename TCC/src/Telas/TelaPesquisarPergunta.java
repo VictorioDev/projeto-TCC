@@ -15,8 +15,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -397,7 +400,8 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
         try {
-            Relatorio.gerarRelatorio("Relatorios\\RelatorioPergunta.jasper", PerguntaDao.retornaRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
+            Relatorio.gerarRelatorio("relatorios//porNivel.jasper", PerguntaDao.RetornaPerguntasPorNiveisRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
+            Relatorio.gerarRelatorio("relatorios//RelatorioPerguntaAlternativa.jasper", PerguntaDao.RetornaPerguntasPorNiveisRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
         } catch (SQLException e) {
             e.printStackTrace();
             

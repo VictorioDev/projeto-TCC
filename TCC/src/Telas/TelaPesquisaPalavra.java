@@ -408,17 +408,26 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, panel, "Radio Test", JOptionPane.QUESTION_MESSAGE);
         if (c1.isSelected()) {
             System.err.println("selecionou primeiro");
-        }
-        try {
-            Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.RetornaPalavrasPorNiveisRs(retornaObjeto(), cbNiveis.getSelectedItem().toString()));
-            //Relatorio.gerarRelatorio("relatorios//dicasDaPalavra.jasper", PalavraDao.RetornaPalavrasEAlternativasRs(retornaObjeto()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Não foi");
+            try {
+                Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.RetornaPalavrasPorNiveisRs(retornaObjeto(), cbNiveis.getSelectedItem().toString()));
+                //Relatorio.gerarRelatorio("relatorios//dicasDaPalavra.jasper", PalavraDao.RetornaPalavrasEAlternativasRs(retornaObjeto()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Não foi");
 
-        } catch (JRException e) {
-            e.printStackTrace();
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
+        } else if (c2.isSelected()) {
+            try {
+                Relatorio.gerarRelatorio("relatorios//dicasDaPalavra.jasper", PalavraDao.RetornaPalavrasEDicasRs(retornaObjeto()));
+            } catch (JRException ex) {
+                Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void tabelaPesquisaPalavraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPesquisaPalavraMouseClicked

@@ -77,7 +77,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                             BufferedImage buff = (BufferedImage) im;
                             Graphics g = lbImagemUser.getGraphics();
 
-                            if (g.drawImage(buff, 0, 0, getWidth() - 350, getHeight() - 250, 0, 0, buff.getWidth(), buff.getHeight(), null)) {
+                            if (g.drawImage(buff, 0, 0, getWidth() - 320, getHeight() - 320, 0, 0, buff.getWidth(), buff.getHeight(), null)) {
                                 if (runnable == false) {
                                     System.out.println("Going to wait()");
                                     this.wait();
@@ -246,7 +246,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         });
         jPanel3.add(btnEnvImagem);
 
-        btnCam.setText("webcam");
+        btnCam.setText("Webcam");
         btnCam.setEnabled(false);
         btnCam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -406,7 +406,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             im.setImage(im.getImage().getScaledInstance(148, 136, 100));
             imageReturn = im;
             lbImagemUser.setIcon(im);
-            webSource.release();
+            //webSource.release();
 //            int accept = jFileChooser1.showSaveDialog(this);
 //            if (accept == JFileChooser.APPROVE_OPTION) {
 //                File file = jFileChooser1.getSelectedFile();
