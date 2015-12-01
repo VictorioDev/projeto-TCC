@@ -100,8 +100,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         lbImagemUser.setIcon(imageReturn);
         getRootPane().setDefaultButton(btnSalvar);
 
-        txNome.setDocument(new LimitaCaracteres());
-        txNomeUser.setDocument(new LimitaCaracteres());
+        txNome.setDocument(new LimitaCaracteres(45));
+        txNomeUser.setDocument(new LimitaCaracteres(45));
         configuraComponentes();
         setSize(481,460);
         setResizable(false);

@@ -35,7 +35,7 @@ public class TelaNovaCategoria extends javax.swing.JDialog {
         super(parent, modal);
         salvar = true;
         initComponents();
-        txCategoria.setDocument(new LimitaCaracteres());
+        txCategoria.setDocument(new LimitaCaracteres(45));
         setResizable(false);
         configuraComponentes();
 //        iconeBotoes();
@@ -46,7 +46,7 @@ public class TelaNovaCategoria extends javax.swing.JDialog {
     public TelaNovaCategoria(Frame parent, boolean modal, CategoriaBean categoria) {
         super(parent, modal);
         initComponents();
-        txCategoria.setDocument(new LimitaCaracteres());
+        txCategoria.setDocument(new LimitaCaracteres(45));
         preencherCampos(categoria);
         salvar = false;
         id = categoria.getIdCategoria();

@@ -40,7 +40,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
     
     public TelaPesquisarNivel(java.awt.Frame parent, boolean modal) {
         initComponents();
-        txNivel.setDocument(new LimitaCaracteres());
+        txNivel.setDocument(new LimitaCaracteres(45));
         setResizable(false);
 //        iconeBotoes();
         configuraComponentes();

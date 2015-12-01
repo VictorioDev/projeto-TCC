@@ -37,7 +37,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         VerificaBotoes();
-        txDescricaoNomejog.setDocument(new LimitaCaracteres());
+        txDescricaoNomejog.setDocument(new LimitaCaracteres(45));
         configuraComponentes();
         setLocationRelativeTo(null);
     }

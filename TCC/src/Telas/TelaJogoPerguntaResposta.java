@@ -195,6 +195,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 }
                 listaperguntas.remove(indicePergunta);
             } else {
+                zerarActionPerformed(null);
                 JOptionPane.showMessageDialog(null, "Você jogou todas as perguntas disponíveis!");
                 dispose();
                 new ConfiguraJogo("pergunta").setVisible(true);

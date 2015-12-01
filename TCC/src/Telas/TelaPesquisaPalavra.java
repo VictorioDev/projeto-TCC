@@ -52,7 +52,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
             Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
         }
         VerificaBotoes();
-        txDescricaoPalavra.setDocument(new LimitaCaracteres());
+        txDescricaoPalavra.setDocument(new LimitaCaracteres(45));
         configuraComponentes();
         setLocationRelativeTo(null);
     }

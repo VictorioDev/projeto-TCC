@@ -40,7 +40,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
     public TelaPesquisarCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        txCategoria.setDocument(new LimitaCaracteres());
+        txCategoria.setDocument(new LimitaCaracteres(45));
         setResizable(false);
 //        iconeBotoes();
         configuraComponentes();

@@ -61,7 +61,8 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
         super(parent, modal);
         salvar = true;
         initComponents();
-        txAlternativa.setDocument(new LimitaCaracteres());
+        txaPergunta.setDocument(new LimitaCaracteres(100));
+        txAlternativa.setDocument(new LimitaCaracteres(45));
 //        iconeBotoes();
         configuraComponentes();
         setLocationRelativeTo(null);
@@ -76,7 +77,8 @@ public class TelaNovaPergunta extends javax.swing.JDialog {
     public TelaNovaPergunta(Frame parent, boolean modal, PerguntaBean pergunta) {
         super(parent, modal);
         initComponents();
-        txAlternativa.setDocument(new LimitaCaracteres());
+        txaPergunta.setDocument(new LimitaCaracteres(100));
+        txAlternativa.setDocument(new LimitaCaracteres(45));
 //        iconeBotoes();
         configuraComponentes();
         preencherCampos(pergunta);
