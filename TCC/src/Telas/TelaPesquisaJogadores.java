@@ -43,6 +43,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
     }
 
     private void configuraComponentes() {
+        txDescricaoNomejog.setFont(UtilInterface.FONTE_PADRAO);
         btnNovaPalavra.setIcon(UtilInterface.ICONE_NOVO);
         btnExcluir.setIcon(UtilInterface.ICONE_DELETAR);
         btnPesquisar.setIcon(UtilInterface.ICONE_PESQUISAR);

@@ -90,6 +90,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
      */
     public TelaJogoPerguntaResposta() {
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
         jtxaPergunta.setEditable(false);
         iconesBotoes();
@@ -163,54 +164,40 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         try {
             //listaperguntas = PerguntaDao.RetornaPerguntas();
             Random ram = new Random();
-            indicePergunta = ram.nextInt(listaperguntas.size());
-            p = listaperguntas.get(indicePergunta);
-            pergunta = p.getDescricao();
-            List<AlternativaBean> l = AlternativaDao.retornaAlternativas(p);
+            if (listaperguntas.size() > 0) {
+                indicePergunta = ram.nextInt(listaperguntas.size());
+                p = listaperguntas.get(indicePergunta);
+                pergunta = p.getDescricao();
+                List<AlternativaBean> l = AlternativaDao.retornaAlternativas(p);
 
-            br = new ButtonGroup();
-            pnAlternativas.setLayout(new GridLayout(l.size(), 1));
-            int i = 0;
+                br = new ButtonGroup();
+                pnAlternativas.setLayout(new GridLayout(l.size(), 1));
+                int i = 0;
 
-            for (AlternativaBean alternativaBean : l) {
-                if (alternativaBean.getCorreta().equalsIgnoreCase("correta")) {
-                    corretaIndex = i;
-                    aCorreto = alternativaBean;
+                for (AlternativaBean alternativaBean : l) {
+                    if (alternativaBean.getCorreta().equalsIgnoreCase("correta")) {
+                        corretaIndex = i;
+                        aCorreto = alternativaBean;
+                    }
+                    i++;
                 }
-                i++;
-            }
 
-            System.err.println("correta: " + corretaIndex);
-            pnAlternativas.removeAll();
-            i = 0;
-            for (AlternativaBean l1 : l) {
-                b = new JRadioButton(l1.getDescricao());
-                b.setName("btn" + i);
-//                b.addMouseListener(new MouseAdapter() {
-//                    @Override
-//                    public void mouseClicked(MouseEvent e) {
-//                        if (e.getClickCount() > 0) {
-//                            int f = 0;
-//                            for (Enumeration<AbstractButton> buttons = br.getElements(); buttons.hasMoreElements();) {
-//                                AbstractButton button = buttons.nextElement();
-//
-//                                if (button.isSelected()) {
-//                                    if(f == corretaIndex){
-//                                        JOptionPane.showMessageDialog(null, "Acertou!!!!");
-//                                        SorteiaPergunta();
-//                                        Configura();
-//                                    }
-//                                }
-//                                f++;
-//                            }
-//                        }
-//                    }
-//                });
-                //listaBtn.add(b);
-                pnAlternativas.add(b);
-                br.add(b);
-                i++;
-                start = System.currentTimeMillis();
+                System.err.println("correta: " + corretaIndex);
+                pnAlternativas.removeAll();
+                i = 0;
+                for (AlternativaBean l1 : l) {
+                    b = new JRadioButton(l1.getDescricao());
+                    b.setName("btn" + i);
+                    pnAlternativas.add(b);
+                    br.add(b);
+                    i++;
+                    start = System.currentTimeMillis();
+                }
+                listaperguntas.remove(indicePergunta);
+            } else {
+                JOptionPane.showMessageDialog(null, "Você jogou todas as perguntas disponíveis!");
+                dispose();
+                new ConfiguraJogo("pergunta").setVisible(true);
             }
 
         } catch (SQLException e) {

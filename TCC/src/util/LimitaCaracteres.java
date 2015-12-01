@@ -17,7 +17,7 @@ public class LimitaCaracteres extends PlainDocument{
 
     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
         int tamanho = (this.getLength() + str.length());
-        if(tamanho <= 30){
+        if(tamanho <= 45){
             super.insertString(offs, str, a); //To change body of generated methods, choose Tools | Templates.
         }else{
             super.insertString(offs, str.replaceAll("[aA0-zZ9]", ""), a); //To change body of generated methods, choose Tools | Templates.

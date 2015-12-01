@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
+import util.LimitaCaracteres;
 import util.Relatorio;
 import util.UtilInterface;
 
@@ -39,6 +40,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
     public TelaPesquisarCategoria(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        txCategoria.setDocument(new LimitaCaracteres());
         setResizable(false);
 //        iconeBotoes();
         configuraComponentes();

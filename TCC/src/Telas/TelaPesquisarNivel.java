@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
+import util.LimitaCaracteres;
 import util.Relatorio;
 import util.UtilInterface;
 
@@ -39,6 +40,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
     
     public TelaPesquisarNivel(java.awt.Frame parent, boolean modal) {
         initComponents();
+        txNivel.setDocument(new LimitaCaracteres());
         setResizable(false);
 //        iconeBotoes();
         configuraComponentes();

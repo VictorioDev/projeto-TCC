@@ -18,14 +18,14 @@ import util.Conexao;
 public class PerguntaJogadaDAO {
 
     public static void SalvarPerguntaJogada(PerguntaJogadaBean pj) throws SQLException {
-        String sql = "insert into perguntajogada(idJogador,idPergunta, pontos, acertou, tempo, data) values (?,?,?,?,?,now())";
+        String sql = "insert into perguntajogada(idJogador,idPergunta, acertou, tempo, data) values (?,?,?,?,now())";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setInt(1, pj.getJogador().getIdJogador());
         stmt.setInt(2, pj.getPergunta().getIdPergunta());
-        stmt.setInt(3, pj.getPontos());
-        stmt.setBoolean(4, pj.isAcertou());
-        stmt.setFloat(5, pj.getTempo());
+//        stmt.setInt(3, pj.getPontos());
+        stmt.setBoolean(3, pj.isAcertou());
+        stmt.setFloat(4, pj.getTempo());
 
         stmt.execute();
         stmt.close();

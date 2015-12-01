@@ -51,7 +51,6 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         VerificaBotoes();
         txDescricaoPalavra.setDocument(new LimitaCaracteres());
         configuraComponentes();
