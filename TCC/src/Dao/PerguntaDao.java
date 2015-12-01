@@ -266,7 +266,92 @@ public class PerguntaDao {
 
     }
 
-    public static List<PerguntaBean> retornaPergs(PerguntaBean per, String filtroNivel, String filtroCategoria) throws SQLException {
+    public static ResultSet retornaPergutasSemObjetoRs(String filtroNivel, String filtroCategoria) throws SQLException {
+        List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
+        String sql = null;
+        if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ca.descricao as categoria_descricao,"
+                    + " ca.idCategoria, "
+                    + " ni.idNivel, "
+                    + " ni.descricao as nivel_descricao "
+                    + " FROM "
+                    + " Pergunta pe, "
+                    + " Categoria ca, "
+                    + " Nivel ni "
+                    + " WHERE "
+                    + " pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel"
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else if (!filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as nivel_descricao, "
+                    + " ca.idCategoria,"
+                    + " ca.descricao as categoria_descricao "
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria "
+                    + " ni.descricao = '" + filtroNivel + "' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && !filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as nivel_descricao,"
+                    + " ca.idCategoria,"
+                    + " ca.descricao as categoria_descricao"
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria "
+                    + "ca.descricao = '" + filtroCategoria + "' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else {
+
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as nivel_descricao,"
+                    + " ca.idCategoria,"
+                    + " ca.descricao as categoria_descricao"
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria AND"
+                    + " ni.descricao = '" + filtroNivel + "'"
+                    + " AND ca.descricao = '" + filtroCategoria + "'"
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+
+        }
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        return rs;
+
+    }
+
+    public static List<PerguntaBean> retornaPergutasPorObjeto(PerguntaBean per, String filtroNivel, String filtroCategoria) throws SQLException {
         List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
         String sql = null;
         if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
@@ -525,8 +610,94 @@ public class PerguntaDao {
         return rs;
     }
 
-    public static ResultSet RetornaPerguntasPorNiveisRs(PerguntaBean p, String parametro) throws SQLException {
+    public static ResultSet retornaPerguntasPorNiveisComObjetoRs(PerguntaBean p, String parametro) throws SQLException {
 
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN pergunta "
+                    + "p ON n.idNivel = p.idNivel and p.descricao like '" + p.getDescricao() + "%' "
+                    + "order by nivel_descricao";
+        } else {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN pergunta "
+                    + "p ON n.idNivel = p.idNivel AND n.descricao like '" + parametro + "' "
+                    + " and p.descricao like '" + p.getDescricao() + "%' "
+                    + "order by nivel_descricao and pergunta_descricao";
+        }
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet retornaPerguntasPorCategoriaComObjetoRs(PerguntaBean p, String parametro) throws SQLException {
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM caetgoria c INNER JOIN pergunta "
+                    + "p ON c.idCategoria = p.idCategoria and p.descricao like '" + p.getDescricao() + "%' "
+                    + "order by categoria_descricao";
+        } else {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM categoria c INNER JOIN pergunta "
+                    + "p ON c.idCategoria = p.idCetgoria AND c.descricao like '" + parametro + "' "
+                    + " and p.descricao like '" + p.getDescricao() + "%' "
+                    + "order by categoria_descricao and pergunta_descricao";
+        }
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet retornaPerguntasPorCategoriaSemObjetoRs(String parametro) throws SQLException {
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM caetgoria c INNER JOIN pergunta "
+                    + "p ON c.idCategoria = p.idCategoria "
+                    + "order by categoria_descricao";
+        } else {
+            sql = "SELECT "
+                    + "p.descricao "
+                    + "AS pergunta_descricao,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM categoria c INNER JOIN pergunta "
+                    + "p ON c.idCategoria = p.idCategoria AND c.descricao like '" + parametro + "' "
+                    + "order by categoria_descricao and pergunta_descricao";
+        }
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet retornaPerguntasPorNiveisSemObjetoRs(String parametro) throws SQLException {
         String sql = "";
         if (parametro.equalsIgnoreCase("<<Tudo>>")) {
             sql = "SELECT "
@@ -595,6 +766,91 @@ public class PerguntaDao {
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet retornaPergutasPorObjetoRs(PerguntaBean per, String filtroNivel, String filtroCategoria) throws SQLException {
+        List<PerguntaBean> listaPl = new ArrayList<PerguntaBean>();
+        String sql = null;
+        if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ca.descricao as categoria_descricao,"
+                    + " ca.idCategoria, "
+                    + " ni.idNivel, "
+                    + " ni.descricao as nivel_descricao "
+                    + " FROM "
+                    + " Pergunta pe, "
+                    + " Categoria ca, "
+                    + " Nivel ni "
+                    + " WHERE "
+                    + " pe.idCategoria = ca.idCategoria AND pe.idNivel = ni.idNivel AND "
+                    + " pe.descricao like '" + per.getDescricao() + "%' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else if (!filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as nivel_descricao, "
+                    + " ca.idCategoria,"
+                    + " ca.descricao as categoria_descricao "
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria"
+                    + " AND pe.descricao like'" + per.getDescricao() + "%' and ni.descricao = '" + filtroNivel + "'"
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && !filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as nivel_descricao,"
+                    + " ca.idCategoria,"
+                    + " ca.descricao as categoria_descricao"
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria "
+                    + " AND pe.descricao like'" + per.getDescricao() + "%' and ca.descricao = '" + filtroCategoria + "' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        } else {
+
+            sql = "SELECT"
+                    + " pe.idPergunta,"
+                    + " pe.descricao,"
+                    + " ni.idNivel,"
+                    + " ni.descricao as nivel_descricao,"
+                    + " ca.idCategoria,"
+                    + " ca.descricao as categoria_descricao"
+                    + " FROM "
+                    + " Pergunta pe,"
+                    + " Nivel ni, "
+                    + " Categoria ca "
+                    + " WHERE "
+                    + " pe.idNivel = ni.idNivel AND "
+                    + " pe.idCategoria = ca.idCategoria "
+                    + " AND pe.descricao like'" + per.getDescricao() + "%' and ni.descricao = '" + filtroNivel + "' "
+                    + " AND ca.descricao = '" + filtroCategoria + "' "
+                    + " ORDER BY pe.descricao";
+            System.err.println(sql);
+        }
+
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
         return rs;
     }
 

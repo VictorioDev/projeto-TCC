@@ -371,7 +371,7 @@ public class PalavraDao {
         conexao.close();
     }
 
-    public static ResultSet RetornaPalavrasPorNiveisRs(PalavraBean p, String parametro) throws SQLException {
+    public static ResultSet retornaPalavrasPorNiveisComObjetoRs(PalavraBean p, String parametro) throws SQLException {
 
         String sql = "";
         if (parametro.equalsIgnoreCase("<<Tudo>>")) {
@@ -413,7 +413,7 @@ public class PalavraDao {
                     + "n.descricao "
                     + "AS nivel_descricao "
                     + "FROM nivel n INNER JOIN palavra "
-                    + "p ON n.idNivel = p.idNivel AND n.descricao like '" + parametro + "' "
+                    + "p ON n.idNivel = p.idNivel p.nome like = '" + p.getNome() + "%' AND n.descricao like '" + parametro + "' "
                     + "order by nivel_descricao and palavra_nome";
         }
         System.err.println(sql);
@@ -475,17 +475,17 @@ public class PalavraDao {
         return rs;
     }
 
-    public static ResultSet retornaPlvsRs(PalavraBean pl, String filtroNivel, String filtroCategoria) throws SQLException {
+    public static ResultSet retornaPlvsComObjetoRs(PalavraBean pl, String filtroNivel, String filtroCategoria) throws SQLException {
         List<PalavraBean> listaPl = new ArrayList<PalavraBean>();
         String sql = null;
         if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
             sql = "SELECT"
                     + " p.idPalavra,"
-                    + " p.nome,"
+                    + " p.nome as palavra_nome,"
                     + " n.idNivel,"
-                    + " n.descricao,"
+                    + " n.descricao as nivel_descricao,"
                     + " c.idCategoria,"
-                    + " c.descricao"
+                    + " c.descricao as categoria_descricao"
                     + " FROM "
                     + "Palavra p,"
                     + "Nivel n, "
@@ -499,11 +499,11 @@ public class PalavraDao {
         } else if (!filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
             sql = "SELECT"
                     + " p.idPalavra,"
-                    + " p.nome,"
+                    + " p.nome as palavra_nome,"
                     + " n.idNivel,"
-                    + " n.descricao,"
+                    + " n.descricao nivel_descricao,"
                     + "c.idCategoria,"
-                    + "c.descricao"
+                    + "c.descricao as categoria_descricao"
                     + " FROM "
                     + "Palavra p,"
                     + "Nivel n, "
@@ -517,11 +517,11 @@ public class PalavraDao {
         } else if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && !filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
             sql = "SELECT"
                     + " p.idPalavra,"
-                    + " p.nome,"
+                    + " p.nome as palavra_nome,"
                     + " n.idNivel,"
-                    + " n.descricao,"
+                    + " n.descricao as nivel_descricao,"
                     + "c.idCategoria,"
-                    + "c.descricao"
+                    + "c.descricao as categoria_descricao"
                     + " FROM "
                     + "Palavra p,"
                     + "Nivel n, "
@@ -536,11 +536,11 @@ public class PalavraDao {
 
             sql = "SELECT"
                     + " p.idPalavra,"
-                    + " p.nome,"
+                    + " p.nome as palavra_nome,"
                     + " n.idNivel,"
-                    + " n.descricao,"
+                    + " n.descricao as nivel_descricao,"
                     + "c.idCategoria,"
-                    + "c.descricao"
+                    + "c.descricao as cetgoria_descricao"
                     + " FROM "
                     + "Palavra p,"
                     + "Nivel n, "
@@ -554,6 +554,208 @@ public class PalavraDao {
             System.err.println(sql);
         }
 
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+
+    }
+
+    public static ResultSet retornaPlvsSemObjetoRs(String filtroNivel, String filtroCategoria) throws SQLException {
+        List<PalavraBean> listaPl = new ArrayList<PalavraBean>();
+        String sql = null;
+        if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome as palavra_nome,"
+                    + " n.idNivel,"
+                    + " n.descricao as nivel_descricao,"
+                    + " c.idCategoria,"
+                    + " c.descricao as categoria_descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria "
+                    + "ORDER BY p.nome";
+            System.err.println(sql);
+        } else if (!filtroNivel.equalsIgnoreCase("<<Tudo>>") && filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome as palavra_nome,"
+                    + " n.idNivel,"
+                    + " n.descricao as nivel_descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao as categoria_descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria "
+                    + "n.descricao = '" + filtroNivel + "' "
+                    + "ORDER BY p.nome";
+            System.err.println(sql);
+        } else if (filtroNivel.equalsIgnoreCase("<<Tudo>>") && !filtroCategoria.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome as palavra_nome,"
+                    + " n.idNivel,"
+                    + " n.descricao as nivel_descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao as categoria_descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria "
+                    + "AND c.descricao = '" + filtroCategoria + "' "
+                    + "ORDER BY p.nome";
+            System.err.println(sql);
+        } else {
+
+            sql = "SELECT"
+                    + " p.idPalavra,"
+                    + " p.nome as palavra_nome,"
+                    + " n.idNivel,"
+                    + " n.descricao as nivel_descricao,"
+                    + "c.idCategoria,"
+                    + "c.descricao as categoria_descricao"
+                    + " FROM "
+                    + "Palavra p,"
+                    + "Nivel n, "
+                    + "Categoria c "
+                    + "WHERE "
+                    + "p.idNivel = n.idNivel AND "
+                    + "p.idCategoria = c.idCategoria "
+                    + "AND n.descricao = '" + filtroNivel + "' "
+                    + "AND c.descricao = '" + filtroCategoria + "' "
+                    + "ORDER BY p.nome";
+            System.err.println(sql);
+        }
+
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+    
+     public static ResultSet retornaPalavrasPorNiveisSemObjetoRs(String parametro) throws SQLException {
+
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+//            sql = "SELECT"
+//                    + " p.idPalavra,"
+//                    + " p.nome as 'palavra_nome',"
+//                    + " n.idNivel,"
+//                    + " n.descricao as 'nivel_descricao'"
+//                    + " FROM "
+//                    + "Palavra p,"
+//                    + "Nivel n "
+//                    + "WHERE "
+//                    + "p.idNivel = n.idNivel "
+//                    + "ORDER BY nivel_descricao and palavra_nome";
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN palavra "
+                    + "p ON n.idNivel = p.idNivel "
+                    + "order by nivel_descricao";
+        } else {
+//            sql = "SELECT"
+//                    + " p.idPalavra,"
+//                    + " p.nome,"
+//                    + " n.idNivel,"
+//                    + " n.descricao"
+//                    + " FROM "
+//                    + "Palavra p,"
+//                    + "Nivel n "
+//                    + "WHERE "
+//                    + "p.idNivel = n.idNivel"
+//                    + " AND p.nome like'" + p.getNome() + "%' "
+//                    + "ORDER BY p.nome";
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "n.descricao "
+                    + "AS nivel_descricao "
+                    + "FROM nivel n INNER JOIN palavra "
+                    + "p ON n.idNivel = p.idNivel AND n.descricao like '" + parametro + "' "
+                    + "order by nivel_descricao and palavra_nome";
+        }
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+     
+     
+     
+     
+     public static ResultSet retornaPalavrasPorCategoriaComObjetoRs(PalavraBean p, String parametro) throws SQLException {
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM categoria c INNER JOIN palavra "
+                    + "p ON c.idCategoria = p.idCategoria and p.nome like '" + p.getNome()+ "%' "
+                    + "order by categoria_descricao";
+        } else {
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM categoria c INNER JOIN palavra "
+                    + "p ON c.idCategoria = p.idCategoria AND c.descricao like '" + parametro + "' "
+                    + " and p.nome like '" + p.getNome() + "%' "
+                    + "order by categoria_descricao and palavra_nome";
+        }
+        System.err.println(sql);
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stmt = conexao.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
+    }
+     
+     
+     
+     
+     
+     
+      public static ResultSet retornaPalavrasPorCategoriaSemObjetoRs(String parametro) throws SQLException {
+        String sql = "";
+        if (parametro.equalsIgnoreCase("<<Tudo>>")) {
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM categoria c INNER JOIN palavra "
+                    + "p ON c.idCategoria = p.idCategoria "
+                    + "order by categoria_descricao";
+        } else {
+            sql = "SELECT "
+                    + "p.nome "
+                    + "AS palavra_nome,"
+                    + "c.descricao "
+                    + "AS categoria_descricao "
+                    + "FROM categoria c INNER JOIN palavra "
+                    + "p ON c.idCategoria = p.idCategoria AND c.descricao like '" + parametro + "' "
+                    + "order by categoria_descricao and palavra_nome";
+        }
+        System.err.println(sql);
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();

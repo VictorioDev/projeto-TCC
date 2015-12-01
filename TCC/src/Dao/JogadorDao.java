@@ -135,6 +135,7 @@ public class JogadorDao {
         jo.setImgUser(rs.getBytes("imagemJogador"));
         jo.setLogin(rs.getString("login"));
         jo.setPassword(rs.getString("senha"));
+        jo.setPontos(rs.getInt("pontos"));
 
         rs.close();
         stmt.close();

@@ -161,7 +161,7 @@ public class TelaLogin extends javax.swing.JDialog {
                 JogadorBean jogador = new JogadorBean();
                 jogador.setLogin(txLogin.getText());
                 jogador.setPassword(txSenha.getText());
-                jogador.setPontos(300);
+              
                 jogadorLogado = JogadorDao.retornaJogadorLogado(jogador);
                 util.UtilObjetos.jogadorLogado = jogadorLogado;
                 dispose();

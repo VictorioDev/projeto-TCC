@@ -68,7 +68,7 @@ FROM
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Palavra(s) agrupada(s) por nívei(s)]]></text>
+					<text><![CDATA[Palavras agrupadas por níveis]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="1858ff34-bb88-4dcb-8f5c-35294984caa2"/>

@@ -9,6 +9,7 @@ import Bean.NivelBean;
 import Bean.PerguntaBean;
 import Dao.CategoriaDao;
 import Dao.NivelDao;
+import Dao.PalavraDao;
 import Dao.PerguntaDao;
 import java.awt.Color;
 import java.sql.SQLException;
@@ -42,12 +43,9 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 //    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
 //    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
 //    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
-
-    
-    
     public TelaPesquisarPergunta() {
         initComponents();
-         try {
+        try {
             populaCombo();
         } catch (SQLException ex) {
             Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,14 +62,14 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
     private List<PerguntaBean> listaPerguntas;
     private List<NivelBean> listaNiveis;
     private List<CategoriaBean> listaCategorias;
-    
+
     private PerguntaBean retornaObjeto() {
         PerguntaBean pergunta = new PerguntaBean();
         pergunta.setDescricao(TxaPergunta.getText().trim());
         return pergunta;
     }
-    
-    private void configuraComponentes(){
+
+    private void configuraComponentes() {
         btAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
         btExcluir.setIcon(UtilInterface.ICONE_REMOVER);
         btImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
@@ -85,7 +83,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         cbNivel.setFont(UtilInterface.FONTE_PADRAO);
         cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
     }
-    
+
     private void iconeBotoes() {
 //        btPesquisar.setIcon(icopes);
 //        btAlterar.setIcon(icoalt);
@@ -102,9 +100,10 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
             btAlterar.setEnabled(true);
             btExcluir.setEnabled(true);
         }
-        
+
     }
-     private void populaCombo() throws SQLException {
+
+    private void populaCombo() throws SQLException {
         listaNiveis = NivelDao.RetornaNiveis();
         listaCategorias = CategoriaDao.retornaCategoria();
 
@@ -121,9 +120,10 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 
         }
     }
-     private void AtualizaTabPergunta() {
+
+    private void AtualizaTabPergunta() {
         try {
-            listaPerguntas = PerguntaDao.retornaPergs(retornaObjeto(),cbNivel.getSelectedItem().toString(),cbCategoria.getSelectedItem().toString());
+            listaPerguntas = PerguntaDao.retornaPergutasPorObjeto(retornaObjeto(), cbNivel.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString());
             DefaultTableModel modeloperg = (DefaultTableModel) tabelaPergunta.getModel();
             modeloperg.setNumRows(0);
             for (PerguntaBean per : listaPerguntas) {
@@ -377,7 +377,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btExcluirActionPerformed
-    
+
     private void btAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAlterarActionPerformed
         // TODO add your handling code here:
         TelaNovaPergunta.auxilio = 1;
@@ -400,15 +400,67 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
-        try {
-            Relatorio.gerarRelatorio("relatorios//porNivel.jasper", PerguntaDao.RetornaPerguntasPorNiveisRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
-            Relatorio.gerarRelatorio("relatorios//RelatorioPerguntaAlternativa.jasper", PerguntaDao.RetornaPerguntasPorNiveisRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-            
-        } catch (JRException ex) {
-            Logger.getLogger(TelaPesquisarPergunta.class.getName()).log(Level.SEVERE, null, ex);
+
+        JPanel panel = new JPanel();
+        JRadioButton c1 = new JRadioButton("Perguntas de um nivel e categoria");
+        JRadioButton c2 = new JRadioButton("Perguntas e suas alternativas");
+        ButtonGroup btnG = new ButtonGroup();
+        btnG.add(c1);
+        btnG.add(c2);
+        panel.add(c1);
+        panel.add(c2);
+        JOptionPane.showMessageDialog(null, panel, "Qual relatório deseja exibir?", JOptionPane.QUESTION_MESSAGE);
+        if (c1.isSelected()) {
+            System.err.println("selecionou primeiro");
+            try {
+                if (cbNivel.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>") && cbCategoria.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>")) {
+                    if (TxaPergunta.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//porCatNiv.jasper", PerguntaDao.retornaPergutasSemObjetoRs(cbNivel.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//porCatNiv.jasper", PerguntaDao.retornaPergutasPorObjetoRs(retornaObjeto(), cbNivel.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    }
+
+                } else if (!cbNivel.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>") && cbCategoria.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>")) {
+                    if (TxaPergunta.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//porNivel.jasper", PerguntaDao.retornaPerguntasPorNiveisSemObjetoRs(cbNivel.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//porNivel.jasper", PerguntaDao.retornaPerguntasPorNiveisComObjetoRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
+                    }
+
+                } else if (cbNivel.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>") && !cbCategoria.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>")) {
+                    //alta aqui
+                    if (TxaPergunta.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//PerCat.jasper", PerguntaDao.retornaPerguntasPorCategoriaSemObjetoRs(cbCategoria.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//PerCat.jasper", PerguntaDao.retornaPerguntasPorCategoriaComObjetoRs(retornaObjeto(), cbCategoria.getSelectedItem().toString()));
+                    }
+
+                } else {
+                    if (TxaPergunta.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//porCatNiv.jasper", PerguntaDao.retornaPergutasSemObjetoRs(cbNivel.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//porCatNiv.jasper", PerguntaDao.retornaPergutasPorObjetoRs(retornaObjeto(), cbNivel.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Não foi");
+
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
+
+        } else if (c2.isSelected()) {
+            try {
+                Relatorio.gerarRelatorio("relatorios//RelatorioPerguntaAlternativa.jasper", PerguntaDao.retornaPerguntasPorCategoriaComObjetoRs(retornaObjeto(), cbNivel.getSelectedItem().toString()));
+            } catch (JRException ex) {
+                Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaPesquisaPalavra.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
+
     }//GEN-LAST:event_btImprimirActionPerformed
 
     private void TxaPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxaPerguntaActionPerformed

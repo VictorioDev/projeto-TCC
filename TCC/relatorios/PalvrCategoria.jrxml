@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PalvrCategoria" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="431973ac-432a-4b62-a5c0-8ddf668f36cd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     palavra.`nome` AS palavra_nome,
+     categoria.`descricao` AS categoria_descricao
+FROM
+     `categoria` categoria INNER JOIN `palavra` palavra ON categoria.`idCategoria` = palavra.`idCategoria`]]>
+	</queryString>
+	<field name="palavra_nome" class="java.lang.String"/>
+	<field name="categoria_descricao" class="java.lang.String"/>
+	<group name="categoria_descricao">
+		<groupExpression><![CDATA[$F{categoria_descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="70">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="32" width="399" height="37" forecolor="#006699" backcolor="#FFFFFF" uuid="cd1e7e47-6acd-48a8-9bcc-83b7d45a31d9"/>
+					<textElement textAlignment="Justified" verticalAlignment="Middle">
+						<font size="24" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria_descricao}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="e2cc1b07-56c5-47d5-95b8-eaef18043627"/>
+				</line>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="270" height="32" forecolor="#33CC04" backcolor="#E6E6E6" uuid="8747de74-877d-4205-8271-fbdd0602a0f6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Categoria]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="palavra_nome">
+		<groupExpression><![CDATA[$F{palavra_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<textField>
+					<reportElement x="0" y="0" width="499" height="37" forecolor="#006699" uuid="9feea129-9621-494a-890c-57506e38516f"/>
+					<textElement textAlignment="Justified">
+						<font size="18" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{palavra_nome}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="100">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="08d2bd6d-6669-4f78-906c-ca5080c4bb70"/>
+				<staticText>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="50a2abfe-1204-4998-bfcc-b5c99a66973f"/>
+					<textElement textAlignment="Right">
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Palavras agrupadas por Categoria]]></text>
+				</staticText>
+				<image>
+					<reportElement x="0" y="0" width="232" height="120" uuid="38bf2794-db1c-4799-9b00-3082be6c0fd2"/>
+					<imageExpression><![CDATA["C:\\Users\\victo\\Documents\\BackupTudo\\Outros\\ProjetosNetBeans\\projeto-TCC\\TCC\\relatorios\\ifpr.jpg"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="d357bf86-0816-4e4b-a7f2-496320b93eb2"/>
+			</line>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="4848e9e0-e366-48c5-a0f4-b95f4840b34e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="33e119ac-cca7-44f9-98ac-b31df825f625"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c1337bae-f305-414c-bbf7-08ea90635e21"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

@@ -216,6 +216,9 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaPesquisaPalavraMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabelaPesquisaPalavraMouseReleased(evt);
+            }
         });
         jScrollPane1.setViewportView(tabelaPesquisaPalavra);
 
@@ -407,10 +410,36 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         panel.add(c2);
         JOptionPane.showMessageDialog(null, panel, "Radio Test", JOptionPane.QUESTION_MESSAGE);
         if (c1.isSelected()) {
-            System.err.println("selecionou primeiro");
+            System.err.println("Selecionou primeiro");
             try {
-                Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.RetornaPalavrasPorNiveisRs(retornaObjeto(), cbNiveis.getSelectedItem().toString()));
-                //Relatorio.gerarRelatorio("relatorios//dicasDaPalavra.jasper", PalavraDao.RetornaPalavrasEAlternativasRs(retornaObjeto()));
+                if (cbNiveis.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>") && cbCategoria.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>")) {
+                    if (txDescricaoPalavra.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//PalvrNivCat.jasper", PalavraDao.retornaPlvsSemObjetoRs(cbNiveis.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//PalvrNivCat.jasper", PalavraDao.retornaPlvsComObjetoRs(retornaObjeto(), cbNiveis.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    }
+
+                } else if (!cbNiveis.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>") && cbCategoria.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>")) {
+                    if (txDescricaoPalavra.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.retornaPalavrasPorNiveisSemObjetoRs(cbNiveis.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//PalavraANiveis.jasper", PalavraDao.retornaPalavrasPorNiveisComObjetoRs(retornaObjeto(), cbNiveis.getSelectedItem().toString()));
+                    }
+
+                } else if (cbNiveis.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>") && !cbCategoria.getSelectedItem().toString().equalsIgnoreCase("<<Tudo>>")) {
+                    if (txDescricaoPalavra.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//PalvrCategoria.jasper", PalavraDao.retornaPalavrasPorCategoriaSemObjetoRs(cbCategoria.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//PalvrCategoria.jasper", PalavraDao.retornaPalavrasPorCategoriaComObjetoRs(retornaObjeto(), cbCategoria.getSelectedItem().toString()));
+                    }
+                } else {
+                    if (txDescricaoPalavra.getText().trim().equalsIgnoreCase("")) {
+                        Relatorio.gerarRelatorio("relatorios//PalvrNivCat.jasper", PalavraDao.retornaPlvsSemObjetoRs(cbNiveis.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    } else {
+                        Relatorio.gerarRelatorio("relatorios//PalvrNivCat.jasper", PalavraDao.retornaPlvsComObjetoRs(retornaObjeto(), cbNiveis.getSelectedItem().toString(), cbCategoria.getSelectedItem().toString()));
+                    }
+
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Não foi");
@@ -418,6 +447,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
             } catch (JRException e) {
                 e.printStackTrace();
             }
+
         } else if (c2.isSelected()) {
             try {
                 Relatorio.gerarRelatorio("relatorios//dicasDaPalavra.jasper", PalavraDao.RetornaPalavrasEDicasRs(retornaObjeto()));
@@ -450,6 +480,11 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_pnTudoMouseMoved
+
+    private void tabelaPesquisaPalavraMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPesquisaPalavraMouseReleased
+        // TODO add your handling code here:
+        VerificaBotoes();
+    }//GEN-LAST:event_tabelaPesquisaPalavraMouseReleased
 
     private PalavraBean retornaObjeto() {
         PalavraBean pl = new PalavraBean();

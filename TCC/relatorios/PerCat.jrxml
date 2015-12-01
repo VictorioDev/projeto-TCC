@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PerCat" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="eb729f0d-ac07-446b-bb77-5202ddfefef7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     pergunta.`descricao` AS pergunta_descricao,
+     categoria.`descricao` AS categoria_descricao
+FROM
+     `categoria` categoria INNER JOIN `pergunta` pergunta ON categoria.`idCategoria` = pergunta.`idCategoria`]]>
+	</queryString>
+	<field name="pergunta_descricao" class="java.lang.String"/>
+	<field name="categoria_descricao" class="java.lang.String"/>
+	<group name="categoria_descricao">
+		<groupExpression><![CDATA[$F{categoria_descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="1" width="455" height="32" forecolor="#006699" backcolor="#FFFFFF" uuid="2d172e25-d242-4933-bf91-a9b0ace306a1"/>
+					<textElement>
+						<font size="25" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria_descricao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="pergunta_descricao">
+		<groupExpression><![CDATA[$F{pergunta_descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="0" y="0" width="455" height="32" forecolor="#006699" uuid="9bf67a72-d81b-42b1-b936-872c83e5e2a3"/>
+					<textElement>
+						<font size="19" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pergunta_descricao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="100">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="f5458246-bf5f-48be-9485-6fdbbd4581e7"/>
+				<staticText>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="b967faee-6bca-4f9b-96d1-710a2625da10"/>
+					<textElement textAlignment="Center">
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Perguntas agrupadas por Categoria]]></text>
+				</staticText>
+				<image>
+					<reportElement x="0" y="0" width="232" height="120" uuid="9edf5541-27dd-45f1-96f4-091fea881e58"/>
+					<imageExpression><![CDATA["C:\\Users\\victo\\Documents\\BackupTudo\\Outros\\ProjetosNetBeans\\projeto-TCC\\TCC\\relatorios\\ifpr.jpg"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="0591a271-c2e0-4fec-ba64-209bd28cfae9"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="5f76a48c-1a16-4787-b46d-7f404ac0f3b0"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="831a53b2-a6be-404d-9ad4-8f37e206523f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="1f302caa-83e1-42d4-9342-43240e0357c1"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="99a9fd86-fb89-416c-bd20-a4ec53fecdee"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

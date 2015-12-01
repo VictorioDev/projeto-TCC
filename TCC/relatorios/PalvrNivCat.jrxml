@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PalvrNivCat" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6b6f5c1b-73b9-4ba5-8ec1-97bb9e5639f6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     palavra.`nome` AS palavra_nome,
+     categoria.`descricao` AS categoria_descricao,
+     nivel.`descricao` AS nivel_descricao
+FROM
+     `categoria` categoria INNER JOIN `palavra` palavra ON categoria.`idCategoria` = palavra.`idCategoria`
+     INNER JOIN `nivel` nivel ON palavra.`idNivel` = nivel.`idNivel`]]>
+	</queryString>
+	<field name="palavra_nome" class="java.lang.String"/>
+	<field name="categoria_descricao" class="java.lang.String"/>
+	<field name="nivel_descricao" class="java.lang.String"/>
+	<group name="nivel_descricao">
+		<groupExpression><![CDATA[$F{nivel_descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement mode="Opaque" x="0" y="0" width="455" height="40" forecolor="#006699" backcolor="#FFFFFF" uuid="99da7ef0-f226-4445-91a9-8fdbe3e44fbf"/>
+					<textElement verticalAlignment="Middle">
+						<font size="30" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nivel_descricao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="categoria_descricao">
+		<groupExpression><![CDATA[$F{categoria_descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="0" y="0" width="455" height="32" forecolor="#006699" uuid="3adc62e1-b590-4809-b7c5-520ce553ee77"/>
+					<textElement>
+						<font size="22" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria_descricao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="palavra_nome">
+		<groupExpression><![CDATA[$F{palavra_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="0" y="0" width="455" height="32" forecolor="#006699" uuid="2de2fadf-b74e-4a54-bc15-d32ca9143923"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{palavra_nome}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="100">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="eff3df73-b788-4265-bcd6-136d12992e55"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="f03edca8-e687-461a-9589-7ed90a86e786"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TITLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="e5425d48-d0e3-487b-a8c2-5dd6cdc4eaf9"/>
+					<textElement textAlignment="Right">
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Palavras agrupadas por Categoria/Nivel]]></text>
+				</staticText>
+				<image>
+					<reportElement x="0" y="0" width="232" height="120" uuid="0544c8e9-a681-48c5-864a-b5e6e6d26350"/>
+					<imageExpression><![CDATA["C:\\Users\\victo\\Documents\\BackupTudo\\Outros\\ProjetosNetBeans\\projeto-TCC\\TCC\\relatorios\\ifpr.jpg"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21"/>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="6cbe7b15-731e-4b25-8791-0ef5d0d76e95"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="0d422ab1-db48-4132-8b51-b718568f8317"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="ecd011b5-1a11-4adf-8a1c-b78fe27e3b57"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="2d58449d-d33b-44c2-b12c-259c7e8e97e6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
