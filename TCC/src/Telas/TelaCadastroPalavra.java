@@ -77,7 +77,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         acoesComponentes("");
         AtualizaCombos();
 
-        txNome.setDocument(new LimitaCaracteres());
+        txNome.setDocument(new LimitaCaracteres(2));
         configuraComponentes();
         setLocationRelativeTo(null);
     }
@@ -89,7 +89,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         id = pl.getIdPalavra();
 
         acoesComponentes("");
-        txNome.setDocument(new LimitaCaracteres());
+        txNome.setDocument(new LimitaCaracteres(2));
         configuraComponentes();
         preencherCampos(pl);
     }

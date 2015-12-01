@@ -13,15 +13,21 @@ import javax.swing.text.PlainDocument;
  *
  * @author Victorio
  */
-public class LimitaCaracteres extends PlainDocument{
+public class LimitaCaracteres extends PlainDocument {
+
+    private static int maxCarac = 0;
+
+    public LimitaCaracteres(int max) {
+        maxCarac = max;
+    }
 
     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
         int tamanho = (this.getLength() + str.length());
-        if(tamanho <= 45){
+        if (tamanho <= maxCarac) {
             super.insertString(offs, str, a); //To change body of generated methods, choose Tools | Templates.
-        }else{
+        } else {
             super.insertString(offs, str.replaceAll("[aA0-zZ9]", ""), a); //To change body of generated methods, choose Tools | Templates.
         }
     }
-    
+
 }
