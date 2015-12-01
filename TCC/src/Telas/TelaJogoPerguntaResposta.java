@@ -83,6 +83,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     private static AlternativaBean aCorreto = new AlternativaBean();
 
     public static JogadorBean j = util.UtilObjetos.jogadorLogado;
+    public static Contador cont;
 
     /**
      * Creates new form TelaJogoPerguntaResposta
@@ -95,11 +96,10 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         PopulaListaPalavras();
         SorteiaPergunta();
         Configura();
-        Contador cont = new Contador(lbTempo);
-        cont.start();
-        if(j == null){
+        verificaCronometro();
+        if (j == null) {
             System.err.println("Objeto vazio!");
-            
+
         }
         setSize(800, 600);
     }
@@ -116,11 +116,27 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
     }
 
-    private void codificandoCronometro() {
-
+    private void zerarActionPerformed(ActionEvent evt) {
+        lbTempo.setText("00:00:00");
+        contador = false;
+        zerado = true;
+        lbTempo.revalidate();
     }
 
-    private void PopulaListaPalavras(){
+    private void recomecarActionPerformed(ActionEvent evt) {
+        contador = true;
+    }
+
+    private void verificaCronometro() {
+        if (contador == true) {
+            cont = new Contador(lbTempo);
+            cont.start();
+        } else {
+            zerarActionPerformed(null);
+        }
+    }
+
+    private void PopulaListaPalavras() {
         try {
             for (int i = 0; i < util.UtilObjetos.listaNiveisPJogar.size(); i++) {
                 for (int k = 0; k < util.UtilObjetos.listaCategoriasPJogar.size(); k++) {
@@ -135,11 +151,12 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 }
 
             }
-           //listapalavrass = PalavraDao.RetornaPalavrasSP();
+            //listapalavrass = PalavraDao.RetornaPalavrasSP();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public String SorteiaPergunta() {
 
         p = new PerguntaBean();
@@ -217,28 +234,28 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         pjb.setPergunta(p);
         pjb.setTempo(tempoGasto);
         pjb.setAcertou(acertou);
-       
-        System.err.println("Id da pergunta: "+p.getDescricao());
+
+        System.err.println("Id da pergunta: " + p.getDescricao());
 
         return pjb;
     }
 
     public void AtualizarBanco() {
-        
-            tempoGasto = (int) ((System.currentTimeMillis() - start) / 1000);
-            System.out.println(tempoGasto);
-            j.setPontos(pontos-erros);
-            try {
-                JogadorDao.UpdatePontos(j);
-                PerguntaJogadaDAO.SalvarPerguntaJogada(RetornaObjeto());
 
-            } catch (SQLException ex) {
-                Logger.getLogger(Telajogo.class
-                        .getName()).log(Level.SEVERE, null, ex);
-            }
+        tempoGasto = (int) ((System.currentTimeMillis() - start) / 1000);
+        System.out.println(tempoGasto);
+        j.setPontos(pontos - erros);
+        try {
+            JogadorDao.UpdatePontos(j);
+            PerguntaJogadaDAO.SalvarPerguntaJogada(RetornaObjeto());
 
-            configIni();
-        
+        } catch (SQLException ex) {
+            Logger.getLogger(Telajogo.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        configIni();
+
     }
 
     public void Configura() {
@@ -616,33 +633,37 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 if (f == corretaIndex) {
                     pontos++;
                     txAcertos.setText(pontos + " ");
-                    if((pontos-erros == 0) || (pontos-erros == 1)){
-                        lbPontuacao.setText(pontos-erros + " ponto");
-                    }else if(pontos-erros < 0){
+                    if ((pontos - erros == 0) || (pontos - erros == 1)) {
+                        lbPontuacao.setText(pontos - erros + " ponto");
+                    } else if (pontos - erros < 0) {
                         lbPontuacao.setText("0 ponto");
-                    }else{
-                        lbPontuacao.setText(pontos-erros + " pontos");
+                    } else {
+                        lbPontuacao.setText(pontos - erros + " pontos");
                     }
                     lbMnsg.setText("Você é bom!");
+                    zerarActionPerformed(evt);
                     JOptionPane.showMessageDialog(null, "Acertou!!!!");
-                    lbMnsg.setText("Usuário "+j.getNome()+ ", responda");
+                    recomecarActionPerformed(evt);
+                    lbMnsg.setText("Usuário " + j.getNome() + ", responda");
                     acertou = true;
                     AtualizarBanco();
                     SorteiaPergunta();
                     Configura();
-                }else{
+                } else {
                     erros++;
                     txErros.setText(erros + " ");
-                    if((pontos-erros == 0) || (pontos-erros == 1)){
-                        lbPontuacao.setText(pontos-erros + " ponto");
-                    }else if(pontos-erros < 0){
+                    if ((pontos - erros == 0) || (pontos - erros == 1)) {
+                        lbPontuacao.setText(pontos - erros + " ponto");
+                    } else if (pontos - erros < 0) {
                         lbPontuacao.setText("0 ponto");
-                    }else{
-                        lbPontuacao.setText(pontos-erros + " pontos");
+                    } else {
+                        lbPontuacao.setText(pontos - erros + " pontos");
                     }
                     lbMnsg.setText("Estude mais um pouco e acerte!");
+                    zerarActionPerformed(evt);
                     JOptionPane.showMessageDialog(null, "Errou");
-                    lbMnsg.setText("Usuário "+j.getNome()+ ", responda");
+                    recomecarActionPerformed(evt);
+                    lbMnsg.setText("Usuário " + j.getNome() + ", responda");
                     acertou = false;
                     AtualizarBanco();
                     SorteiaPergunta();
@@ -655,8 +676,10 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
     private void btPular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPular1ActionPerformed
         // TODO add your handling code here:
+        zerarActionPerformed(evt);
         int pular = JOptionPane.showConfirmDialog(this, "Deseja pular a " + (qtdepula + 1) + "ª questão de 3 possíveis?", "QUER PULAR?", JOptionPane.YES_NO_CANCEL_OPTION);
         if (pular == JOptionPane.YES_OPTION) {
+            recomecarActionPerformed(evt);
             qtdepula++;
             SorteiaPergunta();
             Configura();
