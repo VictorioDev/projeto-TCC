@@ -675,8 +675,8 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 try {
                     PalavraDao.salvarPalavra(retornaObjetoPalavra());
                     dispose();
-//                } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
-//                        JOptionPane.showMessageDialog(null, UtilInterface.MSG_REGISTRO_DUPLICADO);
+                } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
+                    JOptionPane.showMessageDialog(null, UtilInterface.MSG_REGISTRO_DUPLICADO);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -684,6 +684,8 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 try {
                     PalavraDao.atualizaPalavra(retornaObjetoPalavra());
                     dispose();
+                } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
+                    JOptionPane.showMessageDialog(null, UtilInterface.MSG_REGISTRO_DUPLICADO);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }

@@ -372,7 +372,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                     webSource.release();
 
                 } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
-                    JOptionPane.showMessageDialog(null, UtilInterface.MSG_REGISTRO_DUPLICADO);
+                    //JOptionPane.showMessageDialog(null, UtilInterface.MSG_REGISTRO_DUPLICADO);
+                    JOptionPane.showMessageDialog(null, "O nome de usuario já existe!");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (IOException ex) {
@@ -395,7 +396,15 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
             }
             dispose();
-            new TelaLogin(null, true).setVisible(true);
+            try {
+                new TelaLogin(null, true).setVisible(true);
+            } catch (NoSuchFieldException ex) {
+                Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalArgumentException ex) {
+                Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     }//GEN-LAST:event_btnSalvarActionPerformed

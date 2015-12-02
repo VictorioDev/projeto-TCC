@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +33,17 @@ public class TelaLogin extends javax.swing.JDialog {
     /**
      * Creates new form TelaLogin
      */
-    public TelaLogin(java.awt.Frame parent, boolean modal) {
+    public TelaLogin(java.awt.Frame parent, boolean modal) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btnLogar);
+        //String value = "-Djava.library.path=\"vm/x64\"";
+
+        util.VerificaSistema.suckOsInfo();
 //        btnLogar.setIcon(UtilInterface.ICONE_SALVAR);
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,7 +165,7 @@ public class TelaLogin extends javax.swing.JDialog {
                 JogadorBean jogador = new JogadorBean();
                 jogador.setLogin(txLogin.getText());
                 jogador.setPassword(txSenha.getText());
-              
+
                 jogadorLogado = JogadorDao.retornaJogadorLogado(jogador);
                 util.UtilObjetos.jogadorLogado = jogadorLogado;
                 dispose();
@@ -263,14 +266,22 @@ public class TelaLogin extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaLogin dialog = new TelaLogin(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                try {
+                    TelaLogin dialog = new TelaLogin(new javax.swing.JFrame(), true);
+                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent e) {
+                            System.exit(0);
+                        }
+                    });
+                    dialog.setVisible(true);
+                } catch (NoSuchFieldException ex) {
+                    Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalArgumentException ex) {
+                    Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
