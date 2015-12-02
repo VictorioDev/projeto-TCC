@@ -64,6 +64,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     public String alternativas;
 
     public static boolean gameOver;
+    public static int acertos;
     public static int pontos;
     public static int erros;
     public static int tempoGasto;
@@ -93,28 +94,29 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         jtxaPergunta.setEditable(false);
-        iconesBotoes();
-        PopulaListaPalavras();
+        MensgJog();
+        PopulaListaPerguntas();
         SorteiaPergunta();
         Configura();
+        contador = true;
         verificaCronometro();
+        PreeencherCampos(util.UtilObjetos.jogadorLogado);
         if (j == null) {
             System.err.println("Objeto vazio!");
 
         }
         setSize(800, 600);
+        configIni();
     }
 
     private void PreeencherCampos(JogadorBean j) {
-        txAcertos.setText(j.getPontos() + "");
-
+//        txAcertos.setText(j.getPontos() + "");
+        lbPontuacao.setText(j.getPontos()+ " pontos");
+        System.err.println(j.getPontos() + "");
     }
 
-    private void iconesBotoes() {
-        btResponder.setIcon(icores);
-        btPular1.setIcon(icopul);
-//        btRanking.setIcon(icorkg);
-
+    private void MensgJog() {
+        lbMnsg.setText("Usuário " + j.getNome() + ", responda");
     }
 
     private void zerarActionPerformed(ActionEvent evt) {
@@ -128,6 +130,10 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         contador = true;
     }
 
+    private void pausarActionPerformed(ActionEvent evt) {
+        contador = false;
+    }
+
     private void verificaCronometro() {
         if (contador == true) {
             cont = new Contador(lbTempo);
@@ -137,7 +143,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         }
     }
 
-    private void PopulaListaPalavras() {
+    private void PopulaListaPerguntas() {
         try {
             for (int i = 0; i < util.UtilObjetos.listaNiveisPJogar.size(); i++) {
                 for (int k = 0; k < util.UtilObjetos.listaCategoriasPJogar.size(); k++) {
@@ -232,7 +238,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
         tempoGasto = (int) ((System.currentTimeMillis() - start) / 1000);
         System.out.println(tempoGasto);
-        j.setPontos(pontos - erros);
+        j.setPontos(pontos);
         try {
             JogadorDao.UpdatePontos(j);
             PerguntaJogadaDAO.SalvarPerguntaJogada(RetornaObjeto());
@@ -251,7 +257,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         try {
             //Coloca Nivel no label
             PerguntaBean a = PerguntaDao.RetornaPerguntas(p);
-            lbNivel.setText(a.getNivel().getDescricao());
+//            lbNivel.setText(a.getNivel().getDescricao());
 //            lbcategoria.setText(a.getCategoria().getDescricao());
         } catch (SQLException ex) {
             Logger.getLogger(TelaJogoPerguntaResposta.class.getName()).log(Level.SEVERE, null, ex);
@@ -619,20 +625,17 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
             if (button.isSelected()) {
                 if (f == corretaIndex) {
-                    pontos++;
-                    txAcertos.setText(pontos + " ");
-                    if ((pontos - erros == 0) || (pontos - erros == 1)) {
-                        lbPontuacao.setText(pontos - erros + " ponto");
-                    } else if (pontos - erros < 0) {
-                        lbPontuacao.setText("0 ponto");
+                    acertos++;
+                    pontos+=5;
+                    txAcertos.setText(acertos + " ");
+                    if ((pontos == 0) || (pontos == 1)) {
+                        lbPontuacao.setText(pontos + " ponto");
                     } else {
-                        lbPontuacao.setText(pontos - erros + " pontos");
+                        lbPontuacao.setText(pontos + " pontos");
                     }
-                    lbMnsg.setText("Você é bom!");
                     zerarActionPerformed(evt);
                     JOptionPane.showMessageDialog(null, "Acertou!!!!");
                     recomecarActionPerformed(evt);
-                    lbMnsg.setText("Usuário " + j.getNome() + ", responda");
                     acertou = true;
                     AtualizarBanco();
                     SorteiaPergunta();
@@ -640,18 +643,14 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 } else {
                     erros++;
                     txErros.setText(erros + " ");
-                    if ((pontos - erros == 0) || (pontos - erros == 1)) {
-                        lbPontuacao.setText(pontos - erros + " ponto");
-                    } else if (pontos - erros < 0) {
-                        lbPontuacao.setText("0 ponto");
+                    if ((pontos == 0) || (pontos == 1)) {
+                        lbPontuacao.setText(pontos + " ponto");
                     } else {
-                        lbPontuacao.setText(pontos - erros + " pontos");
+                        lbPontuacao.setText(pontos + " pontos");
                     }
-                    lbMnsg.setText("Estude mais um pouco e acerte!");
                     zerarActionPerformed(evt);
                     JOptionPane.showMessageDialog(null, "Errou");
                     recomecarActionPerformed(evt);
-                    lbMnsg.setText("Usuário " + j.getNome() + ", responda");
                     acertou = false;
                     AtualizarBanco();
                     SorteiaPergunta();
@@ -664,13 +663,16 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
     private void btPular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPular1ActionPerformed
         // TODO add your handling code here:
-        zerarActionPerformed(evt);
+        pausarActionPerformed(evt);
         int pular = JOptionPane.showConfirmDialog(this, "Deseja pular a " + (qtdepula + 1) + "ª questão de 3 possíveis?", "QUER PULAR?", JOptionPane.YES_NO_CANCEL_OPTION);
         if (pular == JOptionPane.YES_OPTION) {
+            zerarActionPerformed(evt);
             recomecarActionPerformed(evt);
             qtdepula++;
             SorteiaPergunta();
             Configura();
+        }else{
+            recomecarActionPerformed(evt);
         }
         //se pular tres vezes perde o jogo
         if (qtdepula == 3) {
