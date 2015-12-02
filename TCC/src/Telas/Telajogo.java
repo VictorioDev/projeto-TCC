@@ -161,7 +161,7 @@ public class Telajogo extends javax.swing.JFrame {
         tempoGasto = 0;
         acertou = false;
         start = System.currentTimeMillis();
-        chances = 10;
+        chances = 5;
         imageForca.setImage(imageForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
         lbImgForca.setIcon(imageForca);
         voltaBotoes();
@@ -368,7 +368,7 @@ public class Telajogo extends javax.swing.JFrame {
     }
 
     private void atualizaImagemForca(int chances) {
-        if (chances == 9) {
+        if (chances == 5) {
             imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca1.jpg");
             imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
 
@@ -376,31 +376,31 @@ public class Telajogo extends javax.swing.JFrame {
 
         }
 
-        if (chances == 8) {
+        if (chances == 4) {
             imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca2.jpg");
             imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
             lbImgForca.setIcon(imageAuxForca);
         }
 
-        if (chances == 7) {
+        if (chances == 3) {
             imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca3.jpg");
             imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
             lbImgForca.setIcon(imageAuxForca);
         }
 
-        if (chances == 6) {
+        if (chances == 2) {
             imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca4.jpg");
             imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
             lbImgForca.setIcon(imageAuxForca);
         }
 
-        if (chances == 5) {
+        if (chances == 1) {
             imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca5.jpg");
             imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
             lbImgForca.setIcon(imageAuxForca);
         }
 
-        if (chances == 4) {
+        if (chances == 0) {
             imageAuxForca = new ImageIcon("src\\ImagemForca\\ImgForca6.jpg");
             imageAuxForca.setImage(imageAuxForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
             lbImgForca.setIcon(imageAuxForca);

@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.opencv.core.Core;
+import util.LimitaCaracteres;
 import util.UtilInterface;
 
 /**
@@ -39,7 +40,9 @@ public class TelaLogin extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btnLogar);
         //String value = "-Djava.library.path=\"vm/x64\"";
-
+        
+        txLogin.setDocument(new LimitaCaracteres(50));
+        txSenha.setDocument(new LimitaCaracteres(50));
         util.VerificaSistema.suckOsInfo();
 //        btnLogar.setIcon(UtilInterface.ICONE_SALVAR);
     }

@@ -70,6 +70,7 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
         cbNiveis.setFont(UtilInterface.FONTE_PADRAO);
         cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
+        txDescricaoPalavra.setDocument(new LimitaCaracteres(50));
     }
 
     private void atualizaTabela() {

@@ -63,6 +63,7 @@ public class TelaNovoNivel extends javax.swing.JFrame {
         btCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
         lbNivel.setFont(UtilInterface.FONTE_PADRAO);
         txDescricaoNivel.setFont(UtilInterface.FONTE_PADRAO);
+        txDescricaoNivel.setDocument(new LimitaCaracteres(50));
     }
     
     private void iconeBotoes() {

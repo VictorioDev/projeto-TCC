@@ -26,6 +26,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 import net.sf.jasperreports.engine.JRException;
+import util.LimitaCaracteres;
 import util.Relatorio;
 import util.UtilInterface;
 
@@ -82,6 +83,7 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
         cbNivel.setFont(UtilInterface.FONTE_PADRAO);
         cbCategoria.setFont(UtilInterface.FONTE_PADRAO);
+        TxaPergunta.setDocument(new LimitaCaracteres(100));
     }
 
     private void iconeBotoes() {

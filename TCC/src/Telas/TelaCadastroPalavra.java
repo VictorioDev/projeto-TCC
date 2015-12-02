@@ -102,6 +102,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
         UtilInterface.setFontes(jPanel1.getComponents());
         UtilInterface.setFontes(pnCadastro.getComponents());
         UtilInterface.setFontes(pnBotoes.getComponents());
+        txNome.setDocument(new LimitaCaracteres(50));
     }
 
     private void preencherCampos(PalavraBean p) throws SQLException {

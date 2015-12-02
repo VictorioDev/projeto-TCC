@@ -69,6 +69,7 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
         lbMensg.setFont(UtilInterface.FONTE_PADRAO);
         lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
         txCategoria.setFont(UtilInterface.FONTE_PADRAO);
+        txCategoria.setDocument(new LimitaCaracteres(50));
     }
 
     private void iconeBotoes() {

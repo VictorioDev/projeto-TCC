@@ -62,6 +62,7 @@ public class TelaNovaCategoria extends javax.swing.JDialog {
         btCancelar.setIcon(UtilInterface.ICONE_CANCELAR);
         lbCategoria.setFont(UtilInterface.FONTE_PADRAO);
         txCategoria.setFont(UtilInterface.FONTE_PADRAO);
+        txCategoria.setDocument(new LimitaCaracteres(50));
     }
     
     private void iconeBotoes() {

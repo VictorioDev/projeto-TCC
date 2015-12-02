@@ -49,6 +49,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         btnPesquisar.setIcon(UtilInterface.ICONE_PESQUISAR);
         btnAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
         btnImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
+        txDescricaoNomejog.setDocument(new LimitaCaracteres(50));
     }
 
     private JogadorBean retornaObjeto() {

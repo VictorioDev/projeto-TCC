@@ -66,6 +66,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         lbMensg.setFont(UtilInterface.FONTE_PADRAO);
         lbNivel.setFont(UtilInterface.FONTE_PADRAO);
         txNivel.setFont(UtilInterface.FONTE_PADRAO);
+        txNivel.setDocument(new LimitaCaracteres(50));
     }
 
     private void iconeBotoes() {
