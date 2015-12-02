@@ -166,7 +166,7 @@ public class Telajogo extends javax.swing.JFrame {
         lbImgForca.setIcon(imageForca);
         voltaBotoes();
         tfchances.setText(chances + "");
-        //txPt.setText(pontosJog + "");
+        txPt.setText(pontosJog + "");
         pontosP = 0;
         trac = "";
         palavrad = sorteiaPalavra().toUpperCase();
@@ -217,9 +217,10 @@ public class Telajogo extends javax.swing.JFrame {
     }
 
     private void preeencherCampos(JogadorBean j) {
-        tfnome.setText(j.getNome());
-        System.err.println("NUMERO DE PONTOS "+j.getPontos());
-        txPt.setText(j.getPontos() + "");
+        tfnome.setText(j.getLogin());
+        pontosJog = j.getPontos();
+//        System.err.println("NUMERO DE PONTOS "+j.getPontos());
+//        txPt.setText(j.getPontos() + "");
 
     }
 

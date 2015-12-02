@@ -61,11 +61,11 @@ FROM
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="a99306c4-1425-4b8b-bfdf-aab3f2bd2aff"/>
 				<staticText>
-					<reportElement x="242" y="0" width="353" height="92" forecolor="#000000" uuid="39a939fc-87af-4d1d-ac48-2e1fdaf76d8e"/>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="39a939fc-87af-4d1d-ac48-2e1fdaf76d8e"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Pergunta(s) agrupada(s) por nivel(is)]]></text>
+					<text><![CDATA[Perguntas agrupadas por niveis]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="21d69a80-069a-4ecd-9048-361f3fcc6930"/>

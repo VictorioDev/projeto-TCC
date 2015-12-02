@@ -332,10 +332,15 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
-        setVisible(false);
-        dispose();
+        setModal(false);
+        
         try {
-            Relatorio.gerarRelatorio("Relatorios\\RelatorioCategoria.jasper", CategoriaDao.retornaRs(retornaObjeto()));
+            if(txCategoria.getText().trim().equalsIgnoreCase("")){
+                Relatorio.gerarRelatorio("relatorios\\ListagemDeCategorias.jasper", CategoriaDao.retornaRsSemObjeto());
+            }else{
+                Relatorio.gerarRelatorio("relatorios\\ListagemDeCategorias.jasper", CategoriaDao.retornaRsComObjeto(retornaObjeto()));
+            }
+            
         } catch (SQLException e) {
         } catch (JRException ex) {
             Logger.getLogger(TelaPesquisarCategoria.class.getName()).log(Level.SEVERE, null, ex);

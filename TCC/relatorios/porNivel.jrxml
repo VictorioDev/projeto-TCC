@@ -44,7 +44,7 @@ FROM
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Pergunta(s) agrupada(s) por nivel(is)]]></text>
+					<text><![CDATA[Perguntas agrupadas por niveis]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="fdfc5c09-3129-4c42-91d3-a3f526ad831c"/>

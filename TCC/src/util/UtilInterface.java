@@ -36,6 +36,8 @@ public class UtilInterface {
     public final static ImageIcon ICONE_JOGAR_GRANDE = new ImageIcon("src\\icones\\playicon72.png");
     public final static ImageIcon ICONE_SAIR = new ImageIcon("src\\icones\\back64.png");
     public final static ImageIcon ICONE_CONFIGJOG = new ImageIcon("src\\icones\\iconeconfig.png");
+    public final static ImageIcon ICONE_CONFIGJOGMAIOR = new ImageIcon("src\\icones\\icon-config64.png");
+    
 
     public final static Color COR_ERRO = Color.RED;
     public final static Font FONTE_PADRAO = new Font("Comic Sans MS", 0, 12);

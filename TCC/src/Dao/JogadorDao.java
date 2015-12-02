@@ -131,6 +131,8 @@ public class JogadorDao {
 
         JogadorBean jo = new JogadorBean();
         jo.setNome(rs.getString("nome"));
+        jo.setSexo(rs.getString("sexo"));
+        jo.setEmail(rs.getString("email"));
         jo.setIdJogador(rs.getInt("idJogador"));
         jo.setImgUser(rs.getBytes("imagemJogador"));
         jo.setLogin(rs.getString("login"));
@@ -146,7 +148,7 @@ public class JogadorDao {
     }
 
     public static void AlterarJogador(JogadorBean j) throws SQLException {
-        String slq = " update Jogador set nome = ?, email = ?, login = ?, senha = ?, imagemJogador = ? where idJogador = ?";
+        String slq = " update Jogador set nome = ?, email = ?, login = ?, senha = password(?), imagemJogador = ? , sexo = ? where idJogador = ?";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stmt = conexao.prepareStatement(slq);
         stmt.setString(1, j.getNome());
@@ -154,7 +156,8 @@ public class JogadorDao {
         stmt.setString(3, j.getLogin());
         stmt.setString(4, j.getPassword());
         stmt.setBytes(5, j.getImgUser());
-        stmt.setInt(6, j.getIdJogador());
+        stmt.setString(6, j.getSexo());
+        stmt.setInt(7, j.getIdJogador());
         stmt.execute();
         stmt.close();
         conexao.close();

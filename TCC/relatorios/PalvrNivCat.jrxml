@@ -85,7 +85,7 @@ FROM
 					<textElement textAlignment="Right">
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Palavras agrupadas por Categoria/Nivel]]></text>
+					<text><![CDATA[Palavras agrupadas por Categorias/Niveis]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="0544c8e9-a681-48c5-864a-b5e6e6d26350"/>

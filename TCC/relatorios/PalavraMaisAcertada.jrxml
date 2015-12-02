@@ -40,11 +40,11 @@ ORDER BY
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="435951e9-0b26-473e-8627-9ab3a3d8f0a3"/>
 				<staticText>
-					<reportElement x="282" y="0" width="313" height="92" forecolor="#000000" uuid="e7d508c6-98c8-4cba-bcee-c1698d2ea044"/>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="e7d508c6-98c8-4cba-bcee-c1698d2ea044"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Palavra(s) mais acertada(s)]]></text>
+					<text><![CDATA[Palavras mais acertadas]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="097d3a41-9b53-498f-b2a5-6810410f0a85"/>

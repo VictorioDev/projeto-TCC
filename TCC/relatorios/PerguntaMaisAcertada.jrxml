@@ -32,11 +32,11 @@ QtdeAcertos desc]]>
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="39f679a0-0fc3-4b47-b37c-a7f00b0f2f63"/>
 				<staticText>
-					<reportElement x="310" y="0" width="285" height="92" forecolor="#000000" uuid="f7808fa6-5b23-4b6c-9eae-59f73bf239c2"/>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="f7808fa6-5b23-4b6c-9eae-59f73bf239c2"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Pergunta(s) mais acertada(s)]]></text>
+					<text><![CDATA[Perguntas mais acertadas]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="03c356d2-56d6-4837-8af6-aacf8fce736d"/>

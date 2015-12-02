@@ -100,8 +100,16 @@ public class NivelDao {
         conexao.close();
     }
 
-    public static ResultSet retornaRs(NivelBean nv) throws SQLException {
+    public static ResultSet retornaRsComObjeto(NivelBean nv) throws SQLException {
         String sql = "select * from Nivel where descricao like'" + nv.getDescricao() + "%' order by descricao";
+        Connection conexao = Conexao.getConexao();
+        PreparedStatement stat = conexao.prepareStatement(sql);
+        ResultSet rs = stat.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet retornaRsSemObjeto() throws SQLException {
+        String sql = "select * from Nivel order by descricao";
         Connection conexao = Conexao.getConexao();
         PreparedStatement stat = conexao.prepareStatement(sql);
         ResultSet rs = stat.executeQuery();

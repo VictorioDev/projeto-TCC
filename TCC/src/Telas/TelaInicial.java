@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import org.opencv.core.Core;
 import util.UtilInterface;
 
 /**
@@ -65,7 +66,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }
     
      private void configuraComponentes() {
-        lbConfigurar.setIcon(UtilInterface.ICONE_CONFIGJOG);
+        lbConfigurar.setSize(UtilInterface.ICONE_CONFIGJOGMAIOR.getImage().getWidth(this), UtilInterface.ICONE_CONFIGJOGMAIOR.getImage().getHeight(this));
+        lbConfigurar.setIcon(UtilInterface.ICONE_CONFIGJOGMAIOR);
      }
 
     /**
@@ -137,6 +139,9 @@ public class TelaInicial extends javax.swing.JFrame {
 
         lbConfigurar.setToolTipText("Alterar os dados de usuário");
         lbConfigurar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbConfigurarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lbConfigurarMouseEntered(evt);
             }
@@ -158,20 +163,17 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbImagemJog, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(lbConfigurar)
+                .addGap(18, 18, 18)
+                .addComponent(lbConfigurar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lbImagemJog, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(lbConfigurar)))
+                    .addComponent(lbImagemJog, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbConfigurar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbNome, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -200,16 +202,23 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void lbConfigurarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbConfigurarMouseEntered
         // TODO add your handling code here:
-        lbConfigurar.setBorder(new LineBorder(Color.black, 1));
+        //lbConfigurar.setBorder(new LineBorder(Color.black, 1));
         lbConfigurar.setCursor(new Cursor(Cursor.HAND_CURSOR));
  
     }//GEN-LAST:event_lbConfigurarMouseEntered
 
     private void lbConfigurarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbConfigurarMouseExited
         // TODO add your handling code here:
-        lbConfigurar.setBorder(null);
+        //lbConfigurar.setBorder(null);
         lbConfigurar.setCursor(null);
     }//GEN-LAST:event_lbConfigurarMouseExited
+
+    private void lbConfigurarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbConfigurarMouseClicked
+        // TODO add your handling code here:
+        dispose();
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        new TelaCadastroUsuario(null, true, jogadorLogado).setVisible(true);
+    }//GEN-LAST:event_lbConfigurarMouseClicked
 
     /**
      * @param args the command line arguments

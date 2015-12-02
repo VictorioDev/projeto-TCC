@@ -63,7 +63,7 @@ FROM
 					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Perguntas agrupadas nivel/categoria]]></text>
+					<text><![CDATA[Perguntas agrupadas niveis/categorias]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="15067a22-3509-48ea-9f5c-dfce41fe2d2b"/>

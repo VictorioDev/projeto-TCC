@@ -19,7 +19,7 @@ FROM
 				<textField>
 					<reportElement mode="Opaque" x="0" y="0" width="455" height="52" forecolor="#006699" backcolor="#FFFFFF" uuid="6c914f44-c663-469f-9daa-b7129b19f53d"/>
 					<textElement>
-						<font size="28" isBold="true"/>
+						<font size="30" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nivel_descricao}]]></textFieldExpression>
 				</textField>
@@ -35,21 +35,14 @@ FROM
 	<group name="palavra_nome">
 		<groupExpression><![CDATA[$F{palavra_nome}]]></groupExpression>
 		<groupHeader>
-			<band height="62">
+			<band height="32">
 				<textField>
-					<reportElement x="0" y="30" width="455" height="32" forecolor="#006699" uuid="38c615ed-bac3-47bc-a1c8-371ba312885d"/>
+					<reportElement x="0" y="0" width="455" height="32" forecolor="#006699" uuid="38c615ed-bac3-47bc-a1c8-371ba312885d"/>
 					<textElement>
 						<font size="22" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{palavra_nome}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement x="0" y="0" width="100" height="30" forecolor="#33CC04" backcolor="#F0F0F0" uuid="3d20ea36-fbb2-42ce-927d-33e770e4a3fa"/>
-					<textElement>
-						<font size="13" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Palavras]]></text>
-				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>

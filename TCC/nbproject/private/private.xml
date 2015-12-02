@@ -3,26 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaPesquisaPalavra.java</file>
-            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/util/LimitaCaracteres.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Dao/NivelDao.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaInicial.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/Telajogo.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaPesquisarCategoria.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaRelatorio.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaPesquisarPergunta.java</file>
-            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaCadastroPalavra.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/util/Conexao.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Dao/JogadorDao.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Bean/PerguntaJogadaBean.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Bean/PalavraJogadaBean.java</file>
-            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaCadastroUsuario.java</file>
-            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/ConfiguraJogo.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaLogin.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/util/Relatorio.java</file>
-            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Dao/PalavraJogadaDAO.java</file>
-            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaJogoPerguntaResposta.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/util/UtilInterface.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Dao/PalavraDao.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaAdmin.java</file>
             <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Dao/PerguntaDao.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaPesquisaPalavra.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/util/LimitaCaracteres.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaPesquisarNivel.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaCadastroPalavra.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Dao/CategoriaDao.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaCadastroUsuario.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/ConfiguraJogo.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/util/VoltaImagemJPG.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Dao/PalavraJogadaDAO.java</file>
+            <file>file:/C:/Users/victo/Documents/BackupTudo/Outros/ProjetosNetBeans/projeto-TCC/TCC/src/Telas/TelaJogoPerguntaResposta.java</file>
         </group>
     </open-files>
 </project-private>

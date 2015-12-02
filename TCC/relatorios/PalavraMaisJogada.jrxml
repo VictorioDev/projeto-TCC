@@ -40,11 +40,11 @@ NumVezesJogadas desc]]>
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="120" backcolor="#FFFFFF" uuid="891443cb-db57-4974-b82c-c8a0eaa3d733"/>
 				<staticText>
-					<reportElement x="338" y="0" width="256" height="92" forecolor="#000000" uuid="ca750bd8-07b6-4053-9872-2db23526dab6"/>
+					<reportElement x="232" y="0" width="363" height="120" forecolor="#000000" uuid="ca750bd8-07b6-4053-9872-2db23526dab6"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Palavra(s) mais jogada(s)]]></text>
+					<text><![CDATA[Palavras mais jogadas]]></text>
 				</staticText>
 				<image>
 					<reportElement x="0" y="0" width="232" height="120" uuid="38a4a4d1-e3b5-4899-a6ab-1c3f0882df77"/>

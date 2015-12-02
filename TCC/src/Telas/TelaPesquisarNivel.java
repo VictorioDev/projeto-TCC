@@ -37,7 +37,6 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 //    public static ImageIcon iconov = new ImageIcon("src\\icones\\Document-Blank-icon16.png");
 //    public static ImageIcon icoexc = new ImageIcon("src\\icones\\Delete-icon16.png");
 //    public static ImageIcon icorel = new ImageIcon("src\\icones\\relatorio_icone.jpg");
-    
     public TelaPesquisarNivel(java.awt.Frame parent, boolean modal) {
         initComponents();
         txNivel.setDocument(new LimitaCaracteres(45));
@@ -57,8 +56,8 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         nivel.setDescricao(txNivel.getText());
         return nivel;
     }
-    
-    private void configuraComponentes(){
+
+    private void configuraComponentes() {
         btAlterar.setIcon(UtilInterface.ICONE_ALTERAR);
         btExcluir.setIcon(UtilInterface.ICONE_REMOVER);
         btImprimir.setIcon(UtilInterface.ICONE_RELATORIO);
@@ -85,9 +84,9 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
             btAlterar.setEnabled(true);
             btExcluir.setEnabled(true);
         }
-        
+
     }
-    
+
     private void AtualizaTabNivel() {
         try {
             listaNivel = NivelDao.RetornaNiveis(retornaObjeto());
@@ -160,7 +159,7 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nível(is)"
+                "Níveis"
             }
         ));
         tabelaNivel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -321,7 +320,8 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
                 if (opc == JOptionPane.YES_OPTION) {
                     NivelDao.DeletarNivel(nivel);
                     AtualizaTabNivel();
-                    validaBotoes();                }
+                    validaBotoes();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -330,12 +330,19 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
-        try{
-            Relatorio.gerarRelatorio("Relatorios\\RelatorioNivel.jasper", NivelDao.retornaRs(retornaObjeto()));
-        }catch(SQLException e){
+        try {
+            if (txNivel.getText().trim().equalsIgnoreCase("")) {
+                Relatorio.gerarRelatorio("relatorios\\ListagemDeNiveis.jasper", NivelDao.retornaRsSemObjeto());
+            }else{
+                Relatorio.gerarRelatorio("relatorios\\ListagemDeNiveis.jasper", NivelDao.retornaRsComObjeto(retornaObjeto()));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         } catch (JRException ex) {
+            ex.printStackTrace();
             Logger.getLogger(TelaPesquisarNivel.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_btImprimirActionPerformed
 
     private void tabelaNivelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaNivelMouseClicked

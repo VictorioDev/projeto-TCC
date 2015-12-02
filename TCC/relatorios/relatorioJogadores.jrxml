@@ -28,16 +28,16 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="120" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<staticText>
-				<reportElement x="266" y="0" width="289" height="79" uuid="a0de98cf-f7e4-4c41-8658-436b1c135a81"/>
+				<reportElement x="214" y="-20" width="363" height="120" uuid="a0de98cf-f7e4-4c41-8658-436b1c135a81"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="34" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Relatório de Jogadores]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="0" width="232" height="120" uuid="680bb14d-b206-4233-a506-fb348890284c"/>
+				<reportElement x="-18" y="-20" width="232" height="120" uuid="680bb14d-b206-4233-a506-fb348890284c"/>
 				<imageExpression><![CDATA["ifpr.jpg"]]></imageExpression>
 			</image>
 		</band>

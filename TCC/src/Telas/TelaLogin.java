@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.opencv.core.Core;
 import util.UtilInterface;
 
 /**
@@ -186,6 +187,7 @@ public class TelaLogin extends javax.swing.JDialog {
 
     private void lbCadastreseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCadastreseMouseClicked
         dispose();
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         new TelaCadastroUsuario(null, true).setVisible(true);
     }//GEN-LAST:event_lbCadastreseMouseClicked
 

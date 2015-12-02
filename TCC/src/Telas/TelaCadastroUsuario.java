@@ -103,8 +103,9 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         txNome.setDocument(new LimitaCaracteres(45));
         txNomeUser.setDocument(new LimitaCaracteres(45));
         configuraComponentes();
-        setSize(481,460);
-        setResizable(false);
+        setSize(481, 460);
+        setResizable(true);
+
     }
 
     public TelaCadastroUsuario(java.awt.Dialog parent, boolean modal, JogadorBean j) {
@@ -114,8 +115,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         id = j.getIdJogador();
         PreencherCampos(j);
         configuraComponentes();
-        setSize(481,460);
-        setResizable(false);
+        setSize(481, 460);
+        setResizable(true);
 
     }
 
@@ -125,7 +126,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         UtilInterface.setFontes(jPanel1.getComponents());
         UtilInterface.setFontes(jPanel2.getComponents());
         webSource = new VideoCapture(0);
-        if(webSource != null){
+        if (webSource != null) {
             btnCam.setEnabled(true);
         }
     }
@@ -133,6 +134,14 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
     public void PreencherCampos(JogadorBean j) {
         txNome.setText(j.getNome());
         txNomeUser.setText(j.getLogin());
+        System.err.println("SEXO: " + j.getSexo());
+        if (j.getSexo().equalsIgnoreCase("Masculino")) {
+            cbSexo.setSelectedIndex(1);
+        } else {
+            cbSexo.setSelectedIndex(2);
+        }
+
+        System.err.println("EMAIL: " + j.getEmail());
         txEmail.setText(j.getEmail());
         try {
             util.VoltaImagemJPG.Desconvertimg(j.getImgUser(), "src/imgUsers/imgger.jpg");
@@ -140,6 +149,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         ImageIcon img = new ImageIcon("src/imgUsers/imgger.jpg");
+        img.setImage(img.getImage().getScaledInstance(148, 136, 100));
         lbImagemUser.setIcon(img);
 
     }
@@ -359,7 +369,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                 try {
                     JogadorDao.SalvarJogador(RetornObjetoJogador());
                     JOptionPane.showMessageDialog(null, "Usuario cadastrado com sucesso!");
-                    dispose();
+                    webSource.release();
+
                 } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
                     JOptionPane.showMessageDialog(null, UtilInterface.MSG_REGISTRO_DUPLICADO);
                 } catch (SQLException e) {
@@ -374,6 +385,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                     try {
                         JogadorDao.AlterarJogador(RetornObjetoJogador());
                         JOptionPane.showMessageDialog(null, "Usuario alterado com sucesso!");
+                        webSource.release();
                     } catch (SQLException ex) {
                         Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -382,6 +394,9 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
                 }
 
             }
+            dispose();
+            new TelaLogin(null, true).setVisible(true);
+
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -471,18 +486,20 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             lbNameUser.setForeground(Color.BLACK);
         }
 
-        if (new String(txSenha.getPassword()).trim().equals("")) {
-            lbsenha.setForeground(Color.red);
-            err++;
-        } else {
-            lbsenha.setForeground(Color.BLACK);
-        }
+        if (salvar = true) {
+            if (new String(txSenha.getPassword()).trim().equals("")) {
+                lbsenha.setForeground(Color.red);
+                err++;
+            } else {
+                lbsenha.setForeground(Color.BLACK);
+            }
 
-        if (new String(txConfirmSenha.getPassword()).trim().equals("") || !(new String(txConfirmSenha.getPassword()).equals(new String(txSenha.getPassword())))) {
-            lbSenhaConfirm.setForeground(Color.red);
-            err++;
-        } else {
-            lbSenhaConfirm.setForeground(Color.BLACK);
+            if (new String(txConfirmSenha.getPassword()).trim().equals("") || !(new String(txConfirmSenha.getPassword()).equals(new String(txSenha.getPassword())))) {
+                lbSenhaConfirm.setForeground(Color.red);
+                err++;
+            } else {
+                lbSenhaConfirm.setForeground(Color.BLACK);
+            }
         }
 
         if (cbSexo.getSelectedIndex() == 0) {
