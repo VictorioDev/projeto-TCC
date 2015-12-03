@@ -110,9 +110,11 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     }
 
     private void PreeencherCampos(JogadorBean j) {
+        pontos = j.getPontos();
 //        txAcertos.setText(j.getPontos() + "");
-        lbPontuacao.setText(j.getPontos()+ " pontos");
+        lbPontuacao.setText(j.getPontos() + " pontos");
         System.err.println(j.getPontos() + "");
+
     }
 
     private void MensgJog() {
@@ -218,7 +220,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     }
 
     public void configIni() {
-        qtdepula=0;
+        qtdepula = 0;
         gameOver = false;
         tempoGasto = 0;
         acertou = false;
@@ -629,7 +631,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             if (button.isSelected()) {
                 if (f == corretaIndex) {
                     acertos++;
-                    pontos+=5;
+                    pontos += 5;
                     txAcertos.setText(acertos + " ");
                     if ((pontos == 0) || (pontos == 1)) {
                         lbPontuacao.setText(pontos + " ponto");
@@ -646,8 +648,11 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 } else {
                     erros++;
                     txErros.setText(erros + " ");
-                    if ((pontos == 0) || (pontos == 1)) {
-                        lbPontuacao.setText(pontos + " ponto");
+                    pontos -= 5;
+                    if (pontos <= 0) {
+                        lbPontuacao.setText("0 ponto");
+                    } else if (pontos == 1) {
+                        lbPontuacao.setText("1 ponto");
                     } else {
                         lbPontuacao.setText(pontos + " pontos");
                     }
@@ -674,7 +679,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
             qtdepula++;
             SorteiaPergunta();
             Configura();
-        }else{
+        } else {
             recomecarActionPerformed(evt);
         }
         //se pular tres vezes perde o jogo
