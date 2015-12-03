@@ -115,8 +115,9 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         initComponents();
         salvar = false;
         id = j.getIdJogador();
-        PreencherCampos(j);
         configuraComponentes();
+        PreencherCampos(j);
+        
         setSize(481, 460);
         setResizable(true);
 

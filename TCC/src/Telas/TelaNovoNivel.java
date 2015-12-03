@@ -48,11 +48,12 @@ public class TelaNovoNivel extends javax.swing.JFrame {
     public TelaNovoNivel(NivelBean n) {
         initComponents();
         txDescricaoNivel.setDocument(new LimitaCaracteres(45));
+        configuraComponentes();
         preencherCampos(n);
         salvar = false;
         id = n.getIdNivel();
         setResizable(false);
-        configuraComponentes();
+        
 //        iconeBotoes();
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btSalvar);

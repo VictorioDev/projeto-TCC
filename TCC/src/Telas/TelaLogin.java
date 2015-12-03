@@ -44,6 +44,7 @@ public class TelaLogin extends javax.swing.JDialog {
         txLogin.setDocument(new LimitaCaracteres(50));
         txSenha.setDocument(new LimitaCaracteres(50));
         util.VerificaSistema.suckOsInfo();
+        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //        btnLogar.setIcon(UtilInterface.ICONE_SALVAR);
     }
 

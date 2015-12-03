@@ -104,6 +104,7 @@ public class Telajogo extends javax.swing.JFrame {
         preeencherCampos(util.UtilObjetos.jogadorLogado);
         populaListaPalavras();
         configIni();
+        setTitle("Jogo Forca");
 
     }
 
@@ -663,7 +664,7 @@ public class Telajogo extends javax.swing.JFrame {
 
         jLabel6.setText("jLabel6");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
