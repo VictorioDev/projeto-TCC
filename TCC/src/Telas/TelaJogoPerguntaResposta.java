@@ -116,6 +116,8 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     }
 
     private void MensgJog() {
+        jtxaPergunta.setLineWrap(true);
+        jtxaPergunta.setWrapStyleWord(true);
         lbMnsg.setText("Usuário " + j.getNome() + ", responda");
     }
 
@@ -216,6 +218,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
     }
 
     public void configIni() {
+        qtdepula=0;
         gameOver = false;
         tempoGasto = 0;
         acertou = false;
