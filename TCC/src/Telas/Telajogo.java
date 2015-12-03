@@ -447,7 +447,7 @@ public class Telajogo extends javax.swing.JFrame {
         }
 
         if (certo) {
-            tocarSom("src\\Sons\\Street Fighter sound Hadouken.mp3");
+            tocarSom("src\\Sons\\Correct Answer Sound Effect.mp3");
         }
         if (contaErr == palavrad.length()) {
             chances--;

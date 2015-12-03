@@ -40,12 +40,26 @@ public class TelaLogin extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         getRootPane().setDefaultButton(btnLogar);
         //String value = "-Djava.library.path=\"vm/x64\"";
-        
+
         txLogin.setDocument(new LimitaCaracteres(50));
         txSenha.setDocument(new LimitaCaracteres(50));
         util.VerificaSistema.suckOsInfo();
-//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-//        btnLogar.setIcon(UtilInterface.ICONE_SALVAR);
+
+        JogadorBean jog = new JogadorBean();
+        jog.setNome("Sysadmin");
+        jog.setLogin("Sysadmin");
+        jog.setPassword("Sysadmin");
+        jog.setSexo("Masculino");
+        try {
+            jogadorLogado = JogadorDao.retornaJogadorLogado(jog);
+        } catch (SQLException ex) {
+            try {
+                JogadorDao.SalvarJogador(jog);
+            } catch (SQLException e) {
+                Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+
     }
 
     /**
@@ -166,14 +180,20 @@ public class TelaLogin extends javax.swing.JDialog {
         if (VerificaCampos()) {
             boolean verify = false;
             try {
+
                 JogadorBean jogador = new JogadorBean();
                 jogador.setLogin(txLogin.getText());
                 jogador.setPassword(txSenha.getText());
-
                 jogadorLogado = JogadorDao.retornaJogadorLogado(jogador);
-                util.UtilObjetos.jogadorLogado = jogadorLogado;
-                dispose();
-                new TelaInicial(jogadorLogado).setVisible(true);
+                if (jogadorLogado.getLogin().equalsIgnoreCase("Sysadmin")) {
+                    util.UtilObjetos.jogadorLogado = jogadorLogado;
+                    dispose();
+                    new TelaAdmin(null, true).setVisible(true);
+                } else {
+                    util.UtilObjetos.jogadorLogado = jogadorLogado;
+                    dispose();
+                    new TelaInicial(jogadorLogado).setVisible(true);
+                }
 
             } catch (SQLException ex) {
                 System.out.println("INVALIDO");

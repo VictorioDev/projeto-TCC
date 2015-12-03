@@ -242,6 +242,11 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         btnCancelar.setFont(btnCancelar.getFont().deriveFont(btnCancelar.getFont().getSize()+1f));
         btnCancelar.setText("Cancelar");
         btnCancelar.setToolTipText("Clique para cancelar esta operação");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancelar);
 
         txNome.setToolTipText("Digite seu nome neste campo (preferencialmente o nome completo)");
@@ -452,6 +457,20 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_btnCamActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        try {
+            new TelaLogin(null, true).setVisible(true);
+        } catch (NoSuchFieldException ex) {
+            Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private JogadorBean RetornObjetoJogador() throws IOException {
         JogadorBean jog = new JogadorBean();

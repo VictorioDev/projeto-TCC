@@ -39,6 +39,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         VerificaBotoes();
         configuraComponentes();
         setLocationRelativeTo(null);
+       
     }
 
     private void configuraComponentes() {
@@ -238,9 +239,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -253,7 +252,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        if (txDescricaoNomejog.getText().trim().length() > 1) {
+        if (txDescricaoNomejog.getText().trim().length() >= 2) {
             atualizaTabela();
             VerificaBotoes();
         } else {
@@ -263,13 +262,13 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
             DefaultTableModel modelo = (DefaultTableModel) tabelaPesquisaJogadores.getModel();
             modelo.setNumRows(0);
         }
-        try {
-            // TODO add your handling code here:
-            JogadorDao.RetornaJogadores(retornaObjeto());
-            atualizaTabela();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//            // TODO add your handling code here:
+//            JogadorDao.RetornaJogadores(retornaObjeto());
+//            atualizaTabela();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnNovaPalavraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaPalavraActionPerformed
@@ -301,6 +300,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
         try {
+            dispose();
             Relatorio.gerarRelatorio("relatorios//relatorioJogadores.jasper", JogadorDao.RetornaJogadoresRs(retornaObjeto()));
         } catch (SQLException e) {
             e.printStackTrace();

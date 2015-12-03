@@ -137,17 +137,6 @@ public class ConfiguraJogo extends javax.swing.JFrame {
 
         pnNiveis.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnNiveis.setPreferredSize(new java.awt.Dimension(288, 292));
-        pnNiveis.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnNiveisMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnNiveisMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnNiveisMouseExited(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnNiveisLayout = new javax.swing.GroupLayout(pnNiveis);
         pnNiveis.setLayout(pnNiveisLayout);
@@ -267,21 +256,6 @@ public class ConfiguraJogo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void pnNiveisMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNiveisMouseEntered
-        // TODO add your handling code here:
-        pnNiveis.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
-    }//GEN-LAST:event_pnNiveisMouseEntered
-
-    private void pnNiveisMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNiveisMouseExited
-        // TODO add your handling code here:
-        pnNiveis.setBorder(null);
-    }//GEN-LAST:event_pnNiveisMouseExited
-
-    private void pnNiveisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNiveisMouseClicked
-        // TODO add your handling code here:
-        pnNiveis.setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
-    }//GEN-LAST:event_pnNiveisMouseClicked
 
     private void btnSelecionarTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarTudoActionPerformed
         // TODO add your handling code here:
