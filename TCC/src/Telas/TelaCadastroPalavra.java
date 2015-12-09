@@ -634,6 +634,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Erro ao carregar a imagem!");
             }
             acoesComponentes("btn");
+            listadc.add(dica);
 
         } else if (cbDica.getSelectedIndex() == 3) {
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Sons", "mp3", "WMV");
@@ -643,6 +644,7 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
             dica.setSom(converter());
             dica.setTipo("Som");
             acoesComponentes("btn");
+            listadc.add(dica);
         }
         if (cbDica.getSelectedIndex() == 1) {
             String dicatexto = JOptionPane.showInputDialog(null, "Insira a dica!");
@@ -658,9 +660,10 @@ public class TelaCadastroPalavra extends javax.swing.JDialog {
                     lbTipoDica.setForeground(Color.black);
                 }
                 acoesComponentes("btn");
+                listadc.add(dica);
             }
         }
-        listadc.add(dica);
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAdicionarActionPerformed
 

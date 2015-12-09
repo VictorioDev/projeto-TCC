@@ -142,6 +142,11 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Categorias");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         p4.setBackground(new java.awt.Color(153, 153, 225));
 
@@ -169,6 +174,9 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
         tabelaCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaCategoriaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tabelaCategoriaMouseReleased(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaCategoria);
@@ -302,17 +310,24 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Nenhuma categoria selecionada para a exclusão!", "ERRO!", JOptionPane.ERROR_MESSAGE);
             txCategoria.requestFocus();
         } else {
-            CategoriaBean categoria = listaCategoria.get(tabelaCategoria.getSelectedRow());
-            try {
-                int opc = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a categoria?");
-                if (opc == JOptionPane.YES_OPTION) {
+            CategoriaBean categoria = new CategoriaBean();
+
+            categoria = listaCategoria.get(tabelaCategoria.getSelectedRow());
+            int opc = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir a categoria?");
+            if (opc == JOptionPane.YES_OPTION) {
+                try {
                     CategoriaDao.excluir(categoria);
                     AtualizaTabCategoria();
                     validaBotoes();
+                } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
+                    //ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Há palavras associadas a esta categoria!");
+                } catch (SQLException e) {
+                    //e.printStackTrace();
+
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
@@ -333,15 +348,15 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
     private void btImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btImprimirActionPerformed
         // TODO add your handling code here:
-        setModal(false);
-        
+       
+
         try {
-            if(txCategoria.getText().trim().equalsIgnoreCase("")){
+            if (txCategoria.getText().trim().equalsIgnoreCase("")) {
                 Relatorio.gerarRelatorio("relatorios\\ListagemDeCategorias.jasper", CategoriaDao.retornaRsSemObjeto());
-            }else{
+            } else {
                 Relatorio.gerarRelatorio("relatorios\\ListagemDeCategorias.jasper", CategoriaDao.retornaRsComObjeto(retornaObjeto()));
             }
-            
+
         } catch (SQLException e) {
         } catch (JRException ex) {
             Logger.getLogger(TelaPesquisarCategoria.class.getName()).log(Level.SEVERE, null, ex);
@@ -350,8 +365,19 @@ public class TelaPesquisarCategoria extends javax.swing.JDialog {
 
     private void tabelaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCategoriaMouseClicked
         // TODO add your handling code here:
-        validaBotoes();
+
     }//GEN-LAST:event_tabelaCategoriaMouseClicked
+
+    private void tabelaCategoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaCategoriaMouseReleased
+        // TODO add your handling code here:
+        validaBotoes();
+    }//GEN-LAST:event_tabelaCategoriaMouseReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        dispose();
+        new TelaAdmin(null, true).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
     /**
      * @param args the command line arguments
      */

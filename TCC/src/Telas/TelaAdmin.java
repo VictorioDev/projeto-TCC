@@ -81,7 +81,8 @@ public class TelaAdmin extends javax.swing.JDialog {
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                        new TelaPesquisaJogadores(null, true).setVisible(true);
+                        dispose();
+                        new TelaPesquisaJogadores(null, false).setVisible(true);
                         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                     }
 
@@ -114,7 +115,8 @@ public class TelaAdmin extends javax.swing.JDialog {
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                        new TelaPesquisarCategoria(null, true).setVisible(true);
+                        dispose();
+                        new TelaPesquisarCategoria(null, false).setVisible(true);
                         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                     }
 

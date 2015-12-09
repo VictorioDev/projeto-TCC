@@ -173,6 +173,10 @@ public class PerguntaDao {
             n.setIdNivel(rs.getInt("idNivel"));
             n.setDescricao(rs.getString("descricaoNiv"));
             pe.setNivel(n);
+            CategoriaBean c = new CategoriaBean();
+            c.setIdCategoria(rs.getInt("idCategoria"));
+            c.setDescricao(rs.getString("descricaoCat"));
+            pe.setCategoria(c);
         }
 
         rs.close();
@@ -553,7 +557,7 @@ public class PerguntaDao {
     }
 
     public static void excluir(PerguntaBean pergunta) throws SQLException {
-        try {
+        
             String sql = "delete from Pergunta where idPergunta=?";
             Connection conexao = Conexao.getConexao();
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -561,11 +565,7 @@ public class PerguntaDao {
             stmt.executeUpdate();
             stmt.close();
             conexao.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao excluir pergunta", "ERRO!", JOptionPane.ERROR_MESSAGE);
-
-        }
+       
 
     }
 

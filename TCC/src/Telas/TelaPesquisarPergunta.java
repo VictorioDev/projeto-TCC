@@ -374,8 +374,11 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
                     AtualizaTabPergunta();
                     validaBotoes();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException ex) {
+                JOptionPane.showMessageDialog(null, "Essta pergunta já foi jogada por um jogador!");
+                //ex.printStackTrace();
+            } catch (SQLException ex) {
+
             }
         }
     }//GEN-LAST:event_btExcluirActionPerformed

@@ -89,8 +89,8 @@ public class CategoriaDao {
         }
     }
 
-    public static void excluir(CategoriaBean cat) throws SQLException {
-        try {
+    public static void excluir(CategoriaBean cat) throws SQLException{
+       
             String sql = "delete from Categoria where idCategoria=?";
             Connection conexao = Conexao.getConexao();
             PreparedStatement stmt = conexao.prepareStatement(sql);
@@ -98,9 +98,7 @@ public class CategoriaDao {
             stmt.executeUpdate();
             stmt.close();
             conexao.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        
     }
 
     public static ResultSet retornaRsComObjeto(CategoriaBean cat) throws SQLException {

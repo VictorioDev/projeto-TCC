@@ -19,6 +19,7 @@ import Dao.PerguntaDao;
 import Dao.PerguntaJogadaDAO;
 import static Telas.Telajogo.listapalavrass;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -198,6 +199,8 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
                 for (AlternativaBean l1 : l) {
                     b = new JRadioButton(l1.getDescricao());
                     b.setName("btn" + i);
+                    b.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));  
+//b.setFont(new Font(“Serif”, Font.BOLD, 15));
                     pnAlternativas.add(b);
                     br.add(b);
                     i++;
@@ -262,8 +265,8 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
         try {
             //Coloca Nivel no label
             PerguntaBean a = PerguntaDao.RetornaPerguntas(p);
-//            lbNivel.setText(a.getNivel().getDescricao());
-//            lbcategoria.setText(a.getCategoria().getDescricao());
+            lbNivel.setText(a.getNivel().getDescricao());
+            lbcategoria.setText(a.getCategoria().getDescricao());
         } catch (SQLException ex) {
             Logger.getLogger(TelaJogoPerguntaResposta.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -339,7 +342,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
         jtxaPergunta.setEditable(false);
         jtxaPergunta.setColumns(10);
-        jtxaPergunta.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jtxaPergunta.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jtxaPergunta.setRows(2);
         scrPergunta.setViewportView(jtxaPergunta);
 
@@ -361,6 +364,7 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
         pnAlternativas.setBackground(new java.awt.Color(153, 153, 225));
         pnAlternativas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alternativas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 0, 18))); // NOI18N
+        pnAlternativas.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
         pnAlternativas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 pnAlternativasMouseClicked(evt);

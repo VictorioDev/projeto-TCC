@@ -117,6 +117,11 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Jogadores");
         setBackground(new java.awt.Color(153, 153, 225));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 225));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 1, 12))); // NOI18N
@@ -290,17 +295,19 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
             atualizaTabela();
             VerificaBotoes();
-        } catch (SQLException e) {
+        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Não foi");
+            JOptionPane.showMessageDialog(null, "Existem registros que envolvem este jogador no sistema!");
 
+        }catch(SQLException e){
+            
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
         try {
-            dispose();
+            
             Relatorio.gerarRelatorio("relatorios//relatorioJogadores.jasper", JogadorDao.RetornaJogadoresRs(retornaObjeto()));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -315,6 +322,12 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
         // TODO add your handling code here:
         VerificaBotoes();
     }//GEN-LAST:event_tabelaPesquisaJogadoresMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        dispose();
+        new TelaAdmin(null,true).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

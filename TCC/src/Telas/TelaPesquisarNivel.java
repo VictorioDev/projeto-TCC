@@ -323,8 +323,11 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
                     AtualizaTabNivel();
                     validaBotoes();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+                JOptionPane.showMessageDialog(null, "Há palavras associadas a este Nivel!");
+//e.printStackTrace();
+            } catch(SQLException ex){
+                //ex.printStackTrace();
             }
         }
     }//GEN-LAST:event_btExcluirActionPerformed

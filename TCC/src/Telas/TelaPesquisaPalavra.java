@@ -390,6 +390,8 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Exclusão realizada com sucesso!");
             atualizaTabela();
             VerificaBotoes();
+        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(null, "Essta palavra já foi jogada por um jogador!");
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Não foi");
