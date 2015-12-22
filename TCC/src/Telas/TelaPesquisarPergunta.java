@@ -178,6 +178,11 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Perguntas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 225));
 
@@ -476,6 +481,11 @@ public class TelaPesquisarPergunta extends javax.swing.JFrame {
         // TODO add your handling code here:
         validaBotoes();
     }//GEN-LAST:event_tabelaPerguntaMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        new TelaAdmin(this,true).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

@@ -325,7 +325,7 @@ public class TelaPesquisaJogadores extends javax.swing.JDialog {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        dispose();
+       
         new TelaAdmin(null,true).setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 

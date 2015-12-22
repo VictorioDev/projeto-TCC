@@ -359,7 +359,7 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnTudo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnTudo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -571,6 +571,8 @@ public class TelaCadastroUsuario extends javax.swing.JDialog {
             ImageIcon imagemSelec = new ImageIcon(arquivoSelect.getSelectedFile().getPath());
             imagemSelec.setImage(imagemSelec.getImage().getScaledInstance(148, 136, 100));
             imageReturn = imagemSelec;
+        }else{
+            lbImagemUser.setIcon(imageReturn);
         }
 
     }

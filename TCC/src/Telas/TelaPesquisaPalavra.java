@@ -177,6 +177,11 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
                 formMouseMoved(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         pnTudo.setBackground(new java.awt.Color(153, 153, 225));
         pnTudo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pesquisa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Comic Sans MS", 1, 12))); // NOI18N
@@ -487,6 +492,11 @@ public class TelaPesquisaPalavra extends javax.swing.JFrame {
         // TODO add your handling code here:
         VerificaBotoes();
     }//GEN-LAST:event_tabelaPesquisaPalavraMouseReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        new TelaAdmin(this,true).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     private PalavraBean retornaObjeto() {
         PalavraBean pl = new PalavraBean();

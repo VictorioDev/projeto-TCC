@@ -87,9 +87,14 @@ public class TelaInicial extends javax.swing.JFrame {
         lbImagemJog = new javax.swing.JLabel();
         lbConfigurar = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tela Inicial");
         setBackground(new java.awt.Color(204, 255, 204));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 255));
@@ -219,6 +224,10 @@ public class TelaInicial extends javax.swing.JFrame {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         new TelaCadastroUsuario(null, true, jogadorLogado).setVisible(true);
     }//GEN-LAST:event_lbConfigurarMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+       
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

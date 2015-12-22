@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import org.opencv.core.Core;
 import util.LimitaCaracteres;
 import util.UtilInterface;
+import util.VerificaSistema;
 
 /**
  *
@@ -43,7 +44,31 @@ public class TelaLogin extends javax.swing.JDialog {
 
         txLogin.setDocument(new LimitaCaracteres(50));
         txSenha.setDocument(new LimitaCaracteres(50));
-        util.VerificaSistema.suckOsInfo();
+        if(util.VerificaSistema.suckOsInfo().equalsIgnoreCase("86")){
+             Field fieldSysPath = null;
+             System.setProperty("java.library.path", "vm/x86");
+            try {
+                fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
+            } catch (NoSuchFieldException ex) {
+                Logger.getLogger(VerificaSistema.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(VerificaSistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fieldSysPath.setAccessible(true);
+            fieldSysPath.set(null, null);
+        }else{
+             Field fieldSysPath = null;
+             System.setProperty("java.library.path", "vm/x64");
+            try {
+                fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
+            } catch (NoSuchFieldException ex) {
+                Logger.getLogger(VerificaSistema.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SecurityException ex) {
+                Logger.getLogger(VerificaSistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fieldSysPath.setAccessible(true);
+            fieldSysPath.set(null, null);
+        }
 
         JogadorBean jog = new JogadorBean();
         jog.setNome("Sysadmin");
@@ -83,6 +108,11 @@ public class TelaLogin extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         pnCampos.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -226,6 +256,11 @@ public class TelaLogin extends javax.swing.JDialog {
 //        }
     }//GEN-LAST:event_txLoginMouseClicked
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_formWindowClosed
+
     private boolean VerificaCampos() {
         boolean veri = false;
         int err = 0;
@@ -295,7 +330,7 @@ public class TelaLogin extends javax.swing.JDialog {
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent e) {
-                            System.exit(0);
+                            
                         }
                     });
                     dialog.setVisible(true);

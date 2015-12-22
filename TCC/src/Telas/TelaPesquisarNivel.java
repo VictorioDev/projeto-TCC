@@ -139,6 +139,11 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa de Níveis");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 225));
 
@@ -353,6 +358,11 @@ public class TelaPesquisarNivel extends javax.swing.JFrame {
         // TODO add your handling code here:
         validaBotoes();
     }//GEN-LAST:event_tabelaNivelMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        new TelaAdmin(this,true).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

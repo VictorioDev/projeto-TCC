@@ -162,7 +162,7 @@ public class Telajogo extends javax.swing.JFrame {
         tempoGasto = 0;
         acertou = false;
         start = System.currentTimeMillis();
-        chances = 5;
+        chances = 6;
         imageForca.setImage(imageForca.getImage().getScaledInstance(lbImgForca.getWidth(), lbImgForca.getHeight(), 100));
         lbImgForca.setIcon(imageForca);
         voltaBotoes();

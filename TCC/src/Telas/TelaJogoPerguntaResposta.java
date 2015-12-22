@@ -334,6 +334,11 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jogo de Perguntas e Respostas");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         pnPaiDeTodos.setBackground(new java.awt.Color(153, 153, 225));
 
@@ -700,6 +705,11 @@ public class TelaJogoPerguntaResposta extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_pnAlternativasMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        new TelaInicial(util.UtilObjetos.jogadorLogado).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
